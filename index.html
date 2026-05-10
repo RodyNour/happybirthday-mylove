@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>A Book Full of Us – Radwa & Nour ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Poppins:wght@200;300;400;500;600&family=Dancing+Script:wght@400;600;700&family=Tajawal:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#ff2d78;--ps:#ff6fa8;--pu:#a855f7;--pu2:#7c3aed;--pu3:#c084fc;
+  --gold:#f0c060;--bg:#030007;--text:#f5e6ff;--muted:#b89ec4;--muted2:#7a5f90;
+  --gp:rgba(255,45,120,.55);--gpu:rgba(168,85,247,.45);
+  --pw:330px;--ph:460px;--ft:680ms;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-family:'Poppins',sans-serif;color:var(--text)}
+body.ar{font-family:'Tajawal',sans-serif;direction:rtl}
+
+/* ── STAR CANVAS / BLOBS ── */
+#bgCanvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+.blob{position:fixed;border-radius:50%;filter:blur(140px);opacity:.13;pointer-events:none;z-index:0;animation:blobD 20s ease-in-out infinite alternate}
+.b1{width:600px;height:600px;background:var(--pu);top:-200px;left:-200px}
+.b2{width:520px;height:520px;background:var(--pink);bottom:-160px;right:-160px;animation-delay:-10s}
+.b3{width:400px;height:400px;background:#4a0066;top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:-6s}
+@keyframes blobD{0%{transform:translate(0,0) scale(1)}100%{transform:translate(38px,28px) scale(1.09)}}
+
+/* ── LOADER ── */
+#loader{position:fixed;inset:0;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);transition:opacity 1s ease,visibility 1s ease}
+#loader.hide{opacity:0;visibility:hidden;pointer-events:none}
+.ld-heart{font-size:3.5rem;animation:hb 1.2s ease-in-out infinite;margin-bottom:20px}
+@keyframes hb{0%,100%{transform:scale(1);filter:drop-shadow(0 0 8px var(--gp))}50%{transform:scale(1.25);filter:drop-shadow(0 0 22px var(--gp))}}
+.ld-title{font-family:'Dancing Script',cursive;font-size:clamp(2rem,5vw,3.5rem);background:linear-gradient(135deg,var(--ps),var(--gold),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.ld-sub{font-size:.7rem;letter-spacing:.2em;color:var(--muted);margin-bottom:36px;text-transform:uppercase}
+.ld-track{width:260px;height:3px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden}
+.ld-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--pink),var(--pu));border-radius:99px;box-shadow:0 0 14px var(--gp);transition:width .1s linear}
+.ld-hint{margin-top:14px;font-size:.62rem;letter-spacing:.14em;color:var(--muted2)}
+
+/* ── SCENE / BOOK ── */
+#scene{position:fixed;inset:0;z-index:1;display:flex;align-items:center;justify-content:center}
+#bookOuter{opacity:0;transform:scale(.83) translateY(30px);transition:opacity 1.4s ease,transform 1.4s cubic-bezier(.16,1,.3,1)}
+#bookOuter.show{opacity:1;transform:scale(1) translateY(0)}
+#book{display:flex;width:calc(var(--pw)*2);height:var(--ph);position:relative;animation:bGlow 4.5s ease-in-out infinite alternate}
+@keyframes bGlow{
+  0%{filter:drop-shadow(0 0 36px var(--gp)) drop-shadow(0 0 85px var(--gpu)) drop-shadow(0 30px 60px rgba(0,0,0,.8))}
+  100%{filter:drop-shadow(0 0 58px var(--gp)) drop-shadow(0 0 130px var(--gpu)) drop-shadow(0 30px 60px rgba(0,0,0,.8))}}
+#book::after{content:'';position:absolute;left:50%;top:0;transform:translateX(-50%);width:9px;height:100%;background:linear-gradient(to right,#08000e,#250040,#08000e);z-index:60;box-shadow:0 0 18px rgba(168,85,247,.65)}
+
+/* ── PANELS / FLIP ── */
+.panel{width:var(--pw);height:var(--ph);position:relative;overflow:hidden;perspective:1700px}
+#lPanel{border-radius:8px 0 0 8px}
+#rPanel{border-radius:0 8px 8px 0}
+.pbg{position:absolute;inset:0;background:linear-gradient(160deg,#150024 0%,#090013 100%);border:1px solid rgba(168,85,247,.13)}
+#lPanel .pbg{border-radius:8px 0 0 8px;border-right:none}
+#rPanel .pbg{border-radius:0 8px 8px 0;border-left:none}
+.fcard{position:absolute;inset:0;transform-style:preserve-3d;transition:transform var(--ft) cubic-bezier(.645,.045,.355,1);z-index:10}
+#lCard{transform-origin:right center}
+#rCard{transform-origin:left center}
+#lCard.flip{transform:rotateY(-180deg)}
+#rCard.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.fback{transform:rotateY(180deg)}
+#rCard .fback{transform:rotateY(-180deg)}
+.pshadow{position:absolute;inset:0;pointer-events:none;z-index:20;opacity:0;transition:opacity .36s ease}
+#lPanel .pshadow{background:linear-gradient(to left,rgba(0,0,0,.58),transparent)}
+#rPanel .pshadow{background:linear-gradient(to right,rgba(0,0,0,.58),transparent)}
+#lCard.flip~.pshadow,#rCard.flip~.pshadow{opacity:1}
+
+/* ── PAGE BASE ── */
+.pg{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px 18px;position:relative;overflow:hidden;background:linear-gradient(155deg,#150024 0%,#090013 100%)}
+.pg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(168,85,247,.07),transparent 55%),radial-gradient(ellipse at 80% 80%,rgba(255,45,120,.07),transparent 55%);pointer-events:none}
+.pgn{position:absolute;bottom:8px;font-size:.5rem;color:var(--muted2);letter-spacing:.13em;opacity:.5}
+.pgn.l{left:13px}.pgn.r{right:13px}
+.deco{width:44px;height:1px;background:linear-gradient(90deg,transparent,var(--pu3),transparent);margin:5px auto}
+.decoP{background:linear-gradient(90deg,transparent,var(--ps),transparent)}
+@keyframes fY{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes blk{0%,100%{opacity:.3}50%{opacity:.85}}
+
+/* ── EDIT MODE OUTLINE ── */
+body.editmode [contenteditable]{
+  outline:1px dashed rgba(255,45,120,.45);
+  border-radius:4px;
+  min-width:20px;min-height:14px;
+  cursor:text;
+  background:rgba(255,45,120,.04);
+}
+body.editmode [contenteditable]:focus{
+  outline:1px solid rgba(255,45,120,.7);
+  background:rgba(255,45,120,.08);
+}
+body.editmode .edit-upload-btn{display:flex!important}
+body.editmode .edit-cover-btn{display:flex!important}
+
+/* ── COVER ── */
+.pg-cover{background:radial-gradient(ellipse at 50% 40%,#1e0035 0%,#060010 78%)}
+.cv-roses{font-size:1.7rem;letter-spacing:.26em;animation:fY 3s ease-in-out infinite;margin-bottom:6px;text-align:center}
+.cv-img-wrap{position:relative;width:116px;height:116px;margin:6px auto}
+.cv-img{width:116px;height:116px;border-radius:50%;border:2px solid var(--pink);box-shadow:0 0 24px var(--gp),0 0 55px var(--gpu);background:linear-gradient(135deg,#2c004a,#0c0018);display:flex;align-items:center;justify-content:center;font-size:3rem;overflow:hidden;animation:mGlow 3s ease-in-out infinite alternate}
+@keyframes mGlow{0%{box-shadow:0 0 22px var(--gp),0 0 50px var(--gpu)}100%{box-shadow:0 0 38px var(--gp),0 0 80px var(--gpu)}}
+.cv-img img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+/* edit button on cover photo — hidden unless editmode */
+.edit-cover-btn{
+  display:none;
+  position:absolute;bottom:2px;right:2px;width:26px;height:26px;
+  border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--pu2));
+  border:2px solid #030007;align-items:center;justify-content:center;
+  font-size:.75rem;cursor:pointer;z-index:5;box-shadow:0 0 10px var(--gp);transition:transform .2s ease}
+.edit-cover-btn:hover{transform:scale(1.18)}
+.edit-cover-btn input{position:absolute;inset:0;opacity:0;cursor:pointer;border-radius:50%}
+.cv-title{font-family:'Dancing Script',cursive;font-size:clamp(1.25rem,3vw,1.9rem);background:linear-gradient(135deg,var(--ps),var(--gold),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 12px var(--gp));text-align:center;line-height:1.2}
+.cv-line{width:66px;height:1px;background:linear-gradient(90deg,transparent,var(--pink),transparent);margin:5px auto}
+.cv-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.82rem;color:var(--muted);letter-spacing:.12em;text-align:center;margin:3px 0 8px}
+.cv-hint{font-size:.54rem;letter-spacing:.2em;color:var(--pink);opacity:.72;text-transform:uppercase;animation:blk 2.2s ease-in-out infinite;text-align:center}
+
+/* ── INTRO ── */
+.pg-intro{background:radial-gradient(ellipse at 40% 30%,#1a0030 0%,#060010 75%);direction:rtl;font-family:'Tajawal',sans-serif;padding:16px 15px;justify-content:flex-start;overflow-y:auto}
+.pg-intro::-webkit-scrollbar{width:2px}
+.pg-intro::-webkit-scrollbar-thumb{background:rgba(255,45,120,.3);border-radius:2px}
+.intro-orn{font-size:1.2rem;opacity:.45;margin:4px auto 7px;text-align:center;animation:fY 3s ease-in-out infinite}
+.intro-title{font-family:'Dancing Script',cursive;font-size:clamp(.88rem,2.1vw,1.1rem);background:linear-gradient(135deg,var(--ps),var(--gold),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;line-height:1.5;margin-bottom:4px}
+.intro-divider{width:52px;height:1px;background:linear-gradient(90deg,transparent,var(--pink),transparent);margin:3px auto 7px}
+.intro-body{font-size:clamp(.58rem,1.4vw,.7rem);line-height:1.95;color:var(--muted);text-align:right;direction:rtl;width:100%}
+.intro-body p{margin-bottom:5px}
+.hi{background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:500}
+.intro-list{font-size:.57rem;color:var(--muted2);margin:4px 0;padding:5px 7px;border-top:1px solid rgba(255,45,120,.13);border-bottom:1px solid rgba(255,45,120,.13);line-height:2}
+.intro-sig{margin-top:7px;text-align:center;font-family:'Dancing Script',cursive;font-size:clamp(.8rem,1.8vw,.98rem);color:var(--pink);line-height:1.7}
+.intro-sig small{display:block;font-family:'Tajawal',sans-serif;font-size:.56rem;color:var(--muted2);margin-top:2px}
+
+/* ── MEMORY ── */
+.mtag{font-size:.48rem;letter-spacing:.24em;text-transform:uppercase;color:var(--pink);margin-bottom:3px;font-weight:500}
+.mtitle{font-family:'Dancing Script',cursive;font-size:clamp(.95rem,2.4vw,1.35rem);background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:4px}
+body.ar .mtitle{font-family:'Tajawal',sans-serif;font-size:clamp(.9rem,2.2vw,1.2rem);font-weight:500}
+.mthumb{width:100%;height:118px;border-radius:9px;border:1px solid rgba(255,45,120,.28);box-shadow:0 0 18px rgba(255,45,120,.13);margin:4px 0;background:rgba(255,45,120,.04);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;position:relative;overflow:hidden}
+.mthumb::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(168,85,247,.05),transparent 60%,rgba(255,45,120,.05));pointer-events:none;z-index:1}
+.mthumb img,.mthumb video{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:8px}
+.mthumb video{z-index:2}
+.mthumb .big{font-size:2.2rem;z-index:2}
+.mthumb .lbl{font-size:.52rem;color:var(--muted2);z-index:2}
+.vid-badge{position:absolute;top:5px;left:5px;z-index:11;background:rgba(0,0,0,.55);border-radius:99px;padding:2px 7px;font-size:.44rem;color:var(--ps);letter-spacing:.1em;backdrop-filter:blur(4px)}
+/* upload btn — hidden unless editmode */
+.edit-upload-btn{
+  display:none;
+  position:absolute;bottom:5px;right:5px;z-index:10;
+  background:rgba(0,0,0,.6);border:1px solid rgba(255,45,120,.45);
+  color:var(--ps);font-size:.48rem;letter-spacing:.08em;
+  padding:3px 7px;border-radius:99px;cursor:pointer;
+  backdrop-filter:blur(6px);align-items:center;gap:3px;
+}
+.edit-upload-btn:hover{background:rgba(255,45,120,.25)}
+.edit-upload-btn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.mbody{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.67rem,1.6vw,.84rem);line-height:1.72;color:var(--muted);text-align:center}
+body.ar .mbody{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1.85}
+.mdate{font-size:.46rem;color:var(--pu3);letter-spacing:.15em;margin-top:4px;opacity:.75}
+
+/* ── POETRY ── */
+.pg-po{background:radial-gradient(ellipse at 28% 72%,rgba(168,85,247,.1),transparent 62%),radial-gradient(ellipse at 72% 28%,rgba(255,45,120,.08),transparent 62%),#0b0014}
+.po-orn{font-size:1.4rem;opacity:.35;margin:6px 0}
+.po-body{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.75rem,1.8vw,.95rem);line-height:1.95;color:var(--text);text-align:center;max-width:93%}
+body.ar .po-body{font-family:'Tajawal',sans-serif;font-style:normal;line-height:2.1}
+.po-body em{background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-style:normal}
+.po-body strong{color:var(--gold);font-style:normal;font-weight:400}
+.po-lbl{font-size:.48rem;letter-spacing:.25em;color:var(--pink);margin-top:10px;opacity:.55;text-transform:uppercase}
+
+/* ── BIRTHDAY ── */
+.pg-bd{background:radial-gradient(ellipse at center,#1e002e 0%,#05000e 80%);text-align:center}
+.bd-ico{font-size:2.1rem;animation:fY 2.4s ease-in-out infinite}
+.bd-title{font-family:'Dancing Script',cursive;font-size:clamp(1rem,2.5vw,1.55rem);background:linear-gradient(135deg,var(--gold),var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 9px var(--gp));margin:5px 0 3px}
+body.ar .bd-title{font-family:'Tajawal',sans-serif;font-weight:500}
+.bd-sub{font-family:'Cormorant Garamond',serif;font-size:.68rem;color:var(--muted);font-style:italic;margin-bottom:10px}
+body.ar .bd-sub{font-family:'Tajawal',sans-serif;font-style:normal}
+.cd-row{display:flex;gap:5px;justify-content:center;margin:7px 0}
+.cdb{background:rgba(255,45,120,.08);border:1px solid rgba(255,45,120,.28);border-radius:9px;padding:6px 7px;min-width:47px;box-shadow:0 0 13px rgba(255,45,120,.13)}
+.cdn{font-size:1.3rem;font-weight:300;color:var(--pink);display:block;line-height:1;text-shadow:0 0 11px var(--gp)}
+.cdl{font-size:.39rem;letter-spacing:.14em;color:var(--muted2);text-transform:uppercase;display:block;margin-top:3px}
+.bd-msg{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.71rem;line-height:1.78;color:var(--muted);max-width:90%;margin:6px auto 0}
+body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1.95}
+.bd-msg span{background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+/* ── CONTROLS BAR ── */
+#controls{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:96vw;opacity:0;transition:opacity .8s ease 2.2s}
+#controls.show{opacity:1}
+.cb{background:rgba(255,45,120,.11);border:1px solid rgba(255,45,120,.36);color:var(--text);font-family:'Poppins',sans-serif;font-size:.51rem;letter-spacing:.1em;text-transform:uppercase;padding:6px 11px;border-radius:99px;cursor:pointer;backdrop-filter:blur(12px);transition:all .3s ease;white-space:nowrap;display:flex;align-items:center;gap:4px}
+.cb:hover{background:rgba(255,45,120,.25);box-shadow:0 0 16px var(--gp);transform:translateY(-2px)}
+.cb.on{background:rgba(255,45,120,.30);box-shadow:0 0 16px var(--gp)}
+.cb.green{background:rgba(80,220,.07);border-color:rgba(80,220,120,.3);color:#90ffb0}
+.cb.green:hover{background:rgba(80,220,120,.18);box-shadow:0 0 14px rgba(80,220,120,.35)}
+.cb.pur{background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.32);color:var(--pu3)}
+.cb.pur:hover{background:rgba(168,85,247,.22);box-shadow:0 0 14px var(--gpu)}
+/* EDIT MODE button */
+.cb.edit-mode-btn{background:rgba(255,200,0,.08);border-color:rgba(255,200,0,.3);color:#ffd966}
+.cb.edit-mode-btn:hover{background:rgba(255,200,0,.18);box-shadow:0 0 14px rgba(255,200,0,.3)}
+.cb.edit-mode-btn.active{background:rgba(255,200,0,.22);box-shadow:0 0 16px rgba(255,200,0,.4);color:#ffe066}
+
+/* edit mode banner */
+#editBanner{
+  position:fixed;top:0;left:0;right:0;z-index:25;
+  background:rgba(255,200,0,.12);border-bottom:1px solid rgba(255,200,0,.3);
+  backdrop-filter:blur(10px);
+  display:none;align-items:center;justify-content:center;gap:8px;
+  padding:6px 16px;font-size:.55rem;letter-spacing:.14em;color:#ffd966;
+  text-transform:uppercase;
+}
+#editBanner.show{display:flex}
+
+/* viz */
+#viz{display:flex;gap:2px;align-items:flex-end;height:16px}
+.vb{width:3px;border-radius:2px;background:linear-gradient(to top,var(--pink),var(--pu3));height:4px;opacity:.3}
+.vb.on{opacity:1;animation:vbA .5s ease-in-out infinite alternate}
+.vb:nth-child(1){animation-delay:0s}.vb:nth-child(2){animation-delay:.1s}.vb:nth-child(3){animation-delay:.2s}.vb:nth-child(4){animation-delay:.3s}.vb:nth-child(5){animation-delay:.15s}.vb:nth-child(6){animation-delay:.08s}
+@keyframes vbA{0%{height:4px}100%{height:16px}}
+#musicInfo{font-size:.47rem;letter-spacing:.08em;color:var(--muted2);max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* nav */
+.navbtn{position:fixed;top:50%;transform:translateY(-50%);z-index:20;background:rgba(255,45,120,.1);border:1px solid rgba(255,45,120,.28);color:var(--pink);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1.15rem;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);transition:all .3s ease;opacity:0}
+.navbtn.show{opacity:1}
+.navbtn:hover{background:rgba(255,45,120,.28);box-shadow:0 0 18px var(--gp)}
+#navL{left:12px}#navR{right:12px}
+#pgCtr{position:fixed;top:36px;left:50%;transform:translateX(-50%);z-index:20;font-size:.54rem;letter-spacing:.17em;color:var(--muted);opacity:0;transition:opacity .8s ease 2.2s;background:rgba(0,0,0,.42);padding:5px 14px;border-radius:99px;border:1px solid rgba(255,45,120,.14);backdrop-filter:blur(10px);white-space:nowrap}
+#pgCtr.show{opacity:1}
+
+/* ── FLOATERS ── */
+.floater{position:fixed;pointer-events:none;z-index:30;animation:floatUp 4s ease-out forwards}
+@keyframes floatUp{0%{transform:translateY(0) rotate(0) scale(1);opacity:1}100%{transform:translateY(-100vh) rotate(400deg) scale(.2);opacity:0}}
+.ctrail{position:fixed;pointer-events:none;z-index:28;animation:trailF 1.3s ease-out forwards}
+@keyframes trailF{0%{transform:translateY(0) scale(1);opacity:.8}100%{transform:translateY(-28px) scale(.2);opacity:0}}
+
+/* ── TOAST ── */
+#toast{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:100;background:rgba(0,0,0,.65);border:1px solid rgba(255,45,120,.25);border-radius:99px;padding:7px 18px;font-size:.56rem;letter-spacing:.1em;color:var(--muted);backdrop-filter:blur(12px);opacity:0;transition:opacity .4s ease;pointer-events:none;display:flex;align-items:center;gap:7px;white-space:nowrap}
+#toast.show{opacity:1}
+
+/* ── SECRET ── */
+#secret{position:fixed;inset:0;z-index:80;background:rgba(3,0,10,.95);backdrop-filter:blur(22px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all .5s ease}
+#secret.open{opacity:1;visibility:visible}
+.sc-box{max-width:450px;width:92%;text-align:center;padding:40px 28px;border:1px solid rgba(255,45,120,.28);border-radius:22px;background:rgba(255,45,120,.04);box-shadow:0 0 65px var(--gp),0 0 130px var(--gpu)}
+.sc-ico{font-size:3rem;margin-bottom:12px}
+.sc-title{font-family:'Dancing Script',cursive;font-size:1.9rem;background:linear-gradient(135deg,var(--pink),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:14px}
+.sc-body{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.98rem;line-height:1.9;color:var(--muted);margin-bottom:22px}
+.sc-body strong{background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-style:normal;font-weight:400}
+.sc-close{background:linear-gradient(135deg,var(--pink),var(--pu2));border:none;color:#fff;font-family:'Poppins',sans-serif;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;padding:10px 24px;border-radius:99px;cursor:pointer;transition:all .3s ease}
+.sc-close:hover{transform:scale(1.06)}
+
+/* ── MUSIC UPLOAD PANEL ── */
+#musicPanel{position:fixed;inset:0;z-index:88;background:rgba(3,0,10,.96);backdrop-filter:blur(24px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all .4s ease}
+#musicPanel.open{opacity:1;visibility:visible}
+.mp-box{width:min(400px,90vw);padding:36px 26px;border:1px solid rgba(168,85,247,.3);border-radius:22px;background:rgba(168,85,247,.05);box-shadow:0 0 60px var(--gpu);text-align:center}
+.mp-title{font-family:'Dancing Script',cursive;font-size:1.65rem;background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px}
+.mp-sub{font-size:.56rem;letter-spacing:.14em;color:var(--muted2);margin-bottom:22px;text-transform:uppercase}
+.mp-upload-area{border:2px dashed rgba(168,85,247,.35);border-radius:14px;padding:26px 14px;cursor:pointer;transition:all .3s ease;background:rgba(168,85,247,.04);position:relative;margin-bottom:14px}
+.mp-upload-area:hover{border-color:var(--pink)}
+.mp-upload-area input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.mp-icon{font-size:2.2rem;margin-bottom:8px;display:block}
+.mp-txt{font-size:.62rem;color:var(--muted2);line-height:1.7}
+.mp-txt span{color:var(--ps);display:block;margin-top:4px;font-size:.56rem}
+#currentSongDisplay{font-size:.6rem;color:var(--muted);margin-bottom:14px;padding:7px 12px;border-radius:99px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);min-height:30px;display:flex;align-items:center;justify-content:center;gap:6px}
+.mp-saved-badge{color:#90ffb0;font-size:.6rem;padding:4px 10px;border-radius:99px;background:rgba(80,220,120,.1);border:1px solid rgba(80,220,120,.25);margin-bottom:12px;display:none}
+.mp-saved-badge.show{display:block}
+.mp-note{font-size:.53rem;color:var(--muted2);line-height:1.75;margin-bottom:18px}
+.mp-note a{color:var(--ps);text-decoration:none}
+.mp-actions{display:flex;gap:9px;justify-content:center}
+.mp-save{background:linear-gradient(135deg,var(--pink),var(--pu2));border:none;color:#fff;font-family:'Poppins',sans-serif;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;padding:10px 22px;border-radius:99px;cursor:pointer;box-shadow:0 0 18px var(--gp);transition:all .3s ease}
+.mp-save:hover{transform:scale(1.05)}
+.mp-cancel{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:var(--muted);font-family:'Poppins',sans-serif;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;padding:10px 18px;border-radius:99px;cursor:pointer}
+.mp-cancel:hover{background:rgba(255,255,255,.13)}
+
+/* ── ADD PAGE PANEL ── */
+#addPanel{position:fixed;inset:0;z-index:90;background:rgba(3,0,10,.96);backdrop-filter:blur(26px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all .5s ease}
+#addPanel.open{opacity:1;visibility:visible}
+.add-box{width:min(540px,95vw);max-height:90vh;overflow-y:auto;background:linear-gradient(155deg,#150024,#090013);border:1px solid rgba(168,85,247,.28);border-radius:22px;padding:30px 24px;box-shadow:0 0 60px var(--gpu)}
+.add-box::-webkit-scrollbar{width:3px}
+.add-box::-webkit-scrollbar-thumb{background:var(--pu);border-radius:2px}
+.add-title{font-family:'Dancing Script',cursive;font-size:1.65rem;background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:4px}
+.add-sub{font-size:.57rem;letter-spacing:.13em;color:var(--muted2);text-align:center;margin-bottom:18px;text-transform:uppercase}
+.add-tabs{display:flex;gap:6px;margin-bottom:18px;justify-content:center;flex-wrap:wrap}
+.add-tab{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--muted);font-family:'Poppins',sans-serif;font-size:.51rem;letter-spacing:.11em;text-transform:uppercase;padding:6px 13px;border-radius:99px;cursor:pointer;transition:all .3s ease}
+.add-tab.active{background:rgba(255,45,120,.2);border-color:rgba(255,45,120,.45);color:var(--text);box-shadow:0 0 12px var(--gp)}
+.fg{margin-bottom:13px}
+.fg label{display:block;font-size:.52rem;letter-spacing:.13em;color:var(--muted2);text-transform:uppercase;margin-bottom:5px}
+.fg input,.fg textarea,.fg select{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(168,85,247,.25);color:var(--text);font-family:'Poppins',sans-serif;font-size:.72rem;padding:9px 12px;border-radius:10px;outline:none;transition:border-color .3s ease;resize:vertical}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:rgba(255,45,120,.5);box-shadow:0 0 9px rgba(255,45,120,.14)}
+.fg textarea{min-height:72px;line-height:1.6}
+.fg select option{background:#150024;color:var(--text)}
+.emoji-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.em-pick{width:32px;height:32px;border-radius:7px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s ease}
+.em-pick:hover{border-color:var(--pink);transform:scale(1.15)}
+.em-pick.picked{border-color:var(--pink);background:rgba(255,45,120,.15);box-shadow:0 0 8px var(--gp)}
+.media-upload{width:100%;height:106px;border:2px dashed rgba(168,85,247,.3);border-radius:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;transition:all .3s ease;background:rgba(168,85,247,.03);position:relative;overflow:hidden}
+.media-upload:hover{border-color:var(--pink)}
+.media-upload span{font-size:.58rem;color:var(--muted2)}
+.media-upload .ico{font-size:1.7rem;opacity:.5}
+.media-upload input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.media-preview-img,.media-preview-vid{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:9px}
+.add-actions{display:flex;gap:8px;margin-top:18px;justify-content:center}
+.add-save{background:linear-gradient(135deg,var(--pink),var(--pu2));border:none;color:#fff;font-family:'Poppins',sans-serif;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;padding:10px 24px;border-radius:99px;cursor:pointer;box-shadow:0 0 16px var(--gp);transition:all .3s ease}
+.add-save:hover{transform:scale(1.05)}
+.add-cancel{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:var(--muted);font-family:'Poppins',sans-serif;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;padding:10px 18px;border-radius:99px;cursor:pointer}
+.page-list{margin-top:4px}
+.page-item{display:flex;align-items:center;gap:8px;padding:8px 11px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid rgba(168,85,247,.11);margin-bottom:6px}
+.pi-num{font-size:.51rem;color:var(--pu3);min-width:22px}
+.pi-title{flex:1;font-size:.66rem;color:var(--text)}
+.pi-type{font-size:.46rem;color:var(--muted2);text-transform:uppercase}
+.pi-del{background:rgba(255,45,120,.12);border:1px solid rgba(255,45,120,.2);color:var(--pink);width:23px;height:23px;border-radius:50%;cursor:pointer;font-size:.62rem;display:flex;align-items:center;justify-content:center;transition:all .3s ease;flex-shrink:0}
+.pi-del:hover{background:rgba(255,45,120,.3)}
+
+/* ── LANGUAGE PANEL ── */
+#langPanel{position:fixed;inset:0;z-index:95;background:rgba(3,0,10,.97);backdrop-filter:blur(28px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all .4s ease}
+#langPanel.open{opacity:1;visibility:visible}
+.lang-box{width:min(450px,90vw);text-align:center;padding:40px 28px;border:1px solid rgba(168,85,247,.28);border-radius:24px;background:rgba(168,85,247,.05);box-shadow:0 0 60px var(--gpu);position:relative}
+.lang-close-x{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--muted2);font-size:1.3rem;cursor:pointer}
+.lang-close-x:hover{color:var(--pink)}
+.lang-box-title{font-family:'Dancing Script',cursive;font-size:1.75rem;background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px}
+.lang-box-sub{font-size:.6rem;letter-spacing:.15em;color:var(--muted2);margin-bottom:26px;text-transform:uppercase}
+.lang-choices{display:flex;gap:13px;justify-content:center}
+.lang-choice{flex:1;min-width:120px;max-width:160px;padding:18px 12px;border-radius:15px;cursor:pointer;border:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);transition:all .3s ease;text-align:center}
+.lang-choice:hover{border-color:var(--pink);transform:translateY(-3px)}
+.lang-choice.picked{border-color:var(--pink);background:rgba(255,45,120,.1);box-shadow:0 0 20px var(--gp)}
+.lang-flag{font-size:2.5rem;margin-bottom:8px}
+.lang-name{font-size:.86rem;font-weight:500;color:var(--text);margin-bottom:3px}
+.lang-native{font-size:.7rem;color:var(--muted2)}
+.lang-apply{margin-top:22px;background:linear-gradient(135deg,var(--pink),var(--pu2));border:none;color:#fff;font-family:'Poppins',sans-serif;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;padding:10px 24px;border-radius:99px;cursor:pointer;box-shadow:0 0 16px var(--gp);transition:all .3s ease}
+.lang-apply:hover{transform:scale(1.05)}
+
+/* ── MOBILE ── */
+@media(max-width:720px){:root{--pw:min(44vw,200px);--ph:min(70vw,350px)}.cb{font-size:.46rem;padding:5px 9px}#navL{left:4px}#navR{right:4px}}
+@media(max-width:480px){:root{--pw:min(86vw,320px);--ph:475px}#book{width:var(--pw)}#rPanel{display:none}#lPanel{border-radius:10px}#book::after{display:none}#controls{bottom:10px;gap:4px}.add-box{padding:20px 15px}}
+</style>
+</head>
+<body>
+<canvas id="bgCanvas"></canvas>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+<!-- EDIT MODE BANNER -->
+<div id="editBanner">✏️ &nbsp; Edit Mode is ON — click any text to edit, use 📷 buttons to change media &nbsp; | &nbsp; <strong>Click "Edit Mode" again to lock</strong></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="ld-heart">💖</div>
+  <div class="ld-title">Radwa &amp; Nour ❤️</div>
+  <div class="ld-sub">A Book Full of Us</div>
+  <div class="ld-track"><div class="ld-fill" id="ldFill"></div></div>
+  <div class="ld-hint">Opening your book of memories…</div>
+</div>
+
+<div id="toast"><span id="toastIco">♪</span><span id="toastMsg">–</span></div>
+<div id="pgCtr">Page <span id="pgNum">1</span> / <span id="pgTotal">–</span></div>
+<button class="navbtn" id="navL">‹</button>
+<button class="navbtn" id="navR">›</button>
+
+<!-- SCENE -->
+<div id="scene">
+  <div id="bookOuter">
+    <div id="book">
+      <div class="panel" id="lPanel">
+        <div class="pbg"></div>
+        <div class="fcard" id="lCard">
+          <div class="face ffront" id="lFront"></div>
+          <div class="face fback"  id="lBack"></div>
+        </div>
+        <div class="pshadow"></div>
+      </div>
+      <div class="panel" id="rPanel">
+        <div class="pbg"></div>
+        <div class="fcard" id="rCard">
+          <div class="face ffront" id="rFront"></div>
+          <div class="face fback"  id="rBack"></div>
+        </div>
+        <div class="pshadow"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTROLS -->
+<div id="controls">
+  <div id="viz"><div class="vb"></div><div class="vb"></div><div class="vb"></div><div class="vb"></div><div class="vb"></div><div class="vb"></div></div>
+  <div id="musicInfo">No music</div>
+  <button class="cb" id="btnMusic">♪ Music</button>
+  <button class="cb pur" id="btnUploadSong">🎵 My Song</button>
+  <button class="cb" id="btnHearts">💗 Hearts</button>
+  <button class="cb" id="btnStars">✨ Stars</button>
+  <button class="cb" id="btnSecret">🔐 Secret</button>
+  <button class="cb green" id="btnAddPage">✚ Add Page</button>
+  <button class="cb pur" id="btnLang">🌐 Language</button>
+  <button class="cb edit-mode-btn" id="btnEdit">✏️ Edit Mode</button>
+</div>
+
+<!-- SECRET -->
+<div id="secret">
+  <div class="sc-box">
+    <div class="sc-ico">💌</div>
+    <div class="sc-title" id="scTitle">Only For You, Radwa</div>
+    <div class="sc-body" id="scBody">
+      In every universe that has ever existed —<br>
+      in every lifetime that could ever be lived —<br><br>
+      I would search through all of it<br>
+      just to find you again.<br><br>
+      You are not just my best friend.<br>
+      You are the reason I believe that<br>
+      <strong>some bonds are written before birth.</strong><br><br>
+      Happy Birthday, Radwa. I love you endlessly. 🌸
+    </div>
+    <button class="sc-close" onclick="closeSecret()">Close with love ✕</button>
+  </div>
+</div>
+
+<!-- MUSIC PANEL -->
+<div id="musicPanel">
+  <div class="mp-box">
+    <div class="mp-title">🎵 Upload Your Song</div>
+    <div class="mp-sub">أضيفي أغنيتك — تتحفظ تلقائياً</div>
+    <div id="currentSongDisplay">🎵 No song saved yet</div>
+    <div class="mp-saved-badge" id="savedBadge">✓ Song saved in your browser</div>
+    <div class="mp-upload-area">
+      <span class="mp-icon">🎶</span>
+      <div class="mp-txt">
+        Click to upload your song (MP3, M4A, WAV, OGG…)
+        <span>ارفعي ملف الأغنية بتاعتك مباشرةً 🎵</span>
+      </div>
+      <input type="file" accept="audio/*" id="songFileInput">
+    </div>
+    <div class="mp-note">
+      💡 To use Bahaa Sultan songs: download the MP3 from YouTube<br>
+      using <a href="https://ytmp3.cc" target="_blank">ytmp3.cc</a> (free), then upload it here.<br>
+      The song saves in your browser — no need to re-upload!
+    </div>
+    <div class="mp-actions">
+      <button class="mp-save" onclick="saveSong()">✦ Save Song</button>
+      <button class="mp-cancel" onclick="closeMusicPanel()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD PAGE PANEL -->
+<div id="addPanel">
+  <div class="add-box">
+    <div class="add-title">✦ Add a New Page</div>
+    <div class="add-sub">Unlimited pages — saved automatically</div>
+    <div class="add-tabs">
+      <button class="add-tab active" onclick="switchTab('memory',this)">📸 Memory</button>
+      <button class="add-tab" onclick="switchTab('poetry',this)">🌸 Poetry</button>
+      <button class="add-tab" onclick="switchTab('manage',this)">📋 Manage</button>
+    </div>
+    <div id="tab-memory">
+      <div class="fg"><label>Page Title</label><input id="inp-title" type="text" placeholder="e.g. That Night We Danced" maxlength="55"></div>
+      <div class="fg"><label>Date / Caption</label><input id="inp-date" type="text" placeholder="e.g. Summer 2024" maxlength="65"></div>
+      <div class="fg"><label>Memory Text</label><textarea id="inp-text" placeholder="Write your memory… make it emotional ❤️"></textarea></div>
+      <div class="fg">
+        <label>Emoji</label>
+        <div class="emoji-row" id="emojiRow"></div>
+        <input id="inp-emoji-custom" type="text" placeholder="Or type your emoji…" maxlength="8" style="margin-top:6px">
+      </div>
+      <div class="fg">
+        <label>Photo or Video (optional)</label>
+        <div class="media-upload" id="mediaUploadBox">
+          <div class="ico">📷 / 🎬</div>
+          <span>Click to upload photo or video</span>
+          <input type="file" accept="image/*,video/*" id="mediaInput">
+        </div>
+      </div>
+      <div class="add-actions">
+        <button class="add-save" onclick="saveMemory()">Save Page ✦</button>
+        <button class="add-cancel" onclick="closeAddPanel()">Cancel</button>
+      </div>
+    </div>
+    <div id="tab-poetry" style="display:none">
+      <div class="fg"><label>Label (e.g. V. Stars)</label><input id="po-label" type="text" placeholder="V. Stars" maxlength="30"></div>
+      <div class="fg"><label>Poem text — [word] = pink · *word* = gold</label><textarea id="po-text" style="min-height:110px" placeholder="Write your poem…"></textarea></div>
+      <div class="fg"><label>Ornament</label>
+        <select id="po-orn">
+          <option value="❧">❧ Fleuron</option><option value="✦">✦ Star</option>
+          <option value="🌸">🌸 Flower</option><option value="♡">♡ Heart</option>
+        </select>
+      </div>
+      <div class="add-actions">
+        <button class="add-save" onclick="savePoetry()">Save Poem ✦</button>
+        <button class="add-cancel" onclick="closeAddPanel()">Cancel</button>
+      </div>
+    </div>
+    <div id="tab-manage" style="display:none">
+      <div class="page-list" id="pageListWrap"></div>
+      <div style="text-align:center;margin-top:12px"><button class="add-cancel" onclick="closeAddPanel()">Done ✓</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- LANGUAGE PANEL -->
+<div id="langPanel">
+  <div class="lang-box">
+    <button class="lang-close-x" onclick="closeLangPanel()">✕</button>
+    <div class="lang-box-title">Choose Language</div>
+    <div class="lang-box-sub">اختاري لغتك المفضلة</div>
+    <div class="lang-choices">
+      <div class="lang-choice picked" id="lcEN" onclick="pickLang('en')"><div class="lang-flag">🇬🇧</div><div class="lang-name">English</div><div class="lang-native">English</div></div>
+      <div class="lang-choice" id="lcAR" onclick="pickLang('ar')"><div class="lang-flag">🇪🇬</div><div class="lang-name">Arabic</div><div class="lang-native">عربي</div></div>
+    </div>
+    <button class="lang-apply" onclick="applyLang()">Apply ✦ تطبيق</button>
+  </div>
+</div>
+
+<audio id="bgAudio" loop></audio>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   STORAGE KEY MAP
+══════════════════════════════════════════════════════ */
+const SK = {
+  lang:        'rnb_lang',
+  coverPhoto:  'rnb_coverPhoto',
+  songName:    'rnb_songName',
+  songData:    'rnb_songData',       // base64 audio
+  userPages:   'rnb_userPages',
+  memMedia:    'rnb_memMedia',       // JSON {key:{type,src}}
+  editTexts:   'rnb_editTexts',      // JSON {elemKey: htmlContent}
+};
+
+/* ══════════════════════════════════════════════════════
+   TRANSLATIONS
+══════════════════════════════════════════════════════ */
+const T = {
+  en:{
+    coverSub:"A Book Full of Us",coverHint:"✦ touch to open ✦",
+    memTag:"Memory",memThumbLbl:"✦ add your media ✦",
+    bdTitle:"Happy Birthday, Radwa 🎉",bdSub:"Your special day is approaching…",
+    cdLabels:["Days","Hrs","Mins","Secs"],
+    bdMsg:`Every single year I get to celebrate you<br>feels like the universe giving me its greatest gift.<br>You are <span>irreplaceable, infinite,</span><br>and <span>so very, deeply loved.</span>`,
+    scTitle:"Only For You, Radwa",
+    scBody:`In every universe that has ever existed —<br>in every lifetime that could ever be lived —<br><br>I would search through all of it<br>just to find you again.<br><br>You are not just my best friend.<br>You are the reason I believe that<br><strong>some bonds are written before birth.</strong><br><br>Happy Birthday, Radwa. I love you endlessly. 🌸`,
+    noMusic:"No music",
+  },
+  ar:{
+    coverSub:"كتاب مليان بينا",coverHint:"✦ لمسي لتفتحي ✦",
+    memTag:"ذكرى",memThumbLbl:"✦ أضيفي صورتك أو فيديوك ✦",
+    bdTitle:"عيد ميلاد سعيد، رضوى 🎉",bdSub:"عيد ميلادك بيقترب…",
+    cdLabels:["يوم","ساعة","دقيقة","ثانية"],
+    bdMsg:`كل سنة بتيجي فيها عيد ميلادك<br>بحس إن الكون بيديني أغلى هدية عنده.<br>إنتِ <span>مفيش زيك، لا نهاية،</span><br>و<span>محبوبة بعمق ما فيش كلام يوصفه.</span>`,
+    scTitle:"بس إنتِ يا رضوى",
+    scBody:`في كل كون ممكن يتخيله أحد —<br>في كل حياة ممكن تتعاش —<br><br>كنت هادور فيكِ في كل واحدة.<br><br>إنتِ مش بس صاحبتي الأحلى.<br>إنتِ السبب اللي بيخليني أصدق<br><strong>إن في صداقات بتتكتب قبل الميلاد.</strong><br><br>عيد ميلاد سعيد يا رضوى. بحبك للأبد. 🌸`,
+    noMusic:"لا موسيقى",
+  }
+};
+
+/* ══════════════════════════════════════════════════════
+   DEFAULT MEMORIES & POEMS
+══════════════════════════════════════════════════════ */
+const CONTENT = {
+  en:{
+    memories:[
+      {title:"The First Hello",          date:"A day that changed everything",     text:"The moment our worlds collided, time decided to slow down — as if the universe itself wanted us to notice each other.",       emoji:"👋✨"},
+      {title:"Our Favourite Spot",       date:"Where hours felt like minutes",      text:"That little corner of the world only we knew. We turned the most ordinary places into our own private universe.",           emoji:"🌆🌸"},
+      {title:"Late Night Talks",         date:"When the whole world went quiet",    text:"3 AM conversations that felt more real than daylight. You were the only person I never ran out of things to say to.",       emoji:"🌙💬"},
+      {title:"Your Laugh",               date:"The best sound I've ever heard",     text:"The way you laugh with your entire body — I could bottle that sound and survive off it for lifetimes.",                    emoji:"😂💛"},
+      {title:"That One Song",            date:"It still plays in my head",          text:"Every time it comes on, I close my eyes and I'm right back there — with you, completely without a care.",                  emoji:"🎵🎶"},
+      {title:"Dancing in the Rain",      date:"We didn't care at all",              text:"Completely soaked and laughing — that ridiculous, perfect moment was when I knew I'd choose you every single time.",        emoji:"🌧️💃"},
+      {title:"Our Favourite Food",       date:"Always ordered too much",            text:"Every meal with you felt like a celebration, simply because you were sitting across from me.",                              emoji:"🍕🥰"},
+      {title:"When You Cried",           date:"And I held you close",               text:"I wanted to absorb every ounce of pain from you. Watching you hurt is the hardest thing I know.",                          emoji:"🤍🌸"},
+      {title:"Your Morning Voice",       date:"Sleepy and so, so soft",             text:"Half-awake, eyes barely open — you were still the most beautiful thing I'd ever seen in morning light.",                   emoji:"☀️💫"},
+      {title:"That Road Trip",           date:"Windows down, music loud",           text:"Miles upon miles with no real destination. As long as you were beside me, we'd already arrived.",                           emoji:"🚗🗺️"},
+      {title:"The Promise We Made",      date:"Whispered under the stars",          text:"No grand gestures needed — just two quiet words: 'I'm here.' They meant everything in the universe.",                      emoji:"⭐🤝"},
+      {title:"Your Kindness",            date:"That moves me every time",           text:"The tender way you treat every single person, every small moment. You make the world gentler.",                             emoji:"💛🌿"},
+      {title:"When We Got Lost",         date:"And laughed until we couldn't",      text:"The wrong turn that became the best adventure. With you, even being lost feels like exactly where I should be.",           emoji:"🗺️😄"},
+      {title:"Stargazing Together",      date:"The sky felt personal that night",   text:"We named stars as if they were ours. I named the brightest one after you — it seemed only right.",                        emoji:"🌠🔭"},
+      {title:"Your Birthday Last Year",  date:"I wanted every second perfect",      text:"All I wanted was to watch your eyes light up. When they did, I felt like I'd won the entire world.",                      emoji:"🎂🎉"},
+      {title:"Inside Jokes",             date:"Only we could ever understand",      text:"One shared glance across a crowded room and we both dissolve completely. Our own private language of joy.",                emoji:"🤣💜"},
+      {title:"When Time Stood Still",    date:"A perfect, breathless moment",       text:"No words. No movement. Just us, breathing the same air, knowing this was one we'd carry always.",                         emoji:"⏳🌸"},
+      {title:"Your Strength",            date:"You never knew I noticed",           text:"The silent battles you fought with grace, the weight you carried without complaint. You are so much stronger than you know.",emoji:"💪🌟"},
+      {title:"Every Little Thing",       date:"The ones that sum to everything",    text:"Every tiny, ordinary moment with you is a whole world I would choose to live inside — endlessly.",                        emoji:"📖❤️"},
+    ],
+    poems:[
+      {label:"I. Home",    orn:"❧",text:`In the quiet spaces between your words,\nI found a home I hadn't known\nI was searching for.\n\nYou are the poem\nI never knew how to write —\nuntil you walked into the room\nand [everything made sense.]`},
+      {label:"II. Time",   orn:"✦",text:`Time is strange.\nIt moves fast and slow\ndepending on whether you're with me.\n\nWith you, I beg the clocks to stop.\nWithout you, I count *every second*\nuntil I hear your voice again.`},
+      {label:"III. Saved", orn:"🌸",text:`If I could save one fragment\nfrom this entire existence —\none thing to carry into whatever comes next —\n\nit would be the memory of you laughing,\ncompletely free,\n[completely mine to witness.]`},
+      {label:"IV. Constant",orn:"♡",text:`They say love is a feeling.\nBut with you, it is a [place] —\na soft, lit room I return to\nno matter how far I wander.\n\nYou are my *constant.*\nYou are my [home.]\nYou are my *everything.*`},
+    ]
+  },
+  ar:{
+    memories:[
+      {title:"أول مرة قابلناك",            date:"يوم غيّر كل حاجة",               text:"اللحظة اللي الدنيا بتاعتنا تقابلت، الوقت قرر يبطّأ — كأن الكون بنفسه كان عايز يلفت نظرنا لبعض.",        emoji:"👋✨"},
+      {title:"المكان المفضل",               date:"الساعات تعدي زي دقايق",           text:"الركن الصغير ده في الدنيا اللي ما حدش عرفه غيرنا. حوّلنا أعادي الأماكن لكون خاص بينا.",               emoji:"🌆🌸"},
+      {title:"الكلام اللي بالليل",          date:"لما الدنيا كلها بتهدى",           text:"محادثات الساعة ٣ الصبح اللي كانت أصدق من أي حاجة. إنتِ الشخص الوحيد اللي ما بنفدش كلامي معاه.",      emoji:"🌙💬"},
+      {title:"ضحكتك",                      date:"أحلى صوت في الدنيا",              text:"الطريقة اللي بتضحكي بيها بجسمك كله — كنت عايزة أحبس الصوت ده وأعيش عليه لكل الأبد.",                 emoji:"😂💛"},
+      {title:"الأغنية دي",                  date:"لسّه شايلاها في دماغي",           text:"كل ما بتشغل تلاقيني بغمض عيني وأرجع هناك — معاكِ، من غير أي قلق.",                                    emoji:"🎵🎶"},
+      {title:"الرقص في المطر",              date:"ما كناش بنهتم خالص",              text:"مبلولين وبنضحك — اللحظة السخيفة والكاملة دي كانت هي اللي قالتلي إني هختارك في كل مرة.",               emoji:"🌧️💃"},
+      {title:"الأكل المفضل",               date:"دايمًا بنطلب أكتر من اللازم",     text:"كل أكلة معاكِ كانت زي احتفال — بس عشان إنتِ قاعدة قدامي.",                                           emoji:"🍕🥰"},
+      {title:"لما عيّطتِ",                 date:"وأنا مسكتك",                       text:"كنت عايزة أسحب منك كل الوجع. مشوفتيش حاجة تتعب قلبي زي ما تتعبي إنتِ.",                               emoji:"🤍🌸"},
+      {title:"صوتك الصبح",                 date:"نايمة وناعم",                      text:"عينيكِ مش طالعة تتفتح — وبرضو أجمل حاجة شفتيها في ضوء الصبح.",                                         emoji:"☀️💫"},
+      {title:"الرحلة دي",                  date:"شبابيك نازلة والموسيقى عالية",     text:"كيلومترات من غير وجهة حقيقية. طول ما إنتِ جنبي، إحنا وصلنا بالفعل.",                                  emoji:"🚗🗺️"},
+      {title:"الوعد اللي عملناه",           date:"بتهامس تحت النجوم",               text:"ما احتجناش لأي كلام كبير. بس كلمتين: 'أنا هنا' — وكانوا بيساووا الكون كله.",                         emoji:"⭐🤝"},
+      {title:"طيبتك",                      date:"اللي بتحرّكني كل مرة",            text:"الطريقة اللي بتتعاملي بيها مع كل الناس — إنتِ بتخلّي الدنيا أحسن.",                                    emoji:"💛🌿"},
+      {title:"لما اتوهنا",                 date:"وضحكنا لحد ما ما قدرناش",         text:"الاتجاه الغلط اللي بقى أحلى مغامرة. معاكِ، حتى التوه بيحسسني إني في المكان الصح.",                   emoji:"🗺️😄"},
+      {title:"النجوم مع بعض",              date:"الليلة دي السما كانت شخصية",      text:"سميّنا نجوم زي ما كانوا بتوعنا. أحلى واحدة اديتها اسمك — ده كان الأنسب.",                            emoji:"🌠🔭"},
+      {title:"عيد ميلادك السنة اللي فاتت", date:"كنت عايزة كل لحظة تبقى تمام",     text:"اللي كنت عايزاه بس هو أشوف عينيكِ بتضوّي. لما حصل، حسيت إني كسبت الدنيا كلها.",                   emoji:"🎂🎉"},
+      {title:"النكت اللي بينا",             date:"اللي بس إحنا نفهمها",            text:"بصة وحدة عبر أوضة مليانة ناس وإحنا بنضحك في صمت. اللغة السرية بتاعتنا.",                               emoji:"🤣💜"},
+      {title:"لما الوقت وقف",              date:"لحظة هادية وكاملة",               text:"مافيش كلام. مافيش حركة. بس إحنا، بنتنفس نفس الهوا، وعارفين إن ده هيفضل معانا للأبد.",               emoji:"⏳🌸"},
+      {title:"قوتك",                       date:"ما كنتِيش عارفة إني بلاحظ",        text:"المعارك الصامتة اللي اتحاربتيها، الصبر اللي حملتيه بهدوء — إنتِ أقوى بكتير مما بتعرفي.",            emoji:"💪🌟"},
+      {title:"كل حاجة صغيرة",              date:"اللي بتتجمع وتبقى كل حاجة",       text:"كل لحظة عادية معاكِ هي دنيا كاملة كنت عايزة أعيش فيها مرارًا وتكرارًا.",                             emoji:"📖❤️"},
+    ],
+    poems:[
+      {label:"١. البيت",    orn:"❧",text:`في المساحات الهادية بين كلامك،\nلقيت بيتًا كنت بادور عليه\nمن غير ما أعرف.\n\nإنتِ القصيدة اللي ما عرفتش أكتبها —\nلحد ما دخلتِ\nو[كل حاجة اتحلّت].`},
+      {label:"٢. الوقت",   orn:"✦",text:`الوقت غريب.\nبيمشي بسرعة وببطء\nحسب إنتِ معايا ولا لأ.\n\nمعاكِ، ببقى عايزة الساعات توقف.\nمن غيرك، ببقى *بعدّ كل ثانية*\nلحد ما أسمع صوتك تاني.`},
+      {label:"٣. محفوظة",  orn:"🌸",text:`لو قدرت أحتفظ بحاجة وحدة\nمن الوجود ده كله —\nحاجة واحدة أشيلها\nفي أي حياة جاية —\n\nكانت هتبقى ذكرى ضحكتك،\nحرة خالص،\n[اللي كنت بشوفها أنا].`},
+      {label:"٤. الثابت",  orn:"♡",text:`بيقولوا الحب إحساس.\nبس معاكِ هو *مكان* —\nأوضة ضيّاها بتاعتي\nبرجعلها مهما بعدت.\n\nإنتِ [الثابت] بتاعي.\nإنتِ *بيتي*.\nإنتِ [كل حاجة].`},
+    ]
+  }
+};
+
+/* ══════════════════════════════════════════════════════
+   STATE (loaded from localStorage on boot)
+══════════════════════════════════════════════════════ */
+let currentLang    = localStorage.getItem(SK.lang) || 'en';
+let pendingLang    = currentLang;
+let coverPhotoSrc  = localStorage.getItem(SK.coverPhoto) || null;
+let savedSongName  = localStorage.getItem(SK.songName) || '';
+let savedSongData  = localStorage.getItem(SK.songData) || null;   // base64
+let userAddedPages = [];
+let memoryMedia    = {};   // {key:{type,src}} — loaded per boot
+let editTexts      = {};   // {elemKey: html}  — loaded per boot
+let BOOK_PAGES     = [];
+let spread         = 0;
+let flipping       = false;
+let cdTimer        = null;
+let editMode       = false;
+let musicOn        = false;
+let pendingSongFile= null;
+
+// Load user pages from storage
+try{ userAddedPages = JSON.parse(localStorage.getItem(SK.userPages)||'[]'); }catch(e){}
+// Load media
+try{ memoryMedia = JSON.parse(localStorage.getItem(SK.memMedia)||'{}'); }catch(e){}
+// Load edited texts
+try{ editTexts = JSON.parse(localStorage.getItem(SK.editTexts)||'{}'); }catch(e){}
+
+const TOTAL     = () => BOOK_PAGES.length;
+const maxSpread = () => Math.ceil((TOTAL()-1)/2);
+
+/* ══════════════════════════════════════════════════════
+   BUILD PAGES
+   ORDER: cover(0) → intro(1) → memories → poems → user pages → birthday
+══════════════════════════════════════════════════════ */
+function buildBookPages(lang){
+  const c = CONTENT[lang];
+  const pages = [];
+  pages.push({type:'cover', lang});
+  pages.push({type:'intro'});
+  c.memories.forEach((m,i) => pages.push({type:'memory',...m,lang,memKey:`orig-${i}`}));
+  c.poems.forEach(p => pages.push({type:'poetry',...p,lang}));
+  userAddedPages.forEach(p => pages.push(p));
+  pages.push({type:'birthday',lang});
+  return pages;
+}
+
+/* ══════════════════════════════════════════════════════
+   EDIT-TEXT HELPERS
+══════════════════════════════════════════════════════ */
+function saveEditText(key, html){
+  editTexts[key] = html;
+  try{ localStorage.setItem(SK.editTexts, JSON.stringify(editTexts)); }catch(e){}
+}
+function getEditText(key, defaultHtml){
+  return editTexts[key] !== undefined ? editTexts[key] : defaultHtml;
+}
+// Wire contenteditable elements after rendering — called after innerHTML is set
+function wireEditables(container, pageKey){
+  if(!editMode) return;
+  container.querySelectorAll('[data-ekey]').forEach(el=>{
+    el.contentEditable='true';
+    el.addEventListener('blur',()=>{
+      const k=`${pageKey}_${el.dataset.ekey}`;
+      saveEditText(k, el.innerHTML);
+    });
+  });
+}
+
+/* ══════════════════════════════════════════════════════
+   PAGE RENDERERS
+══════════════════════════════════════════════════════ */
+function makeCover(p, gIdx){
+  const t = T[p.lang||currentLang];
+  const photo = coverPhotoSrc ? `<img src="${coverPhotoSrc}" alt="us">` : `💑`;
+  return `<div class="pg pg-cover">
+    <div class="cv-roses">🌹 🌸 🌹</div>
+    <div class="cv-img-wrap">
+      <div class="cv-img">${photo}</div>
+      <label class="edit-cover-btn" title="Change cover photo">📷
+        <input type="file" accept="image/*" onchange="uploadCoverPhoto(event)">
+      </label>
+    </div>
+    <div class="cv-title" data-ekey="cvtitle">${getEditText(`pg${gIdx}_cvtitle`,`Radwa &amp; Nour ❤️`)}</div>
+    <div class="cv-line"></div>
+    <div class="cv-sub" data-ekey="cvsub">${getEditText(`pg${gIdx}_cvsub`,t.coverSub)}</div>
+    <div class="deco decoP" style="margin:5px auto"></div>
+    <div class="cv-hint" onclick="if(!editMode)flipNext()">${t.coverHint}</div>
+    <div class="pgn r">1</div>
+  </div>`;
+}
+
+function makeIntro(){
+  return `<div class="pg pg-intro">
+    <div class="intro-orn">🌸 ✦ 🌸</div>
+    <div class="intro-title" data-ekey="title">${getEditText('intro_title',`كتابُ حُبِّنا<br><span style="font-family:'Tajawal',sans-serif;font-size:.72em;color:var(--muted);background:none;-webkit-text-fill-color:var(--muted)">— أو كتابُ حُبّي أنا —</span>`)}</div>
+    <div class="intro-divider"></div>
+    <div class="intro-body">
+      <p data-ekey="p1">${getEditText('intro_p1',`لم أجد أجمل من الكلمات — وتاللهِ إنها لا تكفي — لتُعبّر عن مدى <span class="hi">حُبّي لكِ</span>، وعن حلاوة أيّامي معكِ.`)}</p>
+      <p data-ekey="p2">${getEditText('intro_p2',`حتى أنّني أعجز عن تخيّل انتهاء حقبةٍ من حياتي أراكِ فيها يوميًا، وأكاد أجزم أنّ ذلك سيكون من <span class="hi">أسوأ المشاعر</span> التي قد أصفها يومًا.`)}</p>
+      <p data-ekey="p3">${getEditText('intro_p3',`سيبقى هذا الكتاب، ويبقى حُبّي دائمًا، سواء كانت الكلمات كافية أم لا… حتى نصل بإذن الله إلى <span class="hi">«الألفيّة في حُبِّ رضوى».</span>`)}</p>
+      <div class="intro-list" data-ekey="list">${getEditText('intro_list',`• بعض <span class="hi">ذكرياتنا</span> &nbsp;•&nbsp; بعض <span class="hi">الكلمات</span><br>• <span class="hi">الصور والفيديوهات</span> اللي تجمعنا &nbsp;•&nbsp; <span class="hi">الموسيقى</span> اللي نحبها<br>• و<span class="hi">Countdown</span> لعيد ميلادك كل سنة`)}</div>
+    </div>
+    <div class="intro-sig">
+      <span data-ekey="sig">${getEditText('intro_sig','مع خالص حُبّي،&nbsp; نور شهاب')}</span>
+      <small data-ekey="sigsm">${getEditText('intro_sigsm','( خوختك 🍑 )')}</small>
+    </div>
+    <div class="pgn r" style="direction:ltr">2</div>
+  </div>`;
+}
+
+function makeMemory(m, gIdx){
+  const t   = T[m.lang||currentLang];
+  const cnt = BOOK_PAGES.slice(0,gIdx+1).filter(p=>p.type==='memory').length;
+  const side= gIdx%2===0?'r':'l';
+  const med = memoryMedia[m.memKey];
+  let mediaHtml='';
+  if(med && med.type==='video') mediaHtml=`<video src="${med.src}" autoplay muted loop playsinline></video><div class="vid-badge">▶ VIDEO</div>`;
+  else if(med) mediaHtml=`<img src="${med.src}" alt="memory">`;
+  else mediaHtml=`<div class="big">${m.emoji}</div><div class="lbl">${t.memThumbLbl}</div>`;
+  const pgK = `pg${gIdx}`;
+  return `<div class="pg">
+    <div class="mtag">${t.memTag} ${String(cnt).padStart(2,'0')}</div>
+    <div class="mtitle" data-ekey="title">${getEditText(`${pgK}_title`,m.title)}</div>
+    <div class="deco"></div>
+    <div class="mthumb">
+      ${mediaHtml}
+      <label class="edit-upload-btn">📷/🎬 ${med?'Change':'Add'}
+        <input type="file" accept="image/*,video/*" onchange="uploadMemMedia(event,'${m.memKey}')">
+      </label>
+    </div>
+    <div class="deco"></div>
+    <div class="mbody" data-ekey="body">${getEditText(`${pgK}_body`,m.text)}</div>
+    <div class="mdate" data-ekey="date">${getEditText(`${pgK}_date`,`✦ ${m.date} ✦`)}</div>
+    <div class="pgn ${side}">${gIdx+1}</div>
+  </div>`;
+}
+
+function makePoetry(p, gIdx){
+  const side=gIdx%2===0?'r':'l';
+  const body=p.text.replace(/\[([^\]]+)\]/g,'<em>$1</em>').replace(/\*([^*]+)\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  const pgK=`pg${gIdx}`;
+  return `<div class="pg pg-po">
+    <div class="po-orn">${p.orn||'❧'}</div>
+    <div class="po-body" data-ekey="body">${getEditText(`${pgK}_body`,body)}</div>
+    <div class="po-orn">${p.orn||'❧'}</div>
+    <div class="po-lbl" data-ekey="lbl">${getEditText(`${pgK}_lbl`,p.label)}</div>
+    <div class="pgn ${side}">${gIdx+1}</div>
+  </div>`;
+}
+
+function makeBirthday(gIdx,lang){
+  const t=T[lang||currentLang];
+  const pgK=`pg${gIdx}`;
+  return `<div class="pg pg-bd">
+    <div class="bd-ico">🎂</div>
+    <div class="bd-title" data-ekey="title">${getEditText(`${pgK}_title`,t.bdTitle)}</div>
+    <div class="bd-sub" data-ekey="sub">${getEditText(`${pgK}_sub`,t.bdSub)}</div>
+    <div class="cd-row">
+      <div class="cdb"><span class="cdn" id="cdD">--</span><span class="cdl">${t.cdLabels[0]}</span></div>
+      <div class="cdb"><span class="cdn" id="cdH">--</span><span class="cdl">${t.cdLabels[1]}</span></div>
+      <div class="cdb"><span class="cdn" id="cdM">--</span><span class="cdl">${t.cdLabels[2]}</span></div>
+      <div class="cdb"><span class="cdn" id="cdS">--</span><span class="cdl">${t.cdLabels[3]}</span></div>
+    </div>
+    <div class="bd-msg" data-ekey="msg">${getEditText(`${pgK}_msg`,t.bdMsg)}</div>
+    <div class="pgn r">${gIdx+1}</div>
+  </div>`;
+}
+
+function renderPage(gIdx){
+  if(gIdx<0||gIdx>=TOTAL()) return '<div class="pg" style="background:#090013"></div>';
+  const p=BOOK_PAGES[gIdx];
+  if(p.type==='cover')    return makeCover(p,gIdx);
+  if(p.type==='intro')    return makeIntro();
+  if(p.type==='memory')   return makeMemory(p,gIdx);
+  if(p.type==='poetry')   return makePoetry(p,gIdx);
+  if(p.type==='birthday') return makeBirthday(gIdx,p.lang);
+  return '<div class="pg"></div>';
+}
+
+/* ══════════════════════════════════════════════════════
+   FLIP ENGINE
+══════════════════════════════════════════════════════ */
+function spreadIdx(s){ return {l:s*2, r:s*2+1}; }
+
+function renderFace(el,idx){
+  if(idx<0||idx>=TOTAL()){
+    el.innerHTML='<div class="pg" style="background:#090013"></div>';
+    return;
+  }
+  el.innerHTML=renderPage(idx);
+  // wire editables
+  const pgKey=`pg${idx}`;
+  el.querySelectorAll('[data-ekey]').forEach(node=>{
+    if(editMode){
+      node.contentEditable='true';
+      node.addEventListener('blur',()=>{
+        const k=`${pgKey}_${node.dataset.ekey}`;
+        saveEditText(k, node.innerHTML);
+        showToast('💾','Saved!');
+      },{once:false});
+    }
+  });
+  if(BOOK_PAGES[idx]?.type==='birthday') startCountdown();
+}
+
+function renderSpread(s){
+  const{l,r}=spreadIdx(s);
+  renderFace(document.getElementById('lFront'),l);
+  renderFace(document.getElementById('rFront'),r<TOTAL()?r:-1);
+  document.getElementById('pgNum').textContent=l+1;
+  document.getElementById('pgTotal').textContent=TOTAL();
+}
+
+function flipNext(){
+  if(flipping||spread>=maxSpread()) return;
+  flipping=true;
+  const ns=spread+1;
+  const{l,r}=spreadIdx(ns);
+  renderFace(document.getElementById('lBack'),l);
+  renderFace(document.getElementById('rBack'),r<TOTAL()?r:-1);
+  const lc=document.getElementById('lCard'),rc=document.getElementById('rCard');
+  lc.classList.add('flip'); rc.classList.add('flip');
+  playFlip(); spawnF(Math.random()<.5?'🌸':'✨');
+  setTimeout(()=>{ spread=ns; renderSpread(spread); lc.classList.remove('flip'); rc.classList.remove('flip'); flipping=false; },680);
+}
+function flipPrev(){
+  if(flipping||spread<=0) return;
+  flipping=true;
+  const ps=spread-1;
+  const{l,r}=spreadIdx(ps);
+  renderFace(document.getElementById('lBack'),l);
+  renderFace(document.getElementById('rBack'),r<TOTAL()?r:-1);
+  const lc=document.getElementById('lCard'),rc=document.getElementById('rCard');
+  lc.style.transition='none'; rc.style.transition='none';
+  lc.classList.add('flip'); rc.classList.add('flip');
+  lc.getBoundingClientRect(); rc.getBoundingClientRect();
+  lc.style.transition=''; rc.style.transition='';
+  lc.classList.remove('flip'); rc.classList.remove('flip');
+  playFlip(); spawnF('💗');
+  setTimeout(()=>{ spread=ps; renderSpread(spread); flipping=false; },680);
+}
+
+/* ══════════════════════════════════════════════════════
+   EDIT MODE
+══════════════════════════════════════════════════════ */
+document.getElementById('btnEdit').addEventListener('click',()=>{
+  editMode=!editMode;
+  document.body.classList.toggle('editmode',editMode);
+  document.getElementById('btnEdit').classList.toggle('active',editMode);
+  document.getElementById('editBanner').classList.toggle('show',editMode);
+  renderSpread(spread);
+  showToast(editMode?'✏️':'🔒', editMode?'Edit Mode ON — click any text to edit':'Edit Mode OFF — everything is locked');
+});
+
+/* ══════════════════════════════════════════════════════
+   MEDIA UPLOADS
+══════════════════════════════════════════════════════ */
+function uploadCoverPhoto(event){
+  event.stopPropagation();
+  const file=event.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    coverPhotoSrc=e.target.result;
+    try{ localStorage.setItem(SK.coverPhoto,coverPhotoSrc); }catch(err){ showToast('⚠️','Image too large for storage — try a smaller photo'); return; }
+    renderSpread(spread);
+    showToast('📷','Cover photo saved! 🌸');
+    spawnBurst(10,['💗','🌸','✨']);
+  };
+  reader.readAsDataURL(file);
+}
+
+function uploadMemMedia(event, memKey){
+  event.stopPropagation();
+  const file=event.target.files[0]; if(!file) return;
+  const isVid=file.type.startsWith('video/');
+  const reader=new FileReader();
+  reader.onload=e=>{
+    memoryMedia[memKey]={type:isVid?'video':'image',src:e.target.result};
+    try{
+      localStorage.setItem(SK.memMedia, JSON.stringify(memoryMedia));
+    }catch(err){ showToast('⚠️','File too large — try compressing it first'); return; }
+    renderSpread(spread);
+    showToast(isVid?'🎬':'📷', isVid?'Video saved! 🎬':'Photo saved! 🌸');
+    spawnBurst(8,['💗','✨','🌸']);
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ══════════════════════════════════════════════════════
+   MUSIC
+══════════════════════════════════════════════════════ */
+const bgAudio=document.getElementById('bgAudio');
+
+// Load saved song on boot
+if(savedSongData){
+  bgAudio.src=savedSongData;
+  document.getElementById('currentSongDisplay').innerHTML=`🎵 Saved: <strong>${savedSongName}</strong>`;
+  document.getElementById('savedBadge').classList.add('show');
+}
+
+document.getElementById('btnUploadSong').addEventListener('click',()=>{
+  document.getElementById('musicPanel').classList.add('open');
+});
+function closeMusicPanel(){ document.getElementById('musicPanel').classList.remove('open'); }
+document.getElementById('musicPanel').addEventListener('click',e=>{ if(e.target===document.getElementById('musicPanel')) closeMusicPanel(); });
+
+document.getElementById('songFileInput').addEventListener('change',function(){
+  const file=this.files[0]; if(!file) return;
+  pendingSongFile=file;
+  savedSongName=file.name.replace(/\.[^.]+$/,'');
+  document.getElementById('currentSongDisplay').innerHTML=`🎵 Ready: <strong>${savedSongName}</strong>`;
+});
+
+function saveSong(){
+  if(!pendingSongFile){ showToast('⚠️','Choose a song file first!'); return; }
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const b64=e.target.result;
+    try{
+      localStorage.setItem(SK.songData,b64);
+      localStorage.setItem(SK.songName,savedSongName);
+    }catch(err){ showToast('⚠️','Song too large for browser storage — try an MP3 under 5 MB'); return; }
+    savedSongData=b64;
+    bgAudio.src=b64;
+    document.getElementById('savedBadge').classList.add('show');
+    closeMusicPanel();
+    showToast('🎵',`Saved: ${savedSongName}`);
+    spawnBurst(10,['🎵','💗','✨']);
+  };
+  reader.readAsDataURL(pendingSongFile);
+}
+
+function startMusic(){
+  if(!savedSongData){ document.getElementById('musicPanel').classList.add('open'); showToast('🎵','Upload your song first!'); return; }
+  bgAudio.play().then(()=>{
+    musicOn=true;
+    document.querySelectorAll('.vb').forEach(b=>b.classList.add('on'));
+    document.getElementById('btnMusic').classList.add('on');
+    document.getElementById('musicInfo').textContent=savedSongName||'Playing…';
+    showToast('♪',savedSongName||'Playing…');
+  }).catch(()=>{ showToast('⚠️','Tap the page first, then try again'); });
+}
+function stopMusic(){
+  bgAudio.pause();
+  musicOn=false;
+  document.querySelectorAll('.vb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('btnMusic').classList.remove('on');
+  document.getElementById('musicInfo').textContent=T[currentLang].noMusic;
+}
+document.getElementById('btnMusic').addEventListener('click',()=>{ if(musicOn) stopMusic(); else startMusic(); spawnBurst(3,['💗','✨']); });
+
+/* ══════════════════════════════════════════════════════
+   COUNTDOWN — always Radwa, 27 June
+══════════════════════════════════════════════════════ */
+function startCountdown(){
+  if(cdTimer) clearInterval(cdTimer);
+  function tick(){
+    const now=new Date();
+    let t=new Date(now.getFullYear(),5,27,0,0,0);
+    if(now>=t) t=new Date(now.getFullYear()+1,5,27,0,0,0);
+    const df=t-now;
+    const d=Math.floor(df/86400000);
+    const h=Math.floor((df%86400000)/3600000);
+    const m=Math.floor((df%3600000)/60000);
+    const s=Math.floor((df%60000)/1000);
+    const pad=n=>String(n).padStart(2,'0');
+    const g=id=>document.getElementById(id);
+    if(g('cdD')){ g('cdD').textContent=d; g('cdH').textContent=pad(h); g('cdM').textContent=pad(m); g('cdS').textContent=pad(s); }
+    else clearInterval(cdTimer);
+  }
+  tick(); cdTimer=setInterval(tick,1000);
+}
+
+/* ══════════════════════════════════════════════════════
+   ADD PAGE
+══════════════════════════════════════════════════════ */
+const EMOJIS=['💗','❤️','🌸','✨','🌙','⭐','🎂','🎉','💫','🌹','💕','🤍','🌺','🎵','🌠','😂','💪','🚗','🗺️','☀️','🌧️','💛','🍕','🌿','📖','🤣','⏳','💬','💖','🌟'];
+let addMediaSrc=null, addMediaType='image';
+
+function initEmojiPicker(){
+  const row=document.getElementById('emojiRow'); row.innerHTML='';
+  EMOJIS.forEach(e=>{
+    const btn=document.createElement('button'); btn.className='em-pick'; btn.textContent=e;
+    if(e==='💗') btn.classList.add('picked');
+    btn.onclick=()=>{ document.querySelectorAll('.em-pick').forEach(b=>b.classList.remove('picked')); btn.classList.add('picked'); document.getElementById('inp-emoji-custom').value=e; };
+    row.appendChild(btn);
+  });
+}
+function setupMediaUpload(){
+  addMediaSrc=null; addMediaType='image';
+  const box=document.getElementById('mediaUploadBox');
+  box.innerHTML=`<div class="ico">📷 / 🎬</div><span>Click to upload photo or video</span><input type="file" accept="image/*,video/*" id="mediaInput">`;
+  document.getElementById('mediaInput').addEventListener('change',function(){
+    const file=this.files[0]; if(!file) return;
+    addMediaType=file.type.startsWith('video/')?'video':'image';
+    const r=new FileReader();
+    r.onload=ev=>{
+      addMediaSrc=ev.target.result;
+      const prev=addMediaType==='video'?`<video class="media-preview-vid" src="${addMediaSrc}" autoplay muted loop playsinline></video>`:`<img class="media-preview-img" src="${addMediaSrc}">`;
+      box.innerHTML=prev+`<input type="file" accept="image/*,video/*" id="mediaInput">`;
+      document.getElementById('mediaInput').addEventListener('change',arguments.callee);
+      showToast(addMediaType==='video'?'🎬':'📷','Media ready!');
+    };
+    r.readAsDataURL(file);
+  });
+}
+document.getElementById('btnAddPage').addEventListener('click',()=>{
+  initEmojiPicker(); setupMediaUpload();
+  ['inp-title','inp-date','inp-text','inp-emoji-custom','po-label','po-text'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('inp-emoji-custom').value='💗';
+  switchTab('memory',document.querySelector('.add-tab'));
+  document.getElementById('addPanel').classList.add('open');
+});
+function closeAddPanel(){ document.getElementById('addPanel').classList.remove('open'); }
+document.getElementById('addPanel').addEventListener('click',e=>{ if(e.target===document.getElementById('addPanel')) closeAddPanel(); });
+
+function switchTab(name,btn){
+  document.querySelectorAll('.add-tab').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  ['memory','poetry','manage'].forEach(t=>{ document.getElementById('tab-'+t).style.display=(t===name)?'block':'none'; });
+  if(name==='manage') buildPageList();
+}
+function saveMemory(){
+  const title=document.getElementById('inp-title').value.trim();
+  const date=document.getElementById('inp-date').value.trim();
+  const text=document.getElementById('inp-text').value.trim();
+  const emoji=document.getElementById('inp-emoji-custom').value.trim()||'💗';
+  if(!title){showToast('⚠️','Please enter a title!');return;}
+  if(!text){showToast('⚠️','Please write something!');return;}
+  const key='user-'+Date.now();
+  const page={type:'memory',title,date:date||'a moment in time',text,emoji:emoji+' '+emoji,lang:currentLang,memKey:key};
+  if(addMediaSrc){ memoryMedia[key]={type:addMediaType,src:addMediaSrc}; }
+  userAddedPages.push(page);
+  persistUserPages();
+  if(addMediaSrc){ try{ localStorage.setItem(SK.memMedia,JSON.stringify(memoryMedia)); }catch(e){} }
+  BOOK_PAGES=buildBookPages(currentLang);
+  closeAddPanel(); renderSpread(spread);
+  document.getElementById('pgTotal').textContent=TOTAL();
+  showToast('✦','New page saved!');
+  spawnBurst(12,['💗','✨','🌸','📖']);
+}
+function savePoetry(){
+  const label=document.getElementById('po-label').value.trim();
+  const text=document.getElementById('po-text').value.trim();
+  const orn=document.getElementById('po-orn').value;
+  if(!label){showToast('⚠️','Please enter a label!');return;}
+  if(!text){showToast('⚠️','Please write your poem!');return;}
+  userAddedPages.push({type:'poetry',label,text,orn,lang:currentLang});
+  persistUserPages();
+  BOOK_PAGES=buildBookPages(currentLang);
+  closeAddPanel(); renderSpread(spread);
+  document.getElementById('pgTotal').textContent=TOTAL();
+  showToast('🌸','Poem saved!');
+  spawnBurst(12,['🌸','✨','💫']);
+}
+function persistUserPages(){
+  try{ localStorage.setItem(SK.userPages,JSON.stringify(userAddedPages)); }catch(e){}
+}
+function buildPageList(){
+  const wrap=document.getElementById('pageListWrap'); wrap.innerHTML='';
+  const icons={cover:'📖',intro:'💌',memory:'📸',poetry:'🌸',birthday:'🎂'};
+  const types={cover:'Cover',intro:'Intro',memory:'Memory',poetry:'Poetry',birthday:'Birthday'};
+  BOOK_PAGES.forEach((p,i)=>{
+    const div=document.createElement('div'); div.className='page-item';
+    const canDel=p.type!=='cover'&&p.type!=='birthday'&&p.type!=='intro';
+    div.innerHTML=`<span class="pi-num">${i+1}</span>
+      <span class="pi-title">${icons[p.type]||'📄'} ${p.title||p.label||p.type}</span>
+      <span class="pi-type">${types[p.type]||p.type}</span>
+      ${canDel?`<button class="pi-del" onclick="deletePage(${i})">✕</button>`:''}`;
+    wrap.appendChild(div);
+  });
+}
+function deletePage(idx){
+  const p=BOOK_PAGES[idx];
+  if(p.type==='cover'||p.type==='birthday'||p.type==='intro') return;
+  if(!confirm('Delete this page?')) return;
+  const ui=userAddedPages.indexOf(p); if(ui>=0) userAddedPages.splice(ui,1);
+  persistUserPages();
+  BOOK_PAGES=buildBookPages(currentLang);
+  if(spread>maxSpread()) spread=maxSpread();
+  buildPageList(); renderSpread(spread);
+  document.getElementById('pgTotal').textContent=TOTAL();
+  showToast('🗑️','Page deleted');
+}
+
+/* ══════════════════════════════════════════════════════
+   SECRET
+══════════════════════════════════════════════════════ */
+document.getElementById('btnSecret').addEventListener('click',()=>{ document.getElementById('secret').classList.add('open'); spawnBurst(24,['💗','✨','🌸','💖']); });
+function closeSecret(){ document.getElementById('secret').classList.remove('open'); }
+document.getElementById('secret').addEventListener('click',e=>{ if(e.target===document.getElementById('secret')) closeSecret(); });
+
+/* ══════════════════════════════════════════════════════
+   LANGUAGE
+══════════════════════════════════════════════════════ */
+document.getElementById('btnLang').addEventListener('click',()=>{
+  pendingLang=currentLang;
+  document.getElementById('lcEN').classList.toggle('picked',currentLang==='en');
+  document.getElementById('lcAR').classList.toggle('picked',currentLang==='ar');
+  document.getElementById('langPanel').classList.add('open');
+});
+function pickLang(lang){ pendingLang=lang; document.getElementById('lcEN').classList.toggle('picked',lang==='en'); document.getElementById('lcAR').classList.toggle('picked',lang==='ar'); }
+function closeLangPanel(){ document.getElementById('langPanel').classList.remove('open'); }
+document.getElementById('langPanel').addEventListener('click',e=>{ if(e.target===document.getElementById('langPanel')) closeLangPanel(); });
+function applyLang(){
+  currentLang=pendingLang;
+  localStorage.setItem(SK.lang,currentLang);
+  document.body.classList.toggle('ar',currentLang==='ar');
+  BOOK_PAGES=buildBookPages(currentLang);
+  document.getElementById('scTitle').textContent=T[currentLang].scTitle;
+  document.getElementById('scBody').innerHTML=T[currentLang].scBody;
+  if(spread>maxSpread()) spread=0;
+  renderSpread(spread);
+  document.getElementById('pgTotal').textContent=TOTAL();
+  closeLangPanel();
+  showToast('🌐',currentLang==='ar'?'تم التغيير للعربي':'Switched to English');
+  spawnBurst(8,['✨','🌸','💗']);
+}
+
+/* ══════════════════════════════════════════════════════
+   FLOATERS / CURSOR TRAIL
+══════════════════════════════════════════════════════ */
+function spawnF(emoji,x,y){
+  const el=document.createElement('div'); el.className='floater'; el.textContent=emoji;
+  el.style.left=(x??Math.random()*innerWidth)+'px'; el.style.top=(y??innerHeight)+'px';
+  el.style.fontSize=(.7+Math.random()*1.1)+'rem'; el.style.animationDuration=(2.8+Math.random()*2.5)+'s';
+  document.body.appendChild(el); el.addEventListener('animationend',()=>el.remove());
+}
+function spawnBurst(n,emojis){ for(let i=0;i<n;i++) setTimeout(()=>spawnF(emojis[~~(Math.random()*emojis.length)]),i*70); }
+document.getElementById('btnHearts').addEventListener('click',()=>spawnBurst(22,['💗','💕','❤️','💖','💝','🌸']));
+document.getElementById('btnStars').addEventListener('click',()=>spawnBurst(22,['✨','⭐','🌟','💫','🌠']));
+let lastT=0;
+document.addEventListener('mousemove',e=>{
+  if(Date.now()-lastT>130&&Math.random()<.35){
+    const el=document.createElement('div'); el.className='ctrail'; el.textContent=Math.random()<.6?'💗':'✨';
+    el.style.left=e.clientX+'px'; el.style.top=e.clientY+'px';
+    document.body.appendChild(el); el.addEventListener('animationend',()=>el.remove()); lastT=Date.now();
+  }
+});
+setInterval(()=>{ if(Math.random()<.28) spawnF(['💗','✨','🌸','💫'][~~(Math.random()*4)],Math.random()*innerWidth,innerHeight+10); },4500);
+
+/* ══════════════════════════════════════════════════════
+   NAV / KEYBOARD / SWIPE
+══════════════════════════════════════════════════════ */
+document.getElementById('navL').addEventListener('click',flipPrev);
+document.getElementById('navR').addEventListener('click',flipNext);
+document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight'||e.key==='ArrowDown') flipNext(); if(e.key==='ArrowLeft'||e.key==='ArrowUp') flipPrev(); });
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchend',e=>{ const dx=e.changedTouches[0].clientX-tx; if(Math.abs(dx)>50){dx<0?flipNext():flipPrev();} },{passive:true});
+
+/* flip sound */
+function playFlip(){
+  try{
+    const a=new(window.AudioContext||window.webkitAudioContext)();
+    const o=a.createOscillator(),g=a.createGain(),f=a.createBiquadFilter();
+    o.connect(f);f.connect(g);g.connect(a.destination);f.type='lowpass';f.frequency.value=1400;o.type='triangle';
+    o.frequency.setValueAtTime(750,a.currentTime);o.frequency.exponentialRampToValueAtTime(180,a.currentTime+.14);
+    g.gain.setValueAtTime(.08,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.2);
+    o.start(a.currentTime);o.stop(a.currentTime+.22);
+  }catch(e){}
+}
+
+/* ══════════════════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════════════════ */
+let toastTmr=null;
+function showToast(ico,msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toastIco').textContent=ico;
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show');
+  if(toastTmr) clearTimeout(toastTmr);
+  toastTmr=setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+/* ══════════════════════════════════════════════════════
+   STAR CANVAS
+══════════════════════════════════════════════════════ */
+const bgC=document.getElementById('bgCanvas'),bgX=bgC.getContext('2d');
+let stars=[];
+function rszC(){bgC.width=innerWidth;bgC.height=innerHeight;}
+function mkS(n=210){
+  stars=[];
+  for(let i=0;i<n;i++) stars.push({x:Math.random()*bgC.width,y:Math.random()*bgC.height,r:Math.random()*1.4+.2,a:Math.random(),da:(Math.random()*.007+.002)*(Math.random()<.5?1:-1),vx:(Math.random()-.5)*.055,vy:(Math.random()-.5)*.055});
+}
+function drawS(){
+  bgX.clearRect(0,0,bgC.width,bgC.height);
+  stars.forEach(s=>{
+    s.a+=s.da; if(s.a<=0||s.a>=1)s.da*=-1;
+    s.x+=s.vx; s.y+=s.vy;
+    if(s.x<0)s.x=bgC.width; if(s.x>bgC.width)s.x=0;
+    if(s.y<0)s.y=bgC.height; if(s.y>bgC.height)s.y=0;
+    bgX.beginPath(); bgX.arc(s.x,s.y,s.r,0,Math.PI*2);
+    bgX.fillStyle=`rgba(255,255,255,${s.a*.72})`; bgX.fill();
+  });
+  requestAnimationFrame(drawS);
+}
+window.addEventListener('resize',()=>{rszC();mkS();});
+rszC(); mkS(); drawS();
+
+/* ══════════════════════════════════════════════════════
+   BOOT
+══════════════════════════════════════════════════════ */
+const ldF=document.getElementById('ldFill');
+let prog=0;
+const ldI=setInterval(()=>{
+  prog+=Math.random()*12+2;
+  if(prog>=100){prog=100;clearInterval(ldI);boot();}
+  ldF.style.width=prog+'%';
+},90);
+
+function boot(){
+  // Apply saved language
+  document.body.classList.toggle('ar',currentLang==='ar');
+  document.getElementById('lcEN').classList.toggle('picked',currentLang==='en');
+  document.getElementById('lcAR').classList.toggle('picked',currentLang==='ar');
+  document.getElementById('scTitle').textContent=T[currentLang].scTitle;
+  document.getElementById('scBody').innerHTML=T[currentLang].scBody;
+  // Apply saved song badge
+  if(savedSongData){ document.getElementById('savedBadge').classList.add('show'); document.getElementById('currentSongDisplay').innerHTML=`🎵 Saved: <strong>${savedSongName}</strong>`; }
+  BOOK_PAGES=buildBookPages(currentLang);
+  renderSpread(0);
+  document.getElementById('pgTotal').textContent=TOTAL();
+  setTimeout(()=>document.getElementById('loader').classList.add('hide'),350);
+  setTimeout(()=>{
+    document.getElementById('bookOuter').classList.add('show');
+    document.getElementById('controls').classList.add('show');
+    document.getElementById('pgCtr').classList.add('show');
+    document.getElementById('navL').classList.add('show');
+    document.getElementById('navR').classList.add('show');
+  },750);
+  setTimeout(()=>spawnBurst(10,['💗','✨','🌸']),2100);
+}
+</script>
+</body>
+</html>
