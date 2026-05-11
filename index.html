@@ -544,12 +544,22 @@ let fbConfig = null;
 try { fbConfig = JSON.parse(localStorage.getItem(FB_CFG_KEY)); } catch(e){}
 
 function saveFirebaseConfig(){
+function saveFirebaseConfig(){
   const cfg = {
-    apiKey:     document.getElementById('fb-apiKey').value.trim(),
-    databaseURL:document.getElementById('fb-dbURL').value.trim(),
-    projectId:  document.getElementById('fb-projectId').value.trim(),
-    appId:      document.getElementById('fb-appId').value.trim(),
+    apiKey: "AIzaSyDqrbZCuaVDZFhYbV-6pfne2wQyJkTRx58",
+    databaseURL: "https://radwa-nour-book-default-rtdb.firebaseio.com",
+    projectId: "radwa-nour-book",
+    appId: "1:215096507762:web:0dc012f9274e91137731eb"
   };
+  
+  localStorage.setItem(FB_CFG_KEY, JSON.stringify(cfg));
+  fbConfig = cfg;
+  document.getElementById('setupScreen').classList.add('hide');
+  initFirebase(cfg);
+  startLoader();
+  showToast('☁️','Connected to cloud! ✅');
+}
+
   if(!cfg.apiKey||!cfg.databaseURL||!cfg.projectId||!cfg.appId){
     alert('Please fill all fields!'); return;
   }
