@@ -544,12 +544,16 @@ let fbConfig = null;
 try { fbConfig = JSON.parse(localStorage.getItem(FB_CFG_KEY)); } catch(e){}
 
 function saveFirebaseConfig(){
-  const cfg = {
-    apiKey: "AIzaSyDqrbZCuaVDZFhYbV-6pfne2wQyJkTRx58",
-    databaseURL: "https://radwa-nour-book-default-rtdb.firebaseio.com",
-    projectId: "radwa-nour-book",
-    appId: "1:215096507762:web:0dc012f9274e91137731eb"
-  };
+  const apiKey = document.getElementById('fb-apiKey').value.trim();
+  const dbURL = document.getElementById('fb-dbURL').value.trim();
+  const projectId = document.getElementById('fb-projectId').value.trim();
+  const appId = document.getElementById('fb-appId').value.trim();
+  
+  const cfg = {apiKey, databaseURL: dbURL, projectId, appId};
+  
+  if(!cfg.apiKey||!cfg.databaseURL||!cfg.projectId||!cfg.appId){
+    alert('Please fill all fields!'); return;
+  }
   
   localStorage.setItem(FB_CFG_KEY, JSON.stringify(cfg));
   fbConfig = cfg;
@@ -557,16 +561,6 @@ function saveFirebaseConfig(){
   initFirebase(cfg);
   startLoader();
   showToast('☁️','Connected to cloud! ✅');
-}
-
-  if(!cfg.apiKey||!cfg.databaseURL||!cfg.projectId||!cfg.appId){
-    alert('Please fill all fields!'); return;
-  }
-  localStorage.setItem(FB_CFG_KEY, JSON.stringify(cfg));
-  fbConfig = cfg;
-  document.getElementById('setupScreen').classList.add('hide');
-  initFirebase(cfg);
-  startLoader();
 }
 
 function initFirebase(cfg){
@@ -761,7 +755,9 @@ function buildBookPages(lang){
 /* ══════════════════════════════════════════════════════
    EDIT TEXT HELPERS
 ══════════════════════════════════════════════════════ */
-function getET(key,def){ return cloudData.editTexts[key]!==undefined ? cloudData.editTexts[key] : def; }
+function getET(key,def){ 
+  return cloudData.editTexts.hasOwnProperty(key) ? cloudData.editTexts[key] : def; 
+}
 async function saveET(key,html){
   cloudData.editTexts[key]=html;
   await dbSet('editTexts/'+key, html);
@@ -911,7 +907,8 @@ function flipNext(){
   renderFace(document.getElementById('lBack'),l);
   renderFace(document.getElementById('rBack'),r<TOTAL()?r:-1);
   const lc=document.getElementById('lCard'),rc=document.getElementById('rCard');
-  lc.classList.add('flip');rc.classList.add('flip');playFlip();spawnF(Math.random()<.5?'🌸':'✨');
+  lc.classList.add('flip');rc.classList.add('flip');playFlip();
+  spawnF(Math.random()<.5?'🌸':'✨', Math.random()*innerWidth, innerHeight); // ✅ مُصحح
   setTimeout(()=>{spread=ns;renderSpread(spread);lc.classList.remove('flip');rc.classList.remove('flip');flipping=false;},680);
 }
 function flipPrev(){
