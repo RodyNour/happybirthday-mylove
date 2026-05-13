@@ -371,14 +371,15 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
 <div class="modal-overlay" id="secret">
   <div class="modal-box">
     <div class="sc-ico">💌</div>
-    <div class="sc-title" id="scTitle">Only For You, Radwa</div>
-    <div class="sc-body" id="scBody">
+    <div class="sc-title" id="scTitle" data-ek="scTitle" contenteditable="false">Only For You, Radwa</div>
+    <div class="sc-body" id="scBody" data-ek="scBody" contenteditable="false">
       In every universe that has ever existed —<br>in every lifetime that could ever be lived —<br><br>
       I would search through all of it just to find you again.<br><br>
       You are not just my best friend.<br>You are the reason I believe that<br>
       <strong>some bonds are written before birth.</strong><br><br>
       Happy Birthday, Radwa. I love you endlessly. 🌸
     </div>
+    <div id="scEditHint" style="display:none;font-size:.5rem;color:var(--gold);letter-spacing:.12em;margin-bottom:12px;text-align:center">✏️ Click the text above to edit — changes save automatically</div>
     <button class="sc-close" onclick="closeModal('secret')">Close with love ✕</button>
   </div>
 </div>
@@ -704,19 +705,28 @@ function makeCover(p, gi) {
 }
 
 function makeIntro() {
+  /* ── Intro text is FIXED — only editable via code, never via Edit Mode ── */
   return `<div class="pg pg-intro">
     <div class="intro-orn">🌸 ✦ 🌸</div>
-    <div class="intro-title-el" data-ek="ititle" contenteditable="false">${getET('intro_ititle','كتابُ حُبِّنا — أو كتابُ حُبّي أنا —')}</div>
+    <div class="intro-title-el">كتابُ حُبِّنا</div>
     <div class="intro-divider"></div>
     <div class="intro-body">
-      <p data-ek="ip1" contenteditable="false">${getET('intro_ip1','لم أجد أجمل من الكلمات — وتاللهِ إنها لا تكفي — لتُعبّر عن مدى <span class="hi">حُبّي لكِ</span>، وعن حلاوة أيّامي معكِ.')}</p>
-      <p data-ek="ip2" contenteditable="false">${getET('intro_ip2','حتى أنّني أعجز عن تخيّل انتهاء حقبةٍ من حياتي أراكِ فيها يوميًا، وأكاد أجزم أنّ ذلك سيكون من <span class="hi">أسوأ المشاعر</span> التي قد أصفها يومًا.')}</p>
-      <p data-ek="ip3" contenteditable="false">${getET('intro_ip3','سيبقى هذا الكتاب، ويبقى حُبّي دائمًا، حتى نصل بإذن الله إلى <span class="hi">«الألفيّة في حُبِّ رضوى».</span>')}</p>
-      <div class="intro-list" data-ek="ilist" contenteditable="false">${getET('intro_ilist','• بعض <span class="hi">ذكرياتنا</span> • بعض <span class="hi">الكلمات</span> • <span class="hi">الصور والفيديوهات</span> اللي تجمعنا • <span class="hi">الموسيقى</span> اللي نحبها • و<span class="hi">Countdown</span> لعيد ميلادك كل سنة')}</div>
+      <p>من الممكن أن أُطلق عليه <span class="hi">«كتابُ حُبِّنا»</span>، لأنني لم أجد أجمل من الكلمات — وتاللهِ إنها لا تكفي — لتُعبّر عن مدى <span class="hi">حُبّي لكِ</span>، وعن حلاوة أيّامي معكِ.</p>
+      <p>حتى أنّني أعجز عن تخيّل انتهاء حقبةٍ من حياتي أراكِ فيها يوميًا.وأكاد أجزم أنّ ذلك سيكون من <span class="hi">أسوأ المشاعر</span> التي قد أصفها يومًا.</p>
+      <p>سيبقى هذا الكتاب، ويبقى حُبّي دائمًا، سواء استطاعت الكلمات التعبير عنه أم عجزت، وسواء كانت كافية أم لا… حتى نصل — بإذن الله — إلى <span class="hi">«الألفيّة في حُبِّ رضوى»</span>.</p>
+      <div class="intro-list">
+        <span class="hi">يتكوّن الكتاب من:</span><br>
+        • بعض <span class="hi">ذكرياتنا</span>،<br>
+        • بعض <span class="hi">الكلمات</span> — التي لا تكفيكِ —،<br>
+        • بعض <span class="hi">الصور</span> التي تجمعنا،<br>
+        • <span class="hi">الموسيقى</span> التي نُحبّها،<br>
+        • وكلّ شيءٍ يحمل أثرًا منكِ أو يشبهكِ قليلًا…<br><br>
+        وفي النهاية، <span class="hi">Countdown</span> ليوم ميلادك القادم، لتعودي إليه في كلّ عام، وترينه يوم ميلادك القادم… والذي بعده… والذي بعده أيضًا.
+      </div>
     </div>
     <div class="intro-sig">
-      <span data-ek="isig" contenteditable="false">${getET('intro_isig','مع خالص حُبّي، نور شهاب')}</span>
-      <small data-ek="isigsm" contenteditable="false">${getET('intro_isigsm','( خوختك 🍑 )')}</small>
+      مع خالص حُبّي، نور شهاب
+      <small>( خوختك 🍑 )</small>
     </div>
     <div class="pgn r" style="direction:ltr">2</div>
   </div>`;
