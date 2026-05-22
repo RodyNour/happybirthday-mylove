@@ -40,6 +40,7 @@ body {
   cursor: none;
   font-family: var(--body);
   -webkit-font-smoothing: antialiased;
+  
 }
 
 /* ═══════════ CURSOR ═══════════ */
@@ -410,6 +411,10 @@ body {
 </style>
 </head>
 <body>
+  <!-- Music -->
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
 
 <!-- Cursor -->
 <div id="cur"></div>
@@ -805,6 +810,9 @@ document.getElementById('backBtn').addEventListener('click', ()=>{
     setTimeout(()=>overlay.classList.remove('leaving'),1100);
   },950);
 });
+  window.addEventListener('click', () => {
+  document.getElementById('bgMusic').play();
+}, { once: true });
 </script>
 </body>
 </html>
