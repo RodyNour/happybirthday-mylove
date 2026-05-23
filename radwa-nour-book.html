@@ -337,7 +337,6 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
   <button class="cb" id="btnStars">✨ Stars</button>
   <button class="cb" id="btnSecret">🔐 Secret</button>
   <button class="cb green" id="btnAddPage">✚ Add Page</button>
-  <button class="cb pur" id="btnLang">🌐 Lang</button>
   <button class="cb amber" id="btnEdit">✏️ Edit 🔒</button>
 </div>
 
@@ -639,7 +638,7 @@ async function loadCloudData() {
 
 function mergeSnapshot(v) {
   if (!v) return;
-  cloudData.lang        = v.lang        || 'en';
+  cloudData.lang        = 'en'; // always English
   cloudData.coverPhoto  = v.coverPhoto  || null;
   cloudData.songName    = v.songName    || '';
   cloudData.songData    = v.songData    || null;
@@ -705,28 +704,28 @@ function makeCover(p, gi) {
 }
 
 function makeIntro() {
-  /* ── Intro text is FIXED — only editable via code, never via Edit Mode ── */
+  const D = {
+    title: getET('intro_title','كتابُ حُبِّنا'),
+    p1: getET('intro_p1','من الممكن أن أُطلق عليه <span class="hi">«كتابُ حُبِّنا»</span>، لأنني لم أجد أجمل من الكلمات — وتاللهِ إنها لا تكفي — لتُعبّر عن مدى <span class="hi">حُبّي لكِ</span>، وعن حلاوة أيّامي معكِ.'),
+    p2: getET('intro_p2','حتى أنّني أعجز عن تخيّل انتهاء حقبةٍ من حياتي أراكِ فيها يوميًا. وأكاد أجزم أنّ ذلك سيكون من <span class="hi">أسوأ المشاعر</span> التي قد أصفها يومًا.'),
+    p3: getET('intro_p3','سيبقى هذا الكتاب، ويبقى حُبّي دائمًا، سواء استطاعت الكلمات التعبير عنه أم عجزت… حتى نصل — بإذن الله — إلى <span class="hi">«الألفيّة في حُبِّ رضوى»</span>.'),
+    list: getET('intro_list','<span class="hi">يتكوّن الكتاب من:</span><br>• بعض <span class="hi">ذكرياتنا</span>،<br>• بعض <span class="hi">الكلمات</span> — التي لا تكفيكِ —،<br>• بعض <span class="hi">الصور</span> التي تجمعنا،<br>• <span class="hi">الموسيقى</span> التي نُحبّها،<br>• وكلّ شيءٍ يحمل أثرًا منكِ أو يشبهكِ قليلًا…<br><br>وفي النهاية، <span class="hi">Countdown</span> ليوم ميلادك القادم، لتعودي إليه في كلّ عام.'),
+    sig: getET('intro_sig','مع خالص حُبّي، نور شهاب'),
+    sigsm: getET('intro_sigsm','( خوختك 🍑 )'),
+  };
   return `<div class="pg pg-intro">
     <div class="intro-orn">🌸 ✦ 🌸</div>
-    <div class="intro-title-el">كتابُ حُبِّنا</div>
+    <div class="intro-title-el" data-ek="intro_title" contenteditable="false">${D.title}</div>
     <div class="intro-divider"></div>
     <div class="intro-body">
-      <p>من الممكن أن أُطلق عليه <span class="hi">«كتابُ حُبِّنا»</span>، لأنني لم أجد أجمل من الكلمات — وتاللهِ إنها لا تكفي — لتُعبّر عن مدى <span class="hi">حُبّي لكِ</span>، وعن حلاوة أيّامي معكِ.</p>
-      <p>حتى أنّني أعجز عن تخيّل انتهاء حقبةٍ من حياتي أراكِ فيها يوميًا.وأكاد أجزم أنّ ذلك سيكون من <span class="hi">أسوأ المشاعر</span> التي قد أصفها يومًا.</p>
-      <p>سيبقى هذا الكتاب، ويبقى حُبّي دائمًا، سواء استطاعت الكلمات التعبير عنه أم عجزت، وسواء كانت كافية أم لا… حتى نصل — بإذن الله — إلى <span class="hi">«الألفيّة في حُبِّ رضوى»</span>.</p>
-      <div class="intro-list">
-        <span class="hi">يتكوّن الكتاب من:</span><br>
-        • بعض <span class="hi">ذكرياتنا</span>،<br>
-        • بعض <span class="hi">الكلمات</span> — التي لا تكفيكِ —،<br>
-        • بعض <span class="hi">الصور</span> التي تجمعنا،<br>
-        • <span class="hi">الموسيقى</span> التي نُحبّها،<br>
-        • وكلّ شيءٍ يحمل أثرًا منكِ أو يشبهكِ قليلًا…<br><br>
-        وفي النهاية، <span class="hi">Countdown</span> ليوم ميلادك القادم، لتعودي إليه في كلّ عام، وترينه يوم ميلادك القادم… والذي بعده… والذي بعده أيضًا.
-      </div>
+      <p data-ek="intro_p1" contenteditable="false">${D.p1}</p>
+      <p data-ek="intro_p2" contenteditable="false">${D.p2}</p>
+      <p data-ek="intro_p3" contenteditable="false">${D.p3}</p>
+      <div class="intro-list" data-ek="intro_list" contenteditable="false">${D.list}</div>
     </div>
     <div class="intro-sig">
-      مع خالص حُبّي، نور شهاب
-      <small>( خوختك 🍑 )</small>
+      <span data-ek="intro_sig" contenteditable="false">${D.sig}</span>
+      <small data-ek="intro_sigsm" contenteditable="false">${D.sigsm}</small>
     </div>
     <div class="pgn r" style="direction:ltr">2</div>
   </div>`;
@@ -808,17 +807,21 @@ function spreadIdx(s) { return {l:s*2, r:s*2+1}; }
 function renderFace(el, idx) {
   if(idx<0||idx>=TOTAL()){el.innerHTML='<div class="pg" style="background:#090013"></div>';return;}
   el.innerHTML = renderPage(idx);
-  const k=`pg${idx}`;
+  const pageType = BOOK_PAGES[idx]?.type;
+  const k = `pg${idx}`;
   el.querySelectorAll('[data-ek]').forEach(node=>{
     if(editMode){
       node.contentEditable='true';
       node.addEventListener('blur', async()=>{
-        await saveET(`${k}_${node.dataset.ek}`, node.innerHTML);
+        // intro uses raw key (intro_p1), others use pg{idx}_key
+        const ek = node.dataset.ek;
+        const storageKey = ek.startsWith('intro_') ? ek : `${k}_${ek}`;
+        await saveET(storageKey, node.innerHTML);
         showToast('☁️','Saved to cloud!');
       });
     } else node.contentEditable='false';
   });
-  if(BOOK_PAGES[idx]?.type==='birthday') startCountdown();
+  if(pageType==='birthday') startCountdown();
 }
 
 function renderSpread(s) {
@@ -1150,41 +1153,6 @@ async function deletePage(idx){
 document.getElementById('btnSecret').addEventListener('click',()=>{openModal('secret');spawnBurst(24,['💗','✨','🌸','💖']);});
 
 /* ════════════════════════════════════════════════
-   LANGUAGE → FIREBASE
-════════════════════════════════════════════════ */
-document.getElementById('btnLang').addEventListener('click',()=>{
-  pendingLang=cloudData.lang;
-  document.getElementById('lcEN').classList.toggle('picked',cloudData.lang==='en');
-  document.getElementById('lcAR').classList.toggle('picked',cloudData.lang==='ar');
-  openModal('langPanel');
-});
-function pickLang(lang){
-  pendingLang=lang;
-  document.getElementById('lcEN').classList.toggle('picked',lang==='en');
-  document.getElementById('lcAR').classList.toggle('picked',lang==='ar');
-}
-async function applyLang(){
-  cloudData.lang=pendingLang;
-  await dbSet('lang',cloudData.lang);
-  applyLangUI(cloudData.lang);
-  BOOK_PAGES=buildPages(cloudData.lang);
-  if(spread>maxSpread()) spread=0;
-  renderSpread(spread);
-  document.getElementById('pgTotal').textContent=TOTAL();
-  closeModal('langPanel');
-  showToast('🌐',cloudData.lang==='ar'?'تم التغيير للعربي':'Switched to English');
-  spawnBurst(8,['✨','🌸','💗']);
-}
-function applyLangUI(lang){
-  document.body.classList.toggle('ar',lang==='ar');
-  document.getElementById('lcEN').classList.toggle('picked',lang==='en');
-  document.getElementById('lcAR').classList.toggle('picked',lang==='ar');
-  document.getElementById('scTitle').textContent=T[lang].scTitle;
-  document.getElementById('scBody').innerHTML=T[lang].scBody;
-  document.getElementById('musicInfo').textContent=musicOn&&cloudData.songName?cloudData.songName:T[lang].noMusic;
-}
-
-/* ════════════════════════════════════════════════
    FLOATERS
 ════════════════════════════════════════════════ */
 function spawnF(emoji,x,y){
@@ -1265,14 +1233,13 @@ const ldI=setInterval(()=>{
 async function boot(){
   try {
     document.getElementById('ldHint').textContent='Signing in ☁️';
-    // 1. Sign in silently (gives write access)
     await signInOwner();
     document.getElementById('ldHint').textContent='Loading memories ❤️';
-    // 2. Load all data
     await loadCloudData();
-    // 3. Build & render
-    BOOK_PAGES=buildPages(cloudData.lang);
-    applyLangUI(cloudData.lang);
+    BOOK_PAGES=buildPages('en');
+    // set secret text
+    document.getElementById('scTitle').textContent=T.en.scTitle;
+    document.getElementById('scBody').innerHTML=T.en.scBody;
     if(cloudData.songData){
       bgAudio.src=cloudData.songData;
       document.getElementById('currentSongDisplay').innerHTML=`🎵 <strong>${cloudData.songName}</strong>`;
@@ -1280,7 +1247,6 @@ async function boot(){
     }
     renderSpread(0);
     document.getElementById('pgTotal').textContent=TOTAL();
-    // 4. Show UI
     setTimeout(()=>document.getElementById('loader').classList.add('hide'),400);
     setTimeout(()=>{
       document.getElementById('bookOuter').classList.add('show');
