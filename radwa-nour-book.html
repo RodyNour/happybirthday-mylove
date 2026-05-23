@@ -7,9 +7,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Poppins:wght@200;300;400;500;600&family=Dancing+Script:wght@400;600;700&family=Tajawal:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --pink:#ff2d78;--ps:#ff6fa8;--pu:#a855f7;--pu2:#7c3aed;--pu3:#c084fc;
-  --gold:#f0c060;--bg:#030007;--text:#f5e6ff;--muted:#b89ec4;--muted2:#7a5f90;
-  --gp:rgba(255,45,120,.55);--gpu:rgba(168,85,247,.45);
+  --pink:#c8788a;--ps:#d4909f;--pu:#7c6a9a;--pu2:#5a4d7a;--pu3:#9e8fc0;
+  --gold:#c8a96e;--bg:#05040a;--text:#f0eef6;--muted:#a8a0b8;--muted2:#5a5a72;
+  --gp:rgba(200,120,138,.55);--gpu:rgba(124,106,154,.45);
   --pw:330px;--ph:460px;--ft:680ms;
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -907,13 +907,50 @@ function enableEditMode(){
   editMode=true;document.body.classList.add('editmode');
   document.getElementById('btnEdit').classList.add('active');
   document.getElementById('editBanner').classList.add('show');
-  renderSpread(spread);showToast('✏️','Edit Mode ON — click any text!');
+  renderSpread(spread);
+  // Wire secret modal fields
+  wireSecretEdit(true);
+  showToast('✏️','Edit Mode ON — click any text including the Secret message!');
 }
 function disableEditMode(){
   editMode=false;document.body.classList.remove('editmode');
   document.getElementById('btnEdit').classList.remove('active');
   document.getElementById('editBanner').classList.remove('show');
-  renderSpread(spread);showToast('🔒','Edit Mode OFF — locked');
+  renderSpread(spread);
+  wireSecretEdit(false);
+  showToast('🔒','Edit Mode OFF — locked');
+}
+
+function wireSecretEdit(on){
+  // scTitle
+  const title = document.getElementById('scTitle');
+  const body  = document.getElementById('scBody');
+  const hint  = document.getElementById('scEditHint');
+  if(on){
+    title.contentEditable='true';
+    body.contentEditable='true';
+    hint.style.display='block';
+    if(!title._wired){
+      title._wired=true;
+      title.addEventListener('blur',async()=>{
+        await saveET('scTitle', title.innerHTML);
+        cloudData.editTexts['scTitle']=title.innerHTML;
+        showToast('☁️','Secret title saved!');
+      });
+    }
+    if(!body._wired){
+      body._wired=true;
+      body.addEventListener('blur',async()=>{
+        await saveET('scBody', body.innerHTML);
+        cloudData.editTexts['scBody']=body.innerHTML;
+        showToast('☁️','Secret message saved!');
+      });
+    }
+  } else {
+    title.contentEditable='false';
+    body.contentEditable='false';
+    hint.style.display='none';
+  }
 }
 
 /* ════════════════════════════════════════════════
