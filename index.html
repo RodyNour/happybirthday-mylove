@@ -6,6 +6,39 @@
 <title>For Radwa — A Gift</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&family=Syne:wght@300;400;600;700;800&family=DM+Sans:wght@200;300;400&display=swap" rel="stylesheet">
 <style>
+  #musicBtn{
+  position: fixed;
+  top: 22px;
+  left: 22px;
+  z-index: 1000;
+
+  background: rgba(5,4,10,.75);
+  border: 1px solid rgba(255,255,255,.08);
+
+  color: var(--silver-dim);
+
+  padding: 10px 18px;
+
+  font-family: var(--sans);
+  font-size: .55rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+
+  backdrop-filter: blur(14px);
+
+  cursor: none;
+
+  transition:
+  border-color .25s ease,
+  color .25s ease,
+  background .25s ease;
+}
+
+#musicBtn:hover{
+  border-color: rgba(200,120,138,.5);
+  color: var(--rose);
+  background: rgba(12,10,20,.92);
+}
 /* ═══════════ ROOT ═══════════ */
 :root {
   --ink: #05040a;
@@ -416,6 +449,7 @@ body {
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
+<button id="musicBtn">♫</button>
 <!-- Cursor -->
 <div id="cur"></div>
 <div id="cur-ring"></div>
@@ -487,10 +521,10 @@ body {
     <div class="act3-rule" id="a3rule"></div>
 
     <p class="act3-prose2" id="a3prose2">
-      What you are about to see<br>
-      is not a gift made in a day.<br>
-      It is made of every ordinary moment<br>
-      that turned out to be <em>anything but.</em>
+      No expectations<br>
+     Just you,<br>
+      the pages,<br>
+     and whatever happens in between.<em></em>
     </p>
 
     <div class="act3-cta" id="a3cta">
@@ -810,9 +844,30 @@ document.getElementById('backBtn').addEventListener('click', ()=>{
     setTimeout(()=>overlay.classList.remove('leaving'),1100);
   },950);
 });
-  window.addEventListener('click', () => {
-  document.getElementById('bgMusic').play();
-}, { once: true });
+const music = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+
+music.volume = 0.35;
+
+musicBtn.addEventListener('click', async ()=>{
+
+  try{
+
+    if(music.paused){
+      await music.play();
+      musicBtn.textContent='✕'; 
+    }
+
+    else{
+      music.pause();
+      musicBtn.textContent='♫';
+    }
+
+  }catch(err){
+    console.log(err);
+  }
+
+});
 </script>
 </body>
 </html>
