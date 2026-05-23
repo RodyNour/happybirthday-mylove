@@ -395,7 +395,7 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
       <input type="file" accept="audio/*" id="songFileInput">
     </div>
     <div class="mp-note">
-      💡 لأغاني بهاء سلطان: حمّلي MP3 من <a href="https://ytmp3.cc" target="_blank">ytmp3.cc</a> (مجاني) وارفعيه هنا.<br>
+      💡  <a href="https://ytmp3.cc" target="_blank">ytmp3.cc</a> .<br>
       ⚠️ الملف لازم يكون أقل من <strong>5 MB</strong> عشان يتحفظ على السحابة.
     </div>
     <div class="mp-actions">
@@ -1275,8 +1275,9 @@ async function boot(){
     await loadCloudData();
     BOOK_PAGES=buildPages('en');
     // set secret text
-    document.getElementById('scTitle').textContent=T.en.scTitle;
-    document.getElementById('scBody').innerHTML=T.en.scBody;
+ // Load secret from cloud or use default
+document.getElementById('scTitle').innerHTML = cloudData.editTexts?.scTitle || T.en.scTitle;
+document.getElementById('scBody').innerHTML  = cloudData.editTexts?.scBody || T.en.scBody;
     if(cloudData.songData){
       bgAudio.src=cloudData.songData;
       document.getElementById('currentSongDisplay').innerHTML=`🎵 <strong>${cloudData.songName}</strong>`;
