@@ -11,35 +11,23 @@
   top: 22px;
   left: 22px;
   z-index: 1000;
-
   background: rgba(5,4,10,.75);
   border: 1px solid rgba(255,255,255,.08);
-
   color: var(--silver-dim);
-
   padding: 10px 18px;
-
   font-family: var(--sans);
   font-size: .55rem;
   letter-spacing: .28em;
   text-transform: uppercase;
-
   backdrop-filter: blur(14px);
-
   cursor: none;
-
-  transition:
-  border-color .25s ease,
-  color .25s ease,
-  background .25s ease;
+  transition: border-color .25s ease, color .25s ease, background .25s ease;
 }
-
 #musicBtn:hover{
   border-color: rgba(200,120,138,.5);
   color: var(--rose);
   background: rgba(12,10,20,.92);
 }
-/* ═══════════ ROOT ═══════════ */
 :root {
   --ink: #05040a;
   --deep: #080712;
@@ -56,15 +44,8 @@
   --sans: 'Syne', sans-serif;
   --body: 'DM Sans', sans-serif;
 }
-
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-html {
-  background: var(--ink);
-  overflow: hidden;
-  height: 100%;
-}
-
+html { background: var(--ink); overflow: hidden; height: 100%; }
 body {
   background: var(--ink);
   color: var(--white);
@@ -73,10 +54,9 @@ body {
   cursor: none;
   font-family: var(--body);
   -webkit-font-smoothing: antialiased;
-  
 }
 
-/* ═══════════ CURSOR ═══════════ */
+/* CURSOR */
 #cur {
   position: fixed;
   width: 8px; height: 8px;
@@ -100,14 +80,10 @@ body {
   transition: left .14s ease-out, top .14s ease-out, width .25s, height .25s, border-color .25s;
 }
 
-/* ═══════════ CANVAS ═══════════ */
-#veil {
-  position: fixed; inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
+/* CANVAS */
+#veil { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
 
-/* ═══════════ NOISE ═══════════ */
+/* NOISE */
 #noise {
   position: fixed; inset: 0; z-index: 1;
   pointer-events: none; opacity: .025;
@@ -122,7 +98,7 @@ body {
   75%  { background-position: 65px 25px; }
 }
 
-/* ═══════════ ACTS SYSTEM ═══════════ */
+/* ACTS */
 .act {
   position: fixed; inset: 0; z-index: 10;
   display: flex; flex-direction: column;
@@ -132,15 +108,134 @@ body {
 }
 .act.visible { opacity: 1; pointer-events: all; }
 
-/* ═══════════════════════════════════════
-   ACT 1 — OPENING
-═══════════════════════════════════════ */
+/* ═══════ PASSWORD SCREEN ═══════ */
+#actPassword {
+  background: radial-gradient(ellipse at 50% 30%, #120a1a 0%, #05040a 70%);
+  text-align: center;
+  padding: 40px;
+  z-index: 20;
+}
+.pw-eyebrow {
+  font-family: var(--sans);
+  font-size: clamp(.55rem, 1.2vw, .7rem);
+  font-weight: 300;
+  letter-spacing: .55em;
+  color: var(--silver-dim);
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 1.4s ease, transform 1.4s ease;
+}
+.pw-eyebrow.in { opacity: 1; transform: translateY(0); }
+.pw-title {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 5vw, 3.5rem);
+  font-weight: 200;
+  font-style: italic;
+  color: var(--white);
+  margin-bottom: 14px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.2s ease .3s, transform 1.2s ease .3s;
+}
+.pw-title.in { opacity: 1; transform: translateY(0); }
+.pw-title span {
+  background: linear-gradient(135deg, var(--white) 0%, var(--rose) 50%, var(--gold) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.pw-sub {
+  font-family: var(--serif);
+  font-size: clamp(.85rem, 1.8vw, 1.1rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--white-dim);
+  margin-bottom: 48px;
+  opacity: 0;
+  transition: opacity 1.2s ease .7s;
+}
+.pw-sub.in { opacity: 1; }
+.pw-field-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 1.2s ease 1s, transform 1.2s ease 1s;
+}
+.pw-field-wrap.in { opacity: 1; transform: translateY(0); }
+.pw-input {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(200,120,138,.25);
+  color: var(--white);
+  font-family: var(--sans);
+  font-size: 1.4rem;
+  letter-spacing: .5em;
+  text-align: center;
+  padding: 14px 32px;
+  width: 200px;
+  outline: none;
+  cursor: none;
+  transition: border-color .3s ease, background .3s ease;
+}
+.pw-input:focus {
+  border-color: rgba(200,120,138,.6);
+  background: rgba(200,120,138,.04);
+}
+.pw-input::placeholder { color: var(--silver-dim); letter-spacing: .3em; font-size: .9rem; }
+.pw-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: transparent;
+  border: 1px solid rgba(200,120,138,.35);
+  color: var(--rose);
+  font-family: var(--sans);
+  font-size: clamp(.6rem, 1.3vw, .72rem);
+  font-weight: 400;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  padding: 14px 36px;
+  cursor: none;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .4s ease, color .4s ease;
+}
+.pw-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(200,120,138,.12), rgba(200,169,110,.08));
+  transform: translateX(-105%);
+  transition: transform .5s cubic-bezier(.16,1,.3,1);
+}
+.pw-btn:hover::before { transform: translateX(0); }
+.pw-btn:hover { border-color: rgba(200,120,138,.7); color: var(--white); }
+.pw-error {
+  font-family: var(--serif);
+  font-size: .95rem;
+  font-style: italic;
+  color: var(--rose);
+  opacity: 0;
+  transition: opacity .4s ease;
+  height: 24px;
+  margin-top: 4px;
+}
+.pw-error.show { opacity: 1; }
+.pw-rule {
+  width: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--rose-dim), transparent);
+  margin: 0 auto 36px;
+  transition: width 2s cubic-bezier(.16,1,.3,1) .5s;
+}
+.pw-rule.in { width: min(260px, 40vw); }
+
+/* ═══════ ACT 1 ═══════ */
 #act1 {
   background: radial-gradient(ellipse at 50% 30%, #120a1a 0%, #05040a 70%);
   text-align: center;
   padding: 40px;
 }
-
 .act1-eyebrow {
   font-family: var(--sans);
   font-size: clamp(.55rem, 1.2vw, .7rem);
@@ -154,11 +249,7 @@ body {
   transition: opacity 1.4s ease, transform 1.4s ease;
 }
 .act1-eyebrow.in { opacity: 1; transform: translateY(0); }
-
-.act1-title-wrap {
-  overflow: hidden;
-  margin-bottom: 32px;
-}
+.act1-title-wrap { overflow: hidden; margin-bottom: 32px; }
 .act1-title {
   font-family: var(--serif);
   font-size: clamp(3.5rem, 10vw, 9rem);
@@ -177,7 +268,6 @@ body {
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   display: inline;
 }
-
 .act1-rule {
   width: 0; height: 1px;
   background: linear-gradient(90deg, transparent, var(--rose-dim), transparent);
@@ -185,7 +275,6 @@ body {
   transition: width 2s cubic-bezier(.16,1,.3,1) .6s;
 }
 .act1-rule.in { width: min(320px, 50vw); }
-
 .act1-sub {
   font-family: var(--serif);
   font-size: clamp(.95rem, 2.2vw, 1.3rem);
@@ -199,7 +288,6 @@ body {
   transition: opacity 1.6s ease 1.2s, transform 1.6s ease 1.2s;
 }
 .act1-sub.in { opacity: 1; transform: translateY(0); }
-
 .act1-cta {
   margin-top: 60px;
   opacity: 0;
@@ -207,7 +295,6 @@ body {
   transition: opacity 1.4s ease 2s, transform 1.4s ease 2s;
 }
 .act1-cta.in { opacity: 1; transform: translateY(0); }
-
 .cta-btn {
   display: inline-flex;
   align-items: center;
@@ -251,17 +338,9 @@ body {
 }
 .cta-btn:hover .cta-arrow { width: 30px; }
 
-/* ═══════════════════════════════════════
-   ACT 2 — PARTICLES / TRANSITION
-═══════════════════════════════════════ */
-#act2 {
-  background: var(--ink);
-  z-index: 15;
-}
-#act2Canvas {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-}
+/* ═══════ ACT 2 ═══════ */
+#act2 { background: var(--ink); z-index: 15; }
+#act2Canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .act2-center {
   position: relative; z-index: 2;
   text-align: center;
@@ -279,9 +358,7 @@ body {
 }
 .act2-word.show { opacity: 1; }
 
-/* ═══════════════════════════════════════
-   ACT 3 — EMOTIONAL
-═══════════════════════════════════════ */
+/* ═══════ ACT 3 ═══════ */
 #act3 {
   background: radial-gradient(ellipse at 40% 60%, #0e0a18 0%, #05040a 65%);
   padding: clamp(40px, 8vw, 120px) clamp(24px, 8vw, 80px);
@@ -289,10 +366,7 @@ body {
   align-items: flex-start;
   justify-content: center;
 }
-.act3-inner {
-  max-width: 680px;
-  width: 100%;
-}
+.act3-inner { max-width: 680px; width: 100%; }
 .act3-label {
   font-family: var(--sans);
   font-size: clamp(.52rem, 1.1vw, .64rem);
@@ -305,7 +379,6 @@ body {
   transition: opacity 1s ease, transform 1s ease;
 }
 .act3-label.in { opacity: 1; transform: translateY(0); }
-
 .act3-prose {
   font-family: var(--serif);
   font-size: clamp(1.15rem, 2.6vw, 1.65rem);
@@ -316,13 +389,11 @@ body {
   transition: opacity 1.4s ease .3s, transform 1.4s ease .3s;
 }
 .act3-prose.in { opacity: 1; transform: translateY(0); }
-
 .act3-prose em {
   font-style: italic;
   background: linear-gradient(135deg, var(--rose), var(--gold));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
-
 .act3-rule {
   width: 0; height: 1px;
   background: linear-gradient(90deg, var(--rose-dim), transparent);
@@ -330,7 +401,6 @@ body {
   transition: width 1.8s cubic-bezier(.16,1,.3,1) .5s;
 }
 .act3-rule.in { width: min(180px, 30vw); }
-
 .act3-prose2 {
   font-family: var(--serif);
   font-size: clamp(.9rem, 2vw, 1.2rem);
@@ -342,7 +412,6 @@ body {
   transition: opacity 1.4s ease .8s, transform 1.4s ease .8s;
 }
 .act3-prose2.in { opacity: 1; transform: translateY(0); }
-
 .act3-cta {
   margin-top: 56px;
   opacity: 0; transform: translateY(14px);
@@ -350,9 +419,160 @@ body {
 }
 .act3-cta.in { opacity: 1; transform: translateY(0); }
 
-/* ═══════════════════════════════════════
-   ACT 4 — REVEAL TRANSITION
-═══════════════════════════════════════ */
+/* ═══════ QUIZ ACT ═══════ */
+#actQuiz {
+  background: radial-gradient(ellipse at 50% 40%, #110a1c 0%, #05040a 68%);
+  text-align: center;
+  padding: 40px;
+  z-index: 12;
+}
+.quiz-eyebrow {
+  font-family: var(--sans);
+  font-size: clamp(.52rem, 1.1vw, .65rem);
+  font-weight: 300;
+  letter-spacing: .5em;
+  color: var(--silver-dim);
+  text-transform: uppercase;
+  margin-bottom: 36px;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+.quiz-eyebrow.in { opacity: 1; transform: translateY(0); }
+.quiz-question {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 4.5vw, 3rem);
+  font-weight: 200;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.25;
+  margin-bottom: 18px;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 1.2s ease .2s, transform 1.2s ease .2s;
+}
+.quiz-question.in { opacity: 1; transform: translateY(0); }
+.quiz-question span {
+  background: linear-gradient(135deg, var(--rose), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.quiz-rule {
+  width: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--rose-dim), transparent);
+  margin: 24px auto 44px;
+  transition: width 1.8s cubic-bezier(.16,1,.3,1) .4s;
+}
+.quiz-rule.in { width: min(260px, 40vw); }
+.quiz-choices {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0; transform: translateY(18px);
+  transition: opacity 1.2s ease .8s, transform 1.2s ease .8s;
+}
+.quiz-choices.in { opacity: 1; transform: translateY(0); }
+.quiz-choice {
+  background: transparent;
+  border: 1px solid rgba(200,120,138,.3);
+  color: var(--white-dim);
+  font-family: var(--serif);
+  font-size: clamp(1rem, 2.4vw, 1.4rem);
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: .04em;
+  padding: 18px 48px;
+  cursor: none;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .4s ease, color .4s ease;
+  min-width: 180px;
+}
+.quiz-choice::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(200,120,138,.1), rgba(200,169,110,.06));
+  transform: translateX(-105%);
+  transition: transform .5s cubic-bezier(.16,1,.3,1);
+}
+.quiz-choice:hover::before { transform: translateX(0); }
+.quiz-choice:hover { border-color: rgba(200,120,138,.65); color: var(--white); }
+
+/* Wrong answer overlay */
+#wrongOverlay {
+  position: fixed; inset: 0; z-index: 600;
+  background: rgba(5,4,10,.96);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity .5s ease;
+  padding: 40px;
+}
+#wrongOverlay.show { opacity: 1; pointer-events: all; }
+.wrong-emoji {
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  margin-bottom: 24px;
+  animation: wrongShake .5s ease;
+}
+@keyframes wrongShake {
+  0%,100% { transform: rotate(0); }
+  20% { transform: rotate(-8deg) scale(1.1); }
+  40% { transform: rotate(8deg) scale(1.1); }
+  60% { transform: rotate(-6deg); }
+  80% { transform: rotate(6deg); }
+}
+.wrong-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 200;
+  font-style: italic;
+  color: var(--rose);
+  margin-bottom: 14px;
+}
+.wrong-sub {
+  font-family: var(--serif);
+  font-size: clamp(.9rem, 2vw, 1.2rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--white-dim);
+  line-height: 1.8;
+  max-width: 400px;
+  margin-bottom: 40px;
+}
+.wrong-loser-bar {
+  font-family: var(--sans);
+  font-size: clamp(.55rem, 1.2vw, .7rem);
+  letter-spacing: .4em;
+  color: var(--silver-dim);
+  text-transform: uppercase;
+  margin-bottom: 36px;
+}
+.wrong-retry {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
+  border: 1px solid rgba(200,120,138,.3);
+  color: var(--rose);
+  font-family: var(--sans);
+  font-size: .65rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  padding: 14px 32px;
+  cursor: none;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .4s, color .4s;
+}
+.wrong-retry::before {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(135deg,rgba(200,120,138,.1),rgba(200,169,110,.06));
+  transform: translateX(-105%);
+  transition: transform .5s cubic-bezier(.16,1,.3,1);
+}
+.wrong-retry:hover::before { transform: translateX(0); }
+.wrong-retry:hover { border-color: rgba(200,120,138,.65); color: var(--white); }
+
+/* ═══════ REVEAL OVERLAY ═══════ */
 #revealOverlay {
   position: fixed; inset: 0; z-index: 500;
   background: var(--ink);
@@ -395,9 +615,7 @@ body {
 #bookShell.active .back-pill { opacity: 1; pointer-events: all; }
 .back-pill:hover { border-color: rgba(200,120,138,.5); color: var(--rose); }
 
-/* ═══════════════════════════════════════
-   AMBIENT ORBS
-═══════════════════════════════════════ */
+/* ORBS */
 .orb {
   position: fixed; border-radius: 50%;
   pointer-events: none; z-index: 2;
@@ -414,9 +632,7 @@ body {
   100% { transform: translate(30px,20px) scale(1.08); }
 }
 
-/* ═══════════════════════════════════════
-   FLOATING PETALS / DOTS
-═══════════════════════════════════════ */
+/* PETALS */
 .petal {
   position: fixed;
   width: 3px; height: 3px;
@@ -434,56 +650,62 @@ body {
   100% { opacity: 0; transform: translateY(-100vh) rotate(360deg) scale(.2); }
 }
 
-/* ═══════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════ */
 @media (max-width: 600px) {
   #act3 { text-align: center; align-items: center; }
   .act3-rule { margin-left: auto; margin-right: auto; }
+  .quiz-choice { min-width: 140px; padding: 14px 28px; }
 }
 </style>
 </head>
 <body>
-  <!-- Music -->
+
 <audio id="bgMusic" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
-
 <button id="musicBtn">♫</button>
-<!-- Cursor -->
+
 <div id="cur"></div>
 <div id="cur-ring"></div>
-
-<!-- Noise -->
 <div id="noise"></div>
-
-<!-- Canvas veil -->
 <canvas id="veil"></canvas>
 
-<!-- Ambient orbs -->
 <div class="orb orb1"></div>
 <div class="orb orb2"></div>
 <div class="orb orb3"></div>
 
-<!-- ═══════════════════════════════════
+<!-- ══════════════════════════════════
+     PASSWORD SCREEN
+══════════════════════════════════ -->
+<div class="act" id="actPassword">
+  <p class="pw-eyebrow" id="pwEyebrow">Private — for you alone</p>
+  <div class="act1-title-wrap">
+    <div class="pw-title" id="pwTitle">Enter the <span>key.</span></div>
+  </div>
+  <div class="pw-rule" id="pwRule"></div>
+  <p class="pw-sub" id="pwSub">Some things are only meant for the right person.</p>
+  <div class="pw-field-wrap" id="pwFieldWrap">
+    <input class="pw-input" id="pwInput" type="password" maxlength="4" placeholder="····" autocomplete="off" />
+    <div class="pw-error" id="pwError">that is not the right key.</div>
+    <button class="pw-btn" id="pwSubmit">
+      Enter
+      <span class="cta-arrow"></span>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
      ACT 1 — OPENING
-═══════════════════════════════════ -->
+══════════════════════════════════ -->
 <div class="act" id="act1">
   <p class="act1-eyebrow" id="a1eyebrow">A gift — for you, and only you</p>
-
   <div class="act1-title-wrap">
-    <span class="act1-title" id="a1title">
-      For <span>Radwa.</span>
-    </span>
+    <span class="act1-title" id="a1title">For <span>Radwa.</span></span>
   </div>
-
   <div class="act1-rule" id="a1rule"></div>
-
   <p class="act1-sub" id="a1sub">
     There are things that cannot be said out loud.<br>
     This is an attempt, anyway.
   </p>
-
   <div class="act1-cta" id="a1cta">
     <button class="cta-btn" id="act1Btn">
       Begin
@@ -492,9 +714,9 @@ body {
   </div>
 </div>
 
-<!-- ═══════════════════════════════════
+<!-- ══════════════════════════════════
      ACT 2 — TRANSITION
-═══════════════════════════════════ -->
+══════════════════════════════════ -->
 <div class="act" id="act2">
   <canvas id="act2Canvas"></canvas>
   <div class="act2-center">
@@ -502,107 +724,123 @@ body {
   </div>
 </div>
 
-<!-- ═══════════════════════════════════
+<!-- ══════════════════════════════════
      ACT 3 — EMOTIONAL
-═══════════════════════════════════ -->
+══════════════════════════════════ -->
 <div class="act" id="act3">
   <div class="act3-inner">
-
     <div class="act3-label" id="a3label">A note, before we begin</div>
-
- <p class="act3-prose" id="a3prose">
-  There was no moment I could point to,<br><br>
-  only the realization that with you,<br>
-  things that used to feel heavy<br>
-  did not feel the same anymore,<br>
-   I Love you.
-</p>
-
+    <p class="act3-prose" id="a3prose">
+      There was no moment I could point to,<br><br>
+      only the realization that with you,<br>
+      things that used to feel heavy<br>
+      did not feel the same anymore,<br>
+      I Love you.
+    </p>
     <div class="act3-rule" id="a3rule"></div>
-
     <p class="act3-prose2" id="a3prose2">
       No expectations<br>
-     Just you,<br>
+      Just you,<br>
       the pages,<br>
-     and whatever happens in between.<em></em>
+      and whatever happens in between.<em></em>
     </p>
-
     <div class="act3-cta" id="a3cta">
       <button class="cta-btn" id="act3Btn">
         Open the book
         <span class="cta-arrow"></span>
       </button>
     </div>
-
   </div>
 </div>
 
-<!-- ═══════════════════════════════════
-     REVEAL OVERLAY
-═══════════════════════════════════ -->
+<!-- ══════════════════════════════════
+     QUIZ ACT
+══════════════════════════════════ -->
+<div class="act" id="actQuiz">
+  <p class="quiz-eyebrow" id="quizEyebrow">One question, before the book opens</p>
+  <div class="quiz-question" id="quizQuestion">
+    Who do you love <span>more?</span>
+  </div>
+  <div class="quiz-rule" id="quizRule"></div>
+  <div class="quiz-choices" id="quizChoices">
+    <button class="quiz-choice" id="choiceNour">Nour</button>
+    <button class="quiz-choice" id="choiceToti">Toti</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     WRONG ANSWER OVERLAY
+══════════════════════════════════ -->
+<div id="wrongOverlay">
+  <div class="wrong-emoji" id="wrongEmoji">💀</div>
+  <div class="wrong-title">Wrong Answer.</div>
+  <div class="wrong-loser-bar" id="wrongLoserBar">❌ &nbsp; loser alert &nbsp; ❌</div>
+  <p class="wrong-sub" id="wrongSub">
+    seriously? toti?? 😭😭<br>
+    that's not how this works bestie 💅<br>
+    try again — with the right answer this time.
+  </p>
+  <button class="wrong-retry" id="wrongRetry">
+    try again
+    <span class="cta-arrow"></span>
+  </button>
+</div>
+
+<!-- REVEAL OVERLAY -->
 <div id="revealOverlay"></div>
 
-<!-- ═══════════════════════════════════
-     BOOK SHELL
-═══════════════════════════════════ -->
+<!-- BOOK SHELL -->
 <div id="bookShell">
   <button class="back-pill" id="backBtn">← Return</button>
   <iframe id="bookFrame" src="radwa-nour-book.html" title="A Book Full of Us"></iframe>
 </div>
 
 <script>
-/* ══════════════════════════════════════════
-   CURSOR
-══════════════════════════════════════════ */
-const cur   = document.getElementById('cur');
-const curR  = document.getElementById('cur-ring');
+/* ═══════ CURSOR ═══════ */
+const cur  = document.getElementById('cur');
+const curR = document.getElementById('cur-ring');
 let mx=window.innerWidth/2, my=window.innerHeight/2;
 let rx=mx, ry=my;
-
 document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  cur.style.left = mx+'px'; cur.style.top = my+'px';
+  mx=e.clientX; my=e.clientY;
+  cur.style.left=mx+'px'; cur.style.top=my+'px';
 });
 (function loop(){
-  rx += (mx-rx)*.11; ry += (my-ry)*.11;
-  curR.style.left = rx+'px'; curR.style.top = ry+'px';
+  rx+=(mx-rx)*.11; ry+=(my-ry)*.11;
+  curR.style.left=rx+'px'; curR.style.top=ry+'px';
   requestAnimationFrame(loop);
 })();
-
 document.addEventListener('mouseover', e => {
-  if(e.target.closest('button,.cta-btn')) {
+  if(e.target.closest('button,.cta-btn,.quiz-choice,.wrong-retry,.pw-btn')) {
     cur.style.width='16px'; cur.style.height='16px';
     curR.style.width='44px'; curR.style.height='44px';
     curR.style.borderColor='rgba(200,120,138,.6)';
   }
 });
 document.addEventListener('mouseout', e => {
-  if(e.target.closest('button,.cta-btn')) {
+  if(e.target.closest('button,.cta-btn,.quiz-choice,.wrong-retry,.pw-btn')) {
     cur.style.width='8px'; cur.style.height='8px';
     curR.style.width='28px'; curR.style.height='28px';
     curR.style.borderColor='rgba(200,120,138,.3)';
   }
 });
 
-/* ══════════════════════════════════════════
-   BACKGROUND CANVAS — subtle drifting nebula
-══════════════════════════════════════════ */
-const veil  = document.getElementById('veil');
-const vCtx  = veil.getContext('2d');
-let vW, vH, vDots=[];
-
+/* ═══════ BACKGROUND CANVAS ═══════ */
+const veil=document.getElementById('veil');
+const vCtx=veil.getContext('2d');
+let vW,vH,vDots=[];
 function resizeVeil(){
-  veil.width  = vW = window.innerWidth;
-  veil.height = vH = window.innerHeight;
+  veil.width=vW=window.innerWidth;
+  veil.height=vH=window.innerHeight;
   buildDots();
 }
 function buildDots(n=70){
   vDots=[];
   for(let i=0;i<n;i++) vDots.push({
-    x: Math.random()*vW, y: Math.random()*vH,
-    r: Math.random()*.7+.1,
-    a: Math.random()*.5+.05,
-    da: (Math.random()*.004+.001)*(Math.random()<.5?1:-1),
+    x:Math.random()*vW, y:Math.random()*vH,
+    r:Math.random()*.7+.1,
+    a:Math.random()*.5+.05,
+    da:(Math.random()*.004+.001)*(Math.random()<.5?1:-1),
     vx:(Math.random()-.5)*.04, vy:(Math.random()-.5)*.04
   });
 }
@@ -618,23 +856,15 @@ function drawVeil(){
   });
   requestAnimationFrame(drawVeil);
 }
-window.addEventListener('resize', resizeVeil);
+window.addEventListener('resize',resizeVeil);
 resizeVeil(); drawVeil();
 
-/* ══════════════════════════════════════════
-   ORBS — show after brief delay
-══════════════════════════════════════════ */
-setTimeout(()=>{
-  document.querySelectorAll('.orb').forEach(o=>o.classList.add('show'));
-},600);
+setTimeout(()=>{ document.querySelectorAll('.orb').forEach(o=>o.classList.add('show')); },600);
 
-/* ══════════════════════════════════════════
-   PETALS — ambient floating dots
-══════════════════════════════════════════ */
 function spawnPetal(){
   const el=document.createElement('div');
   el.className='petal';
-  const size = Math.random()*3+1;
+  const size=Math.random()*3+1;
   el.style.width=el.style.height=size+'px';
   el.style.left=Math.random()*100+'vw';
   el.style.bottom='-10px';
@@ -644,81 +874,99 @@ function spawnPetal(){
   document.body.appendChild(el);
   el.addEventListener('animationend',()=>el.remove());
 }
-setInterval(spawnPetal, 2200);
+setInterval(spawnPetal,2200);
 
-/* ══════════════════════════════════════════
-   ACT SYSTEM
-══════════════════════════════════════════ */
-let currentAct = 0;
-
-function showAct(id, delay=0){
+/* ═══════ ACT SYSTEM ═══════ */
+function showAct(id,delay=0){
   setTimeout(()=>{
     document.querySelectorAll('.act').forEach(a=>a.classList.remove('visible'));
-    const el=document.getElementById(id);
-    el.classList.add('visible');
-  }, delay);
+    document.getElementById(id).classList.add('visible');
+  },delay);
 }
 
-function hideAct(id){
-  document.getElementById(id).classList.remove('visible');
+/* ═══════ PASSWORD SCREEN ═══════ */
+showAct('actPassword');
+setTimeout(()=>{ document.getElementById('pwTitle').classList.add('in'); },400);
+setTimeout(()=>{
+  document.getElementById('pwEyebrow').classList.add('in');
+  document.getElementById('pwRule').classList.add('in');
+},800);
+setTimeout(()=>{ document.getElementById('pwSub').classList.add('in'); },1200);
+setTimeout(()=>{ document.getElementById('pwFieldWrap').classList.add('in'); },1700);
+
+const CORRECT_PW = '2767';
+
+function checkPassword(){
+  const val = document.getElementById('pwInput').value.trim();
+  const err = document.getElementById('pwError');
+  if(val === CORRECT_PW){
+    err.classList.remove('show');
+    // fade out password screen
+    const pwAct = document.getElementById('actPassword');
+    pwAct.style.transition='opacity .7s ease';
+    pwAct.style.opacity='0';
+    setTimeout(()=>{
+      pwAct.classList.remove('visible');
+      pwAct.style.opacity='';
+      pwAct.style.transition='';
+      startAct1();
+    },750);
+  } else {
+    err.classList.add('show');
+    document.getElementById('pwInput').value='';
+    // shake input
+    const inp = document.getElementById('pwInput');
+    inp.style.transition='border-color .1s ease';
+    inp.style.borderColor='rgba(200,120,138,.8)';
+    setTimeout(()=>{ inp.style.borderColor=''; inp.style.transition=''; },600);
+  }
 }
 
-/* ══════════════════════════════════════════
-   ACT 1 — animate in
-══════════════════════════════════════════ */
-showAct('act1');
-setTimeout(()=>{
-  document.getElementById('a1title').classList.add('in');
-},400);
-setTimeout(()=>{
-  document.getElementById('a1eyebrow').classList.add('in');
-  document.getElementById('a1rule').classList.add('in');
-},900);
-setTimeout(()=>{
-  document.getElementById('a1sub').classList.add('in');
-},1400);
-setTimeout(()=>{
-  document.getElementById('a1cta').classList.add('in');
-},2200);
+document.getElementById('pwSubmit').addEventListener('click', checkPassword);
+document.getElementById('pwInput').addEventListener('keydown', e=>{
+  if(e.key==='Enter') checkPassword();
+  document.getElementById('pwError').classList.remove('show');
+});
 
+/* ═══════ ACT 1 ═══════ */
+function startAct1(){
+  showAct('act1');
+  setTimeout(()=>document.getElementById('a1title').classList.add('in'),400);
+  setTimeout(()=>{
+    document.getElementById('a1eyebrow').classList.add('in');
+    document.getElementById('a1rule').classList.add('in');
+  },900);
+  setTimeout(()=>document.getElementById('a1sub').classList.add('in'),1400);
+  setTimeout(()=>document.getElementById('a1cta').classList.add('in'),2200);
+}
 document.getElementById('act1Btn').addEventListener('click', goToAct2);
 
-/* ══════════════════════════════════════════
-   ACT 2 — particle burst transition
-══════════════════════════════════════════ */
-const act2C = document.getElementById('act2Canvas');
-const a2Ctx = act2C.getContext('2d');
-let a2W, a2H, a2Particles=[];
+/* ═══════ ACT 2 ═══════ */
+const act2C=document.getElementById('act2Canvas');
+const a2Ctx=act2C.getContext('2d');
+let a2W,a2H,a2Particles=[];
 let act2AnimFrame=null;
-
 function resizeAct2(){
   act2C.width=a2W=act2C.offsetWidth;
   act2C.height=a2H=act2C.offsetHeight;
 }
-
 function buildAct2Particles(){
   a2Particles=[];
   for(let i=0;i<120;i++){
     const angle=Math.random()*Math.PI*2;
     const speed=Math.random()*1.2+.2;
     a2Particles.push({
-      x: a2W/2, y: a2H/2,
-      vx: Math.cos(angle)*speed,
-      vy: Math.sin(angle)*speed-(Math.random()*.6),
-      r: Math.random()*2+.5,
-      a: Math.random()*.8+.2,
-      da: -(Math.random()*.006+.002),
-      color: Math.random()<.6?'200,120,138':'200,169,110'
+      x:a2W/2, y:a2H/2,
+      vx:Math.cos(angle)*speed,
+      vy:Math.sin(angle)*speed-(Math.random()*.6),
+      r:Math.random()*2+.5,
+      a:Math.random()*.8+.2,
+      da:-(Math.random()*.006+.002),
+      color:Math.random()<.6?'200,120,138':'200,169,110'
     });
   }
 }
-
-const A2_WORDS = [
-  "Something was made for you.",
-  "With everything.",
-  "Open it.",
-];
-
+const A2_WORDS=["Something was made for you.","With everything.","Open it."];
 let a2WordIdx=0;
 function cycleAct2Words(){
   const el=document.getElementById('a2word');
@@ -727,66 +975,49 @@ function cycleAct2Words(){
     if(a2WordIdx<A2_WORDS.length){
       el.textContent=A2_WORDS[a2WordIdx++];
       el.classList.add('show');
-      if(a2WordIdx<A2_WORDS.length) setTimeout(cycleAct2Words, 1400);
+      if(a2WordIdx<A2_WORDS.length) setTimeout(cycleAct2Words,1400);
     }
   },400);
 }
-
-function drawAct2(t){
+function drawAct2(){
   a2Ctx.clearRect(0,0,a2W,a2H);
-  // dark bg with radial rose glow in center
   const g=a2Ctx.createRadialGradient(a2W/2,a2H/2,0,a2W/2,a2H/2,Math.min(a2W,a2H)*.45);
   g.addColorStop(0,'rgba(28,12,22,1)');
   g.addColorStop(1,'rgba(5,4,10,1)');
   a2Ctx.fillStyle=g; a2Ctx.fillRect(0,0,a2W,a2H);
-
   a2Particles.forEach(p=>{
     p.x+=p.vx; p.y+=p.vy; p.vy-=.004;
-    p.a+=p.da; if(p.a<0) p.a=0;
+    p.a+=p.da; if(p.a<0)p.a=0;
     a2Ctx.beginPath(); a2Ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
     a2Ctx.fillStyle=`rgba(${p.color},${p.a})`; a2Ctx.fill();
   });
   if(a2Particles.some(p=>p.a>0)) act2AnimFrame=requestAnimationFrame(drawAct2);
 }
-
 function goToAct2(){
-  // fade act1 out
   const act1=document.getElementById('act1');
   act1.style.transition='opacity .6s ease';
   act1.style.opacity='0';
-
   setTimeout(()=>{
     act1.classList.remove('visible');
-    act1.style.opacity='';
-    act1.style.transition='';
-
+    act1.style.opacity=''; act1.style.transition='';
     showAct('act2');
-    resizeAct2();
-    buildAct2Particles();
+    resizeAct2(); buildAct2Particles();
     requestAnimationFrame(drawAct2);
-    setTimeout(cycleAct2Words, 300);
-
-    // go to act3 after 4.2s
-    setTimeout(goToAct3, 4200);
+    setTimeout(cycleAct2Words,300);
+    setTimeout(goToAct3,4200);
   },650);
 }
 
-/* ══════════════════════════════════════════
-   ACT 3 — emotional prose
-══════════════════════════════════════════ */
+/* ═══════ ACT 3 ═══════ */
 function goToAct3(){
   if(act2AnimFrame) cancelAnimationFrame(act2AnimFrame);
   const act2=document.getElementById('act2');
   act2.style.transition='opacity .8s ease';
   act2.style.opacity='0';
-
   setTimeout(()=>{
     act2.classList.remove('visible');
-    act2.style.opacity='';
-    act2.style.transition='';
-
+    act2.style.opacity=''; act2.style.transition='';
     showAct('act3');
-
     setTimeout(()=>document.getElementById('a3label').classList.add('in'),200);
     setTimeout(()=>document.getElementById('a3prose').classList.add('in'),500);
     setTimeout(()=>document.getElementById('a3rule').classList.add('in'),1000);
@@ -794,40 +1025,65 @@ function goToAct3(){
     setTimeout(()=>document.getElementById('a3cta').classList.add('in'),2200);
   },850);
 }
+document.getElementById('act3Btn').addEventListener('click', goToQuiz);
 
-document.getElementById('act3Btn').addEventListener('click', openBook);
-
-/* ══════════════════════════════════════════
-   ACT 4 — REVEAL & OPEN BOOK
-══════════════════════════════════════════ */
-function openBook(){
-  const overlay = document.getElementById('revealOverlay');
-  const shell   = document.getElementById('bookShell');
-
-  // Curtain down
-  overlay.classList.add('entering');
-
+/* ═══════ QUIZ ═══════ */
+function goToQuiz(){
+  const act3=document.getElementById('act3');
+  act3.style.transition='opacity .7s ease';
+  act3.style.opacity='0';
   setTimeout(()=>{
-    // hide act3
-    document.getElementById('act3').classList.remove('visible');
-    // show shell
-    shell.classList.add('active');
+    act3.classList.remove('visible');
+    act3.style.opacity=''; act3.style.transition='';
+    showAct('actQuiz');
+    setTimeout(()=>document.getElementById('quizEyebrow').classList.add('in'),200);
+    setTimeout(()=>document.getElementById('quizQuestion').classList.add('in'),450);
+    setTimeout(()=>document.getElementById('quizRule').classList.add('in'),700);
+    setTimeout(()=>document.getElementById('quizChoices').classList.add('in'),1100);
+  },750);
+}
 
-    // Curtain lifts
+document.getElementById('choiceNour').addEventListener('click',()=>{
+  // correct — open book
+  openBook();
+});
+
+document.getElementById('choiceToti').addEventListener('click',()=>{
+  // wrong — show loser overlay
+  const overlay=document.getElementById('wrongOverlay');
+  overlay.classList.add('show');
+  // re-animate the emoji shake
+  const emojiEl=document.getElementById('wrongEmoji');
+  emojiEl.style.animation='none';
+  void emojiEl.offsetWidth;
+  emojiEl.style.animation='wrongShake .5s ease';
+});
+
+document.getElementById('wrongRetry').addEventListener('click',()=>{
+  document.getElementById('wrongOverlay').classList.remove('show');
+  // reset quiz choices animation so it feels fresh
+  const choices=document.getElementById('quizChoices');
+  choices.classList.remove('in');
+  setTimeout(()=>choices.classList.add('in'),100);
+});
+
+/* ═══════ OPEN BOOK ═══════ */
+function openBook(){
+  const overlay=document.getElementById('revealOverlay');
+  const shell=document.getElementById('bookShell');
+  overlay.classList.add('entering');
+  setTimeout(()=>{
+    document.getElementById('actQuiz').classList.remove('visible');
+    shell.classList.add('active');
     overlay.classList.remove('entering');
     overlay.classList.add('leaving');
-
-    setTimeout(()=>{
-      overlay.classList.remove('leaving');
-    },1100);
-
+    setTimeout(()=>overlay.classList.remove('leaving'),1100);
   },950);
 }
 
-document.getElementById('backBtn').addEventListener('click', ()=>{
-  const overlay = document.getElementById('revealOverlay');
-  const shell   = document.getElementById('bookShell');
-
+document.getElementById('backBtn').addEventListener('click',()=>{
+  const overlay=document.getElementById('revealOverlay');
+  const shell=document.getElementById('bookShell');
   overlay.classList.add('entering');
   setTimeout(()=>{
     shell.classList.remove('active');
@@ -844,29 +1100,16 @@ document.getElementById('backBtn').addEventListener('click', ()=>{
     setTimeout(()=>overlay.classList.remove('leaving'),1100);
   },950);
 });
-const music = document.getElementById('bgMusic');
-const musicBtn = document.getElementById('musicBtn');
 
-music.volume = 0.35;
-
-musicBtn.addEventListener('click', async ()=>{
-
+/* ═══════ MUSIC ═══════ */
+const music=document.getElementById('bgMusic');
+const musicBtn=document.getElementById('musicBtn');
+music.volume=0.35;
+musicBtn.addEventListener('click',async()=>{
   try{
-
-    if(music.paused){
-      await music.play();
-      musicBtn.textContent='✕'; 
-    }
-
-    else{
-      music.pause();
-      musicBtn.textContent='♫';
-    }
-
-  }catch(err){
-    console.log(err);
-  }
-
+    if(music.paused){ await music.play(); musicBtn.textContent='✕'; }
+    else { music.pause(); musicBtn.textContent='♫'; }
+  }catch(err){ console.log(err); }
 });
 </script>
 </body>
