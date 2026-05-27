@@ -63,12 +63,32 @@ body.ar{font-family:'Tajawal',sans-serif;direction:rtl}
 #rPanel .pshadow{background:linear-gradient(to right,rgba(0,0,0,.58),transparent)}
 #lCard.flip~.pshadow,#rCard.flip~.pshadow{opacity:1}
 
-/* PAGE BASE */
-.pg{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px 18px;position:relative;overflow:hidden;background:linear-gradient(155deg,#150024 0%,#090013 100%)}
-.pg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(168,85,247,.07),transparent 55%),radial-gradient(ellipse at 80% 80%,rgba(255,45,120,.07),transparent 55%);pointer-events:none}
-.pgn{position:absolute;bottom:8px;font-size:.5rem;color:var(--muted2);letter-spacing:.13em;opacity:.5}
-.pgn.l{left:13px}.pgn.r{right:13px}
-.deco{width:44px;height:1px;background:linear-gradient(90deg,transparent,var(--pu3),transparent);margin:5px auto}
+/* ══ PAGE BASE — SCROLLABLE ══ */
+.pg{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;align-items:center;
+  padding:16px 16px 20px;
+  position:relative;
+  overflow-y:auto;        /* ← scroll enabled */
+  overflow-x:hidden;
+  background:linear-gradient(155deg,#150024 0%,#090013 100%);
+  /* custom scrollbar */
+  scrollbar-width:thin;
+  scrollbar-color:rgba(200,120,138,.35) transparent;
+}
+.pg::-webkit-scrollbar{width:3px}
+.pg::-webkit-scrollbar-thumb{background:rgba(200,120,138,.4);border-radius:3px}
+.pg::-webkit-scrollbar-track{background:transparent}
+.pg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(168,85,247,.07),transparent 55%),radial-gradient(ellipse at 80% 80%,rgba(255,45,120,.07),transparent 55%);pointer-events:none;flex-shrink:0}
+/* subtle fade hint at bottom when content overflows */
+.pg::after{
+  content:'';position:sticky;bottom:0;left:0;right:0;height:18px;
+  background:linear-gradient(to top,rgba(9,0,19,.75),transparent);
+  pointer-events:none;flex-shrink:0;margin-top:auto;
+}
+.pgn{position:sticky;bottom:4px;font-size:.5rem;color:var(--muted2);letter-spacing:.13em;opacity:.5;width:100%;text-align:right}
+.pgn.l{text-align:left}
+.deco{width:44px;height:1px;background:linear-gradient(90deg,transparent,var(--pu3),transparent);margin:5px auto;flex-shrink:0}
 .decoP{background:linear-gradient(90deg,transparent,var(--ps),transparent)}
 @keyframes fY{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 @keyframes blk{0%,100%{opacity:.3}50%{opacity:.85}}
@@ -84,38 +104,36 @@ body.editmode .eu-mem{display:flex!important}
 
 /* COVER */
 .pg-cover{background:radial-gradient(ellipse at 50% 40%,#1e0035 0%,#060010 78%)}
-.cv-roses{font-size:1.7rem;letter-spacing:.26em;animation:fY 3s ease-in-out infinite;margin-bottom:6px;text-align:center}
-.cv-img-wrap{position:relative;width:116px;height:116px;margin:6px auto}
+.cv-roses{font-size:1.7rem;letter-spacing:.26em;animation:fY 3s ease-in-out infinite;margin-bottom:6px;text-align:center;flex-shrink:0}
+.cv-img-wrap{position:relative;width:116px;height:116px;margin:6px auto;flex-shrink:0}
 .cv-img{width:116px;height:116px;border-radius:50%;border:2px solid var(--pink);box-shadow:0 0 24px var(--gp),0 0 55px var(--gpu);background:linear-gradient(135deg,#2c004a,#0c0018);display:flex;align-items:center;justify-content:center;font-size:3rem;overflow:hidden;animation:mGlow 3s ease-in-out infinite alternate}
 .cv-img img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .eu-btn{display:none;position:absolute;bottom:2px;right:2px;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--pu2));border:2px solid #030007;align-items:center;justify-content:center;font-size:.75rem;cursor:pointer;z-index:5;box-shadow:0 0 10px var(--gp)}
 .eu-btn input{position:absolute;inset:0;opacity:0;cursor:pointer;border-radius:50%}
 .eu-mem{display:none;position:absolute;bottom:5px;right:5px;z-index:10;background:rgba(0,0,0,.6);border:1px solid rgba(255,45,120,.45);color:var(--ps);font-size:.47rem;padding:3px 7px;border-radius:99px;cursor:pointer;backdrop-filter:blur(6px);align-items:center;gap:3px}
 .eu-mem input{position:absolute;inset:0;opacity:0;cursor:pointer}
-.cv-title{font-family:'Dancing Script',cursive;font-size:clamp(1.25rem,3vw,1.9rem);background:linear-gradient(135deg,var(--ps),var(--gold),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 12px var(--gp));text-align:center;line-height:1.2}
-.cv-line{width:66px;height:1px;background:linear-gradient(90deg,transparent,var(--pink),transparent);margin:5px auto}
-.cv-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.82rem;color:var(--muted);letter-spacing:.12em;text-align:center;margin:3px 0 8px}
-.cv-hint{font-size:.54rem;letter-spacing:.2em;color:var(--pink);opacity:.72;text-transform:uppercase;animation:blk 2.2s ease-in-out infinite;text-align:center;cursor:pointer}
+.cv-title{font-family:'Dancing Script',cursive;font-size:clamp(1.25rem,3vw,1.9rem);background:linear-gradient(135deg,var(--ps),var(--gold),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 12px var(--gp));text-align:center;line-height:1.2;flex-shrink:0}
+.cv-line{width:66px;height:1px;background:linear-gradient(90deg,transparent,var(--pink),transparent);margin:5px auto;flex-shrink:0}
+.cv-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.82rem;color:var(--muted);letter-spacing:.12em;text-align:center;margin:3px 0 8px;flex-shrink:0}
+.cv-hint{font-size:.54rem;letter-spacing:.2em;color:var(--pink);opacity:.72;text-transform:uppercase;animation:blk 2.2s ease-in-out infinite;text-align:center;cursor:pointer;flex-shrink:0}
 
 /* INTRO */
-.pg-intro{background:radial-gradient(ellipse at 40% 30%,#1a0030 0%,#060010 75%);direction:rtl;font-family:'Tajawal',sans-serif;padding:16px 15px;justify-content:flex-start;overflow-y:auto}
-.pg-intro::-webkit-scrollbar{width:2px}
-.pg-intro::-webkit-scrollbar-thumb{background:rgba(255,45,120,.3);border-radius:2px}
-.intro-orn{font-size:1.1rem;opacity:.45;margin:4px auto 7px;text-align:center;animation:fY 3s ease-in-out infinite}
-.intro-title-el{font-family:'Dancing Script',cursive;font-size:clamp(.86rem,2vw,1.08rem);background:linear-gradient(135deg,var(--ps),var(--gold),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;line-height:1.5;margin-bottom:4px}
-.intro-divider{width:52px;height:1px;background:linear-gradient(90deg,transparent,var(--pink),transparent);margin:3px auto 7px}
+.pg-intro{background:radial-gradient(ellipse at 40% 30%,#1a0030 0%,#060010 75%);direction:rtl;font-family:'Tajawal',sans-serif;align-items:flex-start;padding:14px 13px 20px}
+.intro-orn{font-size:1.1rem;opacity:.45;margin:4px auto 7px;text-align:center;animation:fY 3s ease-in-out infinite;flex-shrink:0;width:100%}
+.intro-title-el{font-family:'Dancing Script',cursive;font-size:clamp(.86rem,2vw,1.08rem);background:linear-gradient(135deg,var(--ps),var(--gold),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;line-height:1.5;margin-bottom:4px;width:100%;flex-shrink:0}
+.intro-divider{width:52px;height:1px;background:linear-gradient(90deg,transparent,var(--pink),transparent);margin:3px auto 7px;flex-shrink:0}
 .intro-body{font-size:clamp(.57rem,1.38vw,.7rem);line-height:1.95;color:var(--muted);text-align:right;direction:rtl;width:100%}
 .intro-body p{margin-bottom:5px}
 .hi{background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:500}
 .intro-list{font-size:.56rem;color:var(--muted2);margin:4px 0;padding:5px 7px;border-top:1px solid rgba(255,45,120,.13);border-bottom:1px solid rgba(255,45,120,.13);line-height:2}
-.intro-sig{margin-top:7px;text-align:center;font-family:'Dancing Script',cursive;font-size:clamp(.78rem,1.75vw,.95rem);color:var(--pink);line-height:1.7}
+.intro-sig{margin-top:7px;text-align:center;font-family:'Dancing Script',cursive;font-size:clamp(.78rem,1.75vw,.95rem);color:var(--pink);line-height:1.7;flex-shrink:0;width:100%}
 .intro-sig small{display:block;font-family:'Tajawal',sans-serif;font-size:.55rem;color:var(--muted2);margin-top:2px}
 
 /* MEMORY */
-.mtag{font-size:.48rem;letter-spacing:.23em;text-transform:uppercase;color:var(--pink);margin-bottom:3px;font-weight:500}
-.mtitle{font-family:'Dancing Script',cursive;font-size:clamp(.93rem,2.3vw,1.32rem);background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:4px}
+.mtag{font-size:.48rem;letter-spacing:.23em;text-transform:uppercase;color:var(--pink);margin-bottom:3px;font-weight:500;flex-shrink:0}
+.mtitle{font-family:'Dancing Script',cursive;font-size:clamp(.93rem,2.3vw,1.32rem);background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:4px;flex-shrink:0}
 body.ar .mtitle{font-family:'Tajawal',sans-serif;font-size:clamp(.88rem,2.1vw,1.2rem);font-weight:500}
-.mthumb{width:100%;height:118px;border-radius:9px;border:1px solid rgba(255,45,120,.28);box-shadow:0 0 18px rgba(255,45,120,.13);margin:4px 0;background:rgba(255,45,120,.04);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;position:relative;overflow:hidden}
+.mthumb{width:100%;height:118px;border-radius:9px;border:1px solid rgba(255,45,120,.28);box-shadow:0 0 18px rgba(255,45,120,.13);margin:4px 0;background:rgba(255,45,120,.04);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;position:relative;overflow:hidden;flex-shrink:0}
 .mthumb::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(168,85,247,.05),transparent 60%,rgba(255,45,120,.05));pointer-events:none;z-index:1}
 .mthumb img,.mthumb video{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:8px}
 .mthumb video{z-index:2}
@@ -124,25 +142,25 @@ body.ar .mtitle{font-family:'Tajawal',sans-serif;font-size:clamp(.88rem,2.1vw,1.
 .vid-badge{position:absolute;top:5px;left:5px;z-index:11;background:rgba(0,0,0,.55);border-radius:99px;padding:2px 7px;font-size:.44rem;color:var(--ps);backdrop-filter:blur(4px)}
 .mbody{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.67rem,1.6vw,.84rem);line-height:1.72;color:var(--muted);text-align:center}
 body.ar .mbody{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1.85}
-.mdate{font-size:.46rem;color:var(--pu3);letter-spacing:.15em;margin-top:4px;opacity:.75}
+.mdate{font-size:.46rem;color:var(--pu3);letter-spacing:.15em;margin-top:4px;opacity:.75;flex-shrink:0}
 
 /* POETRY */
 .pg-po{background:radial-gradient(ellipse at 28% 72%,rgba(168,85,247,.1),transparent 62%),radial-gradient(ellipse at 72% 28%,rgba(255,45,120,.08),transparent 62%),#0b0014}
-.po-orn{font-size:1.4rem;opacity:.35;margin:6px 0}
+.po-orn{font-size:1.4rem;opacity:.35;margin:6px 0;flex-shrink:0}
 .po-body{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.74rem,1.78vw,.94rem);line-height:1.95;color:var(--text);text-align:center;max-width:93%}
 body.ar .po-body{font-family:'Tajawal',sans-serif;font-style:normal;line-height:2.1}
 .po-body em{background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-style:normal}
 .po-body strong{color:var(--gold);font-style:normal;font-weight:400}
-.po-lbl{font-size:.48rem;letter-spacing:.24em;color:var(--pink);margin-top:10px;opacity:.55;text-transform:uppercase}
+.po-lbl{font-size:.48rem;letter-spacing:.24em;color:var(--pink);margin-top:10px;opacity:.55;text-transform:uppercase;flex-shrink:0}
 
 /* BIRTHDAY */
 .pg-bd{background:radial-gradient(ellipse at center,#1e002e 0%,#05000e 80%);text-align:center}
-.bd-ico{font-size:2.1rem;animation:fY 2.4s ease-in-out infinite}
-.bd-title{font-family:'Dancing Script',cursive;font-size:clamp(1rem,2.5vw,1.55rem);background:linear-gradient(135deg,var(--gold),var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 9px var(--gp));margin:5px 0 3px}
+.bd-ico{font-size:2.1rem;animation:fY 2.4s ease-in-out infinite;flex-shrink:0}
+.bd-title{font-family:'Dancing Script',cursive;font-size:clamp(1rem,2.5vw,1.55rem);background:linear-gradient(135deg,var(--gold),var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 9px var(--gp));margin:5px 0 3px;flex-shrink:0}
 body.ar .bd-title{font-family:'Tajawal',sans-serif;font-weight:500}
-.bd-sub{font-family:'Cormorant Garamond',serif;font-size:.68rem;color:var(--muted);font-style:italic;margin-bottom:10px}
+.bd-sub{font-family:'Cormorant Garamond',serif;font-size:.68rem;color:var(--muted);font-style:italic;margin-bottom:10px;flex-shrink:0}
 body.ar .bd-sub{font-family:'Tajawal',sans-serif;font-style:normal}
-.cd-row{display:flex;gap:5px;justify-content:center;margin:7px 0}
+.cd-row{display:flex;gap:5px;justify-content:center;margin:7px 0;flex-shrink:0}
 .cdb{background:rgba(255,45,120,.08);border:1px solid rgba(255,45,120,.28);border-radius:9px;padding:6px 7px;min-width:47px;box-shadow:0 0 13px rgba(255,45,120,.13)}
 .cdn{font-size:1.3rem;font-weight:300;color:var(--pink);display:block;line-height:1;text-shadow:0 0 11px var(--gp)}
 .cdl{font-size:.39rem;letter-spacing:.14em;color:var(--muted2);text-transform:uppercase;display:block;margin-top:3px}
@@ -273,13 +291,28 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
 .add-actions{display:flex;gap:8px;margin-top:16px;justify-content:center}
 .add-save{background:linear-gradient(135deg,var(--pink),var(--pu2));border:none;color:#fff;font-family:'Poppins',sans-serif;font-size:.57rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 22px;border-radius:99px;cursor:pointer;box-shadow:0 0 14px var(--gp)}
 .add-cancel{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:var(--muted);font-family:'Poppins',sans-serif;font-size:.57rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 16px;border-radius:99px;cursor:pointer}
+
+/* ══ PAGE LIST — DRAG & DROP ══ */
 .page-list{margin-top:4px}
-.page-item{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid rgba(168,85,247,.11);margin-bottom:6px}
+.page-item{
+  display:flex;align-items:center;gap:7px;padding:7px 10px;
+  border-radius:8px;background:rgba(255,255,255,.04);
+  border:1px solid rgba(168,85,247,.11);margin-bottom:6px;
+  cursor:grab;user-select:none;transition:all .2s ease;
+  position:relative;
+}
+.page-item:active{cursor:grabbing}
+.page-item.dragging{opacity:.4;border-color:var(--pink);transform:scale(.97)}
+.page-item.drag-over{border-color:var(--pink);background:rgba(255,45,120,.1);transform:translateY(-2px);box-shadow:0 4px 18px var(--gp)}
+.page-item.fixed-page{cursor:default;opacity:.65}
+.pi-drag{font-size:.8rem;color:var(--muted2);flex-shrink:0;cursor:grab}
+.fixed-page .pi-drag{cursor:default;opacity:.3}
 .pi-num{font-size:.5rem;color:var(--pu3);min-width:20px}
 .pi-title{flex:1;font-size:.64rem;color:var(--text)}
 .pi-type{font-size:.45rem;color:var(--muted2);text-transform:uppercase}
 .pi-del{background:rgba(255,45,120,.12);border:1px solid rgba(255,45,120,.2);color:var(--pink);width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:.6rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .pi-del:hover{background:rgba(255,45,120,.3)}
+.reorder-hint{font-size:.51rem;color:var(--muted2);text-align:center;padding:6px;border:1px dashed rgba(168,85,247,.2);border-radius:8px;margin-bottom:10px}
 
 /* lang */
 #langPanel .modal-box{border:1px solid rgba(168,85,247,.28);background:rgba(168,85,247,.05);text-align:center;position:relative}
@@ -419,7 +452,7 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
       <div class="fg"><label>Date / Caption</label><input id="inp-date" type="text" maxlength="65" placeholder="e.g. Summer 2024"></div>
       <div class="fg"><label>Memory Text</label><textarea id="inp-text" placeholder="Write your memory… ❤️"></textarea></div>
       <div class="fg"><label>Emoji</label><div class="emoji-row" id="emojiRow"></div><input id="inp-emoji-custom" type="text" placeholder="Or type emoji…" maxlength="8" style="margin-top:6px"></div>
-      <div class="fg"><label>Photo or Video (max 2MB)</label><div class="media-upload" id="mediaUploadBox"><div class="ico">📷/🎬</div><span>Click to upload</span><input type="file" accept="image/*,video/*" id="mediaInput"></div></div>
+      <div class="fg"><label>Photo or Video (max 20MB)</label><div class="media-upload" id="mediaUploadBox"><div class="ico">📷/🎬</div><span>Click to upload</span><input type="file" accept="image/*,video/*" id="mediaInput"></div></div>
       <div class="add-actions"><button class="add-save" onclick="saveMemory()">☁️ Save Page</button><button class="add-cancel" onclick="closeModal('addPanel')">Cancel</button></div>
     </div>
     <div id="tab-poetry" style="display:none">
@@ -429,6 +462,7 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
       <div class="add-actions"><button class="add-save" onclick="savePoetry()">☁️ Save Poem</button><button class="add-cancel" onclick="closeModal('addPanel')">Cancel</button></div>
     </div>
     <div id="tab-manage" style="display:none">
+      <div class="reorder-hint">⠿ اسحبي الصفحات لترتيبها — Drag to reorder pages</div>
       <div class="page-list" id="pageListWrap"></div>
       <div style="text-align:center;margin-top:12px"><button class="add-cancel" onclick="closeModal('addPanel')">Done ✓</button></div>
     </div>
@@ -450,87 +484,57 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
 
 <audio id="bgAudio" loop></audio>
 
-<!-- Firebase SDK v10 compat -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <script>
-/* ════════════════════════════════════════════════
-   FIREBASE CONFIG + AUTO AUTH
-════════════════════════════════════════════════ */
+/* ════════════ FIREBASE ════════════ */
 const FB = {
-  apiKey:           "AIzaSyDqrbZCuaVDZFhYbV-6pfne2wQyJkTRx58",
-  authDomain:       "radwa-nour-book.firebaseapp.com",
-  databaseURL:      "https://radwa-nour-book-default-rtdb.firebaseio.com",
-  projectId:        "radwa-nour-book",
-  storageBucket:    "radwa-nour-book.appspot.com",
+  apiKey:"AIzaSyDqrbZCuaVDZFhYbV-6pfne2wQyJkTRx58",
+  authDomain:"radwa-nour-book.firebaseapp.com",
+  databaseURL:"https://radwa-nour-book-default-rtdb.firebaseio.com",
+  projectId:"radwa-nour-book",
+  storageBucket:"radwa-nour-book.appspot.com",
   messagingSenderId:"215096507762",
-  appId:            "1:215096507762:web:0dc012f9274e91137731eb"
+  appId:"1:215096507762:web:0dc012f9274e91137731eb"
 };
-
-// Owner credentials — auto login for write access
-const OWNER_EMAIL = "nourmessi629@gmail.com";
-const OWNER_PASS  = "Nour@2767";
-const EDIT_PASSWORD = "2767";  // local edit mode unlock
+const OWNER_EMAIL  = "nourmessi629@gmail.com";
+const OWNER_PASS   = "Nour@2767";
+const EDIT_PASSWORD = "2767";
 
 firebase.initializeApp(FB);
 const auth = firebase.auth();
 const db   = firebase.database();
-
-/* ════════════════════════════════════════════════
-   DB HELPERS
-════════════════════════════════════════════════ */
-const REF = p => db.ref('rnb/' + p);
+const REF  = p => db.ref('rnb/' + p);
 
 async function dbSet(path, val) {
   syncStart();
-  try {
-    await REF(path).set(val);
-    syncDone();
-  } catch(e) {
-    console.error('dbSet error:', e.code, e.message);
-    if(e.code === 'PERMISSION_DENIED') {
-      showToast('⚠️', 'Permission denied — re-logging in…');
+  try { await REF(path).set(val); syncDone(); }
+  catch(e) {
+    if(e.code==='PERMISSION_DENIED'){
+      showToast('⚠️','Re-logging in…');
       await signInOwner();
-      await REF(path).set(val); // retry
+      await REF(path).set(val);
       syncDone();
-    } else {
-      showToast('⚠️', 'Sync error: ' + e.message);
-      syncDone();
-    }
+    } else { showToast('⚠️','Sync error: '+e.message); syncDone(); }
   }
 }
+async function dbRemove(path){syncStart();try{await REF(path).remove();syncDone();}catch(e){syncDone();}}
+function syncStart(){document.getElementById('syncDot').className='show syncing';}
+function syncDone(){const d=document.getElementById('syncDot');d.className='show';setTimeout(()=>d.className='',1500);}
 
-async function dbRemove(path) {
-  syncStart();
-  try { await REF(path).remove(); syncDone(); }
-  catch(e) { console.error(e); syncDone(); }
+async function signInOwner(){
+  try{await auth.signInWithEmailAndPassword(OWNER_EMAIL,OWNER_PASS);}
+  catch(e){console.warn('Sign in failed:',e.message);}
 }
 
-function syncStart() { const d=document.getElementById('syncDot'); d.className='show syncing'; }
-function syncDone()  { const d=document.getElementById('syncDot'); d.className='show'; setTimeout(()=>d.className='',1500); }
-
-/* ════════════════════════════════════════════════
-   AUTO SIGN IN (silent — user never sees it)
-════════════════════════════════════════════════ */
-async function signInOwner() {
-  try {
-    await auth.signInWithEmailAndPassword(OWNER_EMAIL, OWNER_PASS);
-    console.log('✅ Signed in as owner');
-  } catch(e) {
-    console.warn('Sign in failed:', e.message);
-  }
-}
-
-/* ════════════════════════════════════════════════
-   TRANSLATIONS
-════════════════════════════════════════════════ */
+/* ════════════ TRANSLATIONS ════════════ */
 const T = {
   en:{
-    coverSub:"A Book Full of Us", coverHint:"✦ touch to open ✦",
-    memTag:"Memory", memThumbLbl:"✦ add your media ✦",
-    bdTitle:"Happy Birthday, Radwa 🎉", bdSub:"Your special day is approaching…",
+    coverSub:"A Book Full of Us",coverHint:"✦ touch to open ✦",
+    memTag:"Memory",memThumbLbl:"✦ add your media ✦",
+    bdTitle:"Happy Birthday, Radwa 🎉",bdSub:"Your special day is approaching…",
     cdLabels:["Days","Hrs","Mins","Secs"],
     bdMsg:`Every single year I get to celebrate you<br>feels like the universe giving me its greatest gift.<br>You are <span>irreplaceable, infinite,</span><br>and <span>so very, deeply loved.</span>`,
     scTitle:"Only For You, Radwa",
@@ -538,9 +542,9 @@ const T = {
     noMusic:"No music",
   },
   ar:{
-    coverSub:"كتاب مليان بينا", coverHint:"✦ لمسي لتفتحي ✦",
-    memTag:"ذكرى", memThumbLbl:"✦ أضيفي صورتك أو فيديوك ✦",
-    bdTitle:"عيد ميلاد سعيد، رضوى 🎉", bdSub:"عيد ميلادك بيقترب…",
+    coverSub:"كتاب مليان بينا",coverHint:"✦ لمسي لتفتحي ✦",
+    memTag:"ذكرى",memThumbLbl:"✦ أضيفي صورتك أو فيديوك ✦",
+    bdTitle:"عيد ميلاد سعيد، رضوى 🎉",bdSub:"عيد ميلادك بيقترب…",
     cdLabels:["يوم","ساعة","دقيقة","ثانية"],
     bdMsg:`كل سنة بتيجي فيها عيد ميلادك<br>بحس إن الكون بيديني أغلى هدية عنده.<br>إنتِ <span>مفيش زيك، لا نهاية،</span><br>و<span>محبوبة بعمق ما فيش كلام يوصفه.</span>`,
     scTitle:"بس إنتِ يا رضوى",
@@ -549,9 +553,7 @@ const T = {
   }
 };
 
-/* ════════════════════════════════════════════════
-   DEFAULT CONTENT
-════════════════════════════════════════════════ */
+/* ════════════ DEFAULT CONTENT ════════════ */
 const MEM_EN=[
   {title:"The First Hello",date:"A day that changed everything",text:"The moment our worlds collided, time decided to slow down — as if the universe itself wanted us to notice each other.",emoji:"👋✨"},
   {title:"Our Favourite Spot",date:"Where hours felt like minutes",text:"That little corner of the world only we knew. We turned the most ordinary places into our own private universe.",emoji:"🌆🌸"},
@@ -607,87 +609,88 @@ const POE_AR=[
   {label:"٤. الثابت",orn:"♡",text:`بيقولوا الحب إحساس.\nبس معاكِ هو *مكان* —\nأوضة ضيّاها بتاعتي.\n\nإنتِ [الثابت] بتاعي.\nإنتِ *بيتي*. إنتِ [كل حاجة].`},
 ];
 
-/* ════════════════════════════════════════════════
-   CLOUD STATE
-════════════════════════════════════════════════ */
-let cloudData = { lang:'en', coverPhoto:null, songName:'', songData:null, userPages:[], memoryMedia:{}, editTexts:{} };
-let BOOK_PAGES=[], spread=0, flipping=false, cdTimer=null;
-let editMode=false, musicOn=false, pendingSongFile=null;
-let addMediaSrc=null, addMediaType='image', pendingLang='en';
+/* ════════════ CLOUD STATE ════════════ */
+let cloudData={lang:'en',coverPhoto:null,songName:'',songData:null,userPages:[],pageOrder:[],memoryMedia:{},editTexts:{}};
+let BOOK_PAGES=[],spread=0,flipping=false,cdTimer=null;
+let editMode=false,musicOn=false,pendingSongFile=null;
+let addMediaSrc=null,addMediaType='image',pendingLang='en';
 
-/* ════════════════════════════════════════════════
-   LOAD FROM FIREBASE
-════════════════════════════════════════════════ */
-async function loadCloudData() {
-  try {
-    const snap = await db.ref('rnb').once('value');
+/* ════════════ LOAD FROM FIREBASE ════════════ */
+async function loadCloudData(){
+  try{
+    const snap=await db.ref('rnb').once('value');
     mergeSnapshot(snap.val());
-
-    // Live listener
-    db.ref('rnb').on('value', s => {
+    db.ref('rnb').on('value',s=>{
       mergeSnapshot(s.val());
-      BOOK_PAGES = buildPages(cloudData.lang);
+      BOOK_PAGES=buildPages(cloudData.lang);
       renderSpread(spread);
       applyLangUI(cloudData.lang);
     });
-  } catch(e) {
-    console.error('loadCloudData:', e);
-    showToast('⚠️', 'Failed to load — check console');
-  }
+  }catch(e){console.error('loadCloudData:',e);showToast('⚠️','Failed to load');}
 }
 
-function mergeSnapshot(v) {
-  if (!v) return;
-  cloudData.lang        = 'en'; // always English
-  cloudData.coverPhoto  = v.coverPhoto  || null;
-  cloudData.songName    = v.songName    || '';
-  cloudData.songData    = v.songData    || null;
-  cloudData.userPages   = v.userPages   ? Object.values(v.userPages) : [];
-  cloudData.memoryMedia = v.memoryMedia || {};
-  cloudData.editTexts   = v.editTexts   || {};
-
-  if (cloudData.songData) {
-    const a = document.getElementById('bgAudio');
-    if (a.src !== cloudData.songData) a.src = cloudData.songData;
-    document.getElementById('currentSongDisplay').innerHTML = `🎵 <strong>${cloudData.songName}</strong>`;
+function mergeSnapshot(v){
+  if(!v)return;
+  cloudData.lang        ='en';
+  cloudData.coverPhoto  =v.coverPhoto||null;
+  cloudData.songName    =v.songName||'';
+  cloudData.songData    =v.songData||null;
+  cloudData.userPages   =v.userPages?Object.values(v.userPages):[];
+  cloudData.pageOrder   =v.pageOrder||[];
+  cloudData.memoryMedia =v.memoryMedia||{};
+  cloudData.editTexts   =v.editTexts||{};
+  if(cloudData.songData){
+    const a=document.getElementById('bgAudio');
+    if(a.src!==cloudData.songData)a.src=cloudData.songData;
+    document.getElementById('currentSongDisplay').innerHTML=`🎵 <strong>${cloudData.songName}</strong>`;
     document.getElementById('cloudBadge').classList.add('show');
   }
 }
 
-/* ════════════════════════════════════════════════
-   BUILD PAGES
-════════════════════════════════════════════════ */
-function buildPages(lang) {
-  const mems  = lang==='ar' ? MEM_AR : MEM_EN;
-  const poems = lang==='ar' ? POE_AR : POE_EN;
-  const pages = [];
-  pages.push({type:'cover',lang});
-  pages.push({type:'intro'});
-  mems.forEach((m,i)  => pages.push({type:'memory', ...m, lang, memKey:`orig-${i}`}));
-  poems.forEach(p     => pages.push({type:'poetry', ...p, lang}));
-  cloudData.userPages.forEach(p => pages.push(p));
-  pages.push({type:'birthday', lang});
-  return pages;
+/* ════════════ BUILD PAGES ════════════ */
+function buildPages(lang){
+  const mems  = lang==='ar'?MEM_AR:MEM_EN;
+  const poems = lang==='ar'?POE_AR:POE_EN;
+  const core  = [];
+  core.push({type:'cover',lang,_fixedStart:true});
+  core.push({type:'intro',_fixedStart:true});
+  mems.forEach((m,i)=>core.push({type:'memory',...m,lang,memKey:`orig-${i}`}));
+  poems.forEach(p=>core.push({type:'poetry',...p,lang}));
+  cloudData.userPages.forEach(p=>core.push(p));
+  core.push({type:'birthday',lang,_fixedEnd:true});
+
+  // Apply page order if saved — only reorder non-fixed middle pages
+  if(cloudData.pageOrder && cloudData.pageOrder.length>2){
+    const fixed_start=core.filter(p=>p._fixedStart);
+    const fixed_end  =core.filter(p=>p._fixedEnd);
+    const movable    =core.filter(p=>!p._fixedStart&&!p._fixedEnd);
+    const reordered  =[];
+    cloudData.pageOrder.forEach(key=>{
+      const found=movable.find(p=>getPageKey(p)===key);
+      if(found)reordered.push(found);
+    });
+    // add any pages not in order list
+    movable.forEach(p=>{if(!reordered.includes(p))reordered.push(p);});
+    return [...fixed_start,...reordered,...fixed_end];
+  }
+  return core;
 }
 
-/* ════════════════════════════════════════════════
-   EDIT TEXT HELPERS
-════════════════════════════════════════════════ */
-function getET(key, def) {
-  return Object.prototype.hasOwnProperty.call(cloudData.editTexts, key)
-    ? cloudData.editTexts[key] : def;
-}
-async function saveET(key, html) {
-  cloudData.editTexts[key] = html;
-  await dbSet('editTexts/' + key, html);
+function getPageKey(p){
+  if(p._id) return p._id;
+  if(p.type==='memory') return p.memKey||p.title;
+  if(p.type==='poetry') return p.label;
+  return p.type+'_'+p.title;
 }
 
-/* ════════════════════════════════════════════════
-   RENDERERS
-════════════════════════════════════════════════ */
-function makeCover(p, gi) {
-  const t = T[p.lang||cloudData.lang];
-  const photo = cloudData.coverPhoto ? `<img src="${cloudData.coverPhoto}" alt="us">` : '💑';
+/* ════════════ EDIT TEXTS ════════════ */
+function getET(key,def){return Object.prototype.hasOwnProperty.call(cloudData.editTexts,key)?cloudData.editTexts[key]:def;}
+async function saveET(key,html){cloudData.editTexts[key]=html;await dbSet('editTexts/'+key,html);}
+
+/* ════════════ RENDERERS ════════════ */
+function makeCover(p,gi){
+  const t=T[p.lang||cloudData.lang];
+  const photo=cloudData.coverPhoto?`<img src="${cloudData.coverPhoto}" alt="us">`:'💑';
   return `<div class="pg pg-cover">
     <div class="cv-roses">🌹 🌸 🌹</div>
     <div class="cv-img-wrap">
@@ -703,15 +706,15 @@ function makeCover(p, gi) {
   </div>`;
 }
 
-function makeIntro() {
-  const D = {
-    title: getET('intro_title','كتابُ حُبِّنا'),
-    p1: getET('intro_p1','من الممكن أن أُطلق عليه <span class="hi">«كتابُ حُبِّنا»</span>، لأنني لم أجد أجمل من الكلمات — وتاللهِ إنها لا تكفي — لتُعبّر عن مدى <span class="hi">حُبّي لكِ</span>، وعن حلاوة أيّامي معكِ.'),
-    p2: getET('intro_p2','حتى أنّني أعجز عن تخيّل انتهاء حقبةٍ من حياتي أراكِ فيها يوميًا. وأكاد أجزم أنّ ذلك سيكون من <span class="hi">أسوأ المشاعر</span> التي قد أصفها يومًا.'),
-    p3: getET('intro_p3','سيبقى هذا الكتاب، ويبقى حُبّي دائمًا، سواء استطاعت الكلمات التعبير عنه أم عجزت… حتى نصل — بإذن الله — إلى <span class="hi">«الألفيّة في حُبِّ رضوى»</span>.'),
-    list: getET('intro_list','<span class="hi">يتكوّن الكتاب من:</span><br>• بعض <span class="hi">ذكرياتنا</span>،<br>• بعض <span class="hi">الكلمات</span> — التي لا تكفيكِ —،<br>• بعض <span class="hi">الصور</span> التي تجمعنا،<br>• <span class="hi">الموسيقى</span> التي نُحبّها،<br>• وكلّ شيءٍ يحمل أثرًا منكِ أو يشبهكِ قليلًا…<br><br>وفي النهاية، <span class="hi">Countdown</span> ليوم ميلادك القادم، لتعودي إليه في كلّ عام.'),
-    sig: getET('intro_sig','مع خالص حُبّي، نور شهاب'),
-    sigsm: getET('intro_sigsm','( خوختك 🍑 )'),
+function makeIntro(){
+  const D={
+    title:getET('intro_title','كتابُ حُبِّنا'),
+    p1:getET('intro_p1','من الممكن أن أُطلق عليه <span class="hi">«كتابُ حُبِّنا»</span>، لأنني لم أجد أجمل من الكلمات — وتاللهِ إنها لا تكفي — لتُعبّر عن مدى <span class="hi">حُبّي لكِ</span>، وعن حلاوة أيّامي معكِ.'),
+    p2:getET('intro_p2','حتى أنّني أعجز عن تخيّل انتهاء حقبةٍ من حياتي أراكِ فيها يوميًا. وأكاد أجزم أنّ ذلك سيكون من <span class="hi">أسوأ المشاعر</span> التي قد أصفها يومًا.'),
+    p3:getET('intro_p3','سيبقى هذا الكتاب، ويبقى حُبّي دائمًا، سواء استطاعت الكلمات التعبير عنه أم عجزت… حتى نصل — بإذن الله — إلى <span class="hi">«الألفيّة في حُبِّ رضوى»</span>.'),
+    list:getET('intro_list','<span class="hi">يتكوّن الكتاب من:</span><br>• بعض <span class="hi">ذكرياتنا</span>،<br>• بعض <span class="hi">الكلمات</span> — التي لا تكفيكِ —،<br>• بعض <span class="hi">الصور</span> التي تجمعنا،<br>• <span class="hi">الموسيقى</span> التي نُحبّها،<br>• وكلّ شيءٍ يحمل أثرًا منكِ أو يشبهكِ قليلًا…<br><br>وفي النهاية، <span class="hi">Countdown</span> ليوم ميلادك القادم، لتعودي إليه في كلّ عام.'),
+    sig:getET('intro_sig','مع خالص حُبّي، نور شهاب'),
+    sigsm:getET('intro_sigsm','( خوختك 🍑 )'),
   };
   return `<div class="pg pg-intro">
     <div class="intro-orn">🌸 ✦ 🌸</div>
@@ -731,14 +734,14 @@ function makeIntro() {
   </div>`;
 }
 
-function makeMemory(m, gi) {
-  const t    = T[m.lang||cloudData.lang];
-  const cnt  = BOOK_PAGES.slice(0,gi+1).filter(p=>p.type==='memory').length;
-  const side = gi%2===0?'r':'l';
-  const med  = cloudData.memoryMedia[m.memKey];
-  let mh = '';
-  if(med && med.type==='video') mh=`<video src="${med.src}" autoplay muted loop playsinline></video><div class="vid-badge">▶ VIDEO</div>`;
-  else if(med) mh=`<img src="${med.src}" alt="memory">`;
+function makeMemory(m,gi){
+  const t=T[m.lang||cloudData.lang];
+  const cnt=BOOK_PAGES.slice(0,gi+1).filter(p=>p.type==='memory').length;
+  const side=gi%2===0?'r':'l';
+  const med=cloudData.memoryMedia[m.memKey];
+  let mh='';
+  if(med&&med.type==='video')mh=`<video src="${med.src}" autoplay muted loop playsinline></video><div class="vid-badge">▶ VIDEO</div>`;
+  else if(med)mh=`<img src="${med.src}" alt="memory">`;
   else mh=`<div class="big">${m.emoji}</div><div class="lbl">${t.memThumbLbl}</div>`;
   const k=`pg${gi}`;
   return `<div class="pg">
@@ -755,9 +758,9 @@ function makeMemory(m, gi) {
   </div>`;
 }
 
-function makePoetry(p, gi) {
-  const side = gi%2===0?'r':'l';
-  const body = p.text.replace(/\[([^\]]+)\]/g,'<em>$1</em>').replace(/\*([^*]+)\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+function makePoetry(p,gi){
+  const side=gi%2===0?'r':'l';
+  const body=p.text.replace(/\[([^\]]+)\]/g,'<em>$1</em>').replace(/\*([^*]+)\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
   const k=`pg${gi}`;
   return `<div class="pg pg-po">
     <div class="po-orn">${p.orn||'❧'}</div>
@@ -768,8 +771,8 @@ function makePoetry(p, gi) {
   </div>`;
 }
 
-function makeBirthday(gi, lang) {
-  const t=T[lang||cloudData.lang]; const k=`pg${gi}`;
+function makeBirthday(gi,lang){
+  const t=T[lang||cloudData.lang];const k=`pg${gi}`;
   return `<div class="pg pg-bd">
     <div class="bd-ico">🎂</div>
     <div class="bd-title" data-ek="bdtitle" contenteditable="false">${getET(`${k}_bdtitle`,t.bdTitle)}</div>
@@ -785,8 +788,8 @@ function makeBirthday(gi, lang) {
   </div>`;
 }
 
-function renderPage(gi) {
-  if(gi<0||gi>=TOTAL()) return '<div class="pg" style="background:#090013"></div>';
+function renderPage(gi){
+  if(gi<0||gi>=TOTAL())return '<div class="pg" style="background:#090013"></div>';
   const p=BOOK_PAGES[gi];
   if(p.type==='cover')    return makeCover(p,gi);
   if(p.type==='intro')    return makeIntro();
@@ -796,36 +799,32 @@ function renderPage(gi) {
   return '<div class="pg"></div>';
 }
 
-const TOTAL     = () => BOOK_PAGES.length;
-const maxSpread = () => Math.ceil((TOTAL()-1)/2);
+const TOTAL=()=>BOOK_PAGES.length;
+const maxSpread=()=>Math.ceil((TOTAL()-1)/2);
 
-/* ════════════════════════════════════════════════
-   FLIP ENGINE
-════════════════════════════════════════════════ */
-function spreadIdx(s) { return {l:s*2, r:s*2+1}; }
-
-function renderFace(el, idx) {
+/* ════════════ FLIP ENGINE ════════════ */
+function spreadIdx(s){return{l:s*2,r:s*2+1};}
+function renderFace(el,idx){
   if(idx<0||idx>=TOTAL()){el.innerHTML='<div class="pg" style="background:#090013"></div>';return;}
-  el.innerHTML = renderPage(idx);
-  const pageType = BOOK_PAGES[idx]?.type;
-  const k = `pg${idx}`;
+  el.innerHTML=renderPage(idx);
+  const pageType=BOOK_PAGES[idx]?.type;
+  const k=`pg${idx}`;
   el.querySelectorAll('[data-ek]').forEach(node=>{
     if(editMode){
       node.contentEditable='true';
-      node.addEventListener('blur', async()=>{
-        // intro uses raw key (intro_p1), others use pg{idx}_key
-        const ek = node.dataset.ek;
-        const storageKey = ek.startsWith('intro_') ? ek : `${k}_${ek}`;
-        await saveET(storageKey, node.innerHTML);
+      node.addEventListener('blur',async()=>{
+        const ek=node.dataset.ek;
+        const storageKey=ek.startsWith('intro_')?ek:`${k}_${ek}`;
+        await saveET(storageKey,node.innerHTML);
         showToast('☁️','Saved to cloud!');
       });
     } else node.contentEditable='false';
   });
-  if(pageType==='birthday') startCountdown();
+  if(pageType==='birthday')startCountdown();
 }
 
-function renderSpread(s) {
-  const {l,r}=spreadIdx(s);
+function renderSpread(s){
+  const{l,r}=spreadIdx(s);
   renderFace(document.getElementById('lFront'),l);
   renderFace(document.getElementById('rFront'),r<TOTAL()?r:-1);
   document.getElementById('pgNum').textContent=l+1;
@@ -833,19 +832,18 @@ function renderSpread(s) {
   document.getElementById('gotoRange').textContent=`Pages 1 – ${TOTAL()}`;
 }
 
-function flipNext() {
-  if(flipping||spread>=maxSpread()) return;
-  flipping=true; const ns=spread+1; const{l,r}=spreadIdx(ns);
+function flipNext(){
+  if(flipping||spread>=maxSpread())return;
+  flipping=true;const ns=spread+1;const{l,r}=spreadIdx(ns);
   renderFace(document.getElementById('lBack'),l);
   renderFace(document.getElementById('rBack'),r<TOTAL()?r:-1);
   const lc=document.getElementById('lCard'),rc=document.getElementById('rCard');
   lc.classList.add('flip');rc.classList.add('flip');playFlip();spawnF(Math.random()<.5?'🌸':'✨');
   setTimeout(()=>{spread=ns;renderSpread(spread);lc.classList.remove('flip');rc.classList.remove('flip');flipping=false;},680);
 }
-
-function flipPrev() {
-  if(flipping||spread<=0) return;
-  flipping=true; const ps=spread-1; const{l,r}=spreadIdx(ps);
+function flipPrev(){
+  if(flipping||spread<=0)return;
+  flipping=true;const ps=spread-1;const{l,r}=spreadIdx(ps);
   renderFace(document.getElementById('lBack'),l);
   renderFace(document.getElementById('rBack'),r<TOTAL()?r:-1);
   const lc=document.getElementById('lCard'),rc=document.getElementById('rCard');
@@ -856,22 +854,19 @@ function flipPrev() {
   lc.classList.remove('flip');rc.classList.remove('flip');playFlip();spawnF('💗');
   setTimeout(()=>{spread=ps;renderSpread(spread);flipping=false;},680);
 }
-
 function goToPage(n){
   const t=Math.max(1,Math.min(n,TOTAL()));
-  spread=Math.floor((t-1)/2); renderSpread(spread);
-  closeModal('gotoModal'); showToast('📖',`Page ${t}`);
+  spread=Math.floor((t-1)/2);renderSpread(spread);
+  closeModal('gotoModal');showToast('📖',`Page ${t}`);
 }
 
-/* ════════════════════════════════════════════════
-   COUNTDOWN — 27 June, always Radwa
-════════════════════════════════════════════════ */
-function startCountdown() {
-  if(cdTimer) clearInterval(cdTimer);
-  function tick() {
+/* ════════════ COUNTDOWN ════════════ */
+function startCountdown(){
+  if(cdTimer)clearInterval(cdTimer);
+  function tick(){
     const now=new Date();
     let t=new Date(now.getFullYear(),5,27,0,0,0);
-    if(now>=t) t=new Date(now.getFullYear()+1,5,27,0,0,0);
+    if(now>=t)t=new Date(now.getFullYear()+1,5,27,0,0,0);
     const df=t-now;
     const d=Math.floor(df/86400000),h=Math.floor((df%86400000)/3600000),
           m=Math.floor((df%3600000)/60000),s=Math.floor((df%60000)/1000);
@@ -880,12 +875,10 @@ function startCountdown() {
     if(g('cdD')){g('cdD').textContent=d;g('cdH').textContent=pad(h);g('cdM').textContent=pad(m);g('cdS').textContent=pad(s);}
     else clearInterval(cdTimer);
   }
-  tick(); cdTimer=setInterval(tick,1000);
+  tick();cdTimer=setInterval(tick,1000);
 }
 
-/* ════════════════════════════════════════════════
-   PASSWORD + EDIT MODE
-════════════════════════════════════════════════ */
+/* ════════════ EDIT MODE ════════════ */
 document.getElementById('btnEdit').addEventListener('click',()=>{
   if(editMode){disableEditMode();return;}
   openModal('pwModal');
@@ -908,9 +901,8 @@ function enableEditMode(){
   document.getElementById('btnEdit').classList.add('active');
   document.getElementById('editBanner').classList.add('show');
   renderSpread(spread);
-  // Wire secret modal fields
   wireSecretEdit(true);
-  showToast('✏️','Edit Mode ON — click any text including the Secret message!');
+  showToast('✏️','Edit Mode ON!');
 }
 function disableEditMode(){
   editMode=false;document.body.classList.remove('editmode');
@@ -920,48 +912,23 @@ function disableEditMode(){
   wireSecretEdit(false);
   showToast('🔒','Edit Mode OFF — locked');
 }
-
 function wireSecretEdit(on){
-  // scTitle
-  const title = document.getElementById('scTitle');
-  const body  = document.getElementById('scBody');
-  const hint  = document.getElementById('scEditHint');
+  const title=document.getElementById('scTitle');
+  const body=document.getElementById('scBody');
+  const hint=document.getElementById('scEditHint');
   if(on){
-    title.contentEditable='true';
-    body.contentEditable='true';
-    hint.style.display='block';
-    if(!title._wired){
-      title._wired=true;
-      title.addEventListener('blur',async()=>{
-        await saveET('scTitle', title.innerHTML);
-        cloudData.editTexts['scTitle']=title.innerHTML;
-        showToast('☁️','Secret title saved!');
-      });
-    }
-    if(!body._wired){
-      body._wired=true;
-      body.addEventListener('blur',async()=>{
-        await saveET('scBody', body.innerHTML);
-        cloudData.editTexts['scBody']=body.innerHTML;
-        showToast('☁️','Secret message saved!');
-      });
-    }
-  } else {
-    title.contentEditable='false';
-    body.contentEditable='false';
-    hint.style.display='none';
-  }
+    title.contentEditable='true';body.contentEditable='true';hint.style.display='block';
+    if(!title._wired){title._wired=true;title.addEventListener('blur',async()=>{await saveET('scTitle',title.innerHTML);showToast('☁️','Secret title saved!');});}
+    if(!body._wired){body._wired=true;body.addEventListener('blur',async()=>{await saveET('scBody',body.innerHTML);showToast('☁️','Secret message saved!');});}
+  } else {title.contentEditable='false';body.contentEditable='false';hint.style.display='none';}
 }
 
-/* ════════════════════════════════════════════════
-   MODALS
-════════════════════════════════════════════════ */
+/* ════════════ MODALS ════════════ */
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.modal-overlay').forEach(el=>{
   el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');});
 });
-
 document.getElementById('pgCtr').addEventListener('click',()=>{
   document.getElementById('gotoInput').value='';
   openModal('gotoModal');
@@ -973,24 +940,32 @@ function doGoto(){
   goToPage(v);
 }
 
-/* ════════════════════════════════════════════════
-   MEDIA UPLOADS → FIREBASE
-════════════════════════════════════════════════ */
-function compressIfNeeded(base64, maxBytes=2*1024*1024){
-  // If within limit, return as-is
+/* ════════════ MEDIA UPLOADS — UP TO 20MB ════════════ */
+const MAX_MEDIA_MB = 20; // ← changed from 2 to 20
+
+function compressIfNeeded(base64, maxBytes = MAX_MEDIA_MB * 1024 * 1024){
   if(base64.length * 0.75 <= maxBytes) return Promise.resolve(base64);
-  // For images, compress via canvas
   return new Promise(resolve=>{
     if(!base64.startsWith('data:image')){resolve(base64);return;}
     const img=new Image();
     img.onload=()=>{
       const canvas=document.createElement('canvas');
       let {width:w,height:h}=img;
+      // Keep reducing quality rather than size for better results
+      canvas.width=w;canvas.height=h;
+      const ctx=canvas.getContext('2d');
+      ctx.drawImage(img,0,0,w,h);
+      // Try quality 0.85 first
+      let result=canvas.toDataURL('image/jpeg',0.85);
+      if(result.length*0.75<=maxBytes){resolve(result);return;}
+      // Try quality 0.7
+      result=canvas.toDataURL('image/jpeg',0.70);
+      if(result.length*0.75<=maxBytes){resolve(result);return;}
+      // Scale down
       const scale=Math.sqrt(maxBytes/(base64.length*.75));
-      w=Math.floor(w*scale); h=Math.floor(h*scale);
-      canvas.width=w; canvas.height=h;
-      canvas.getContext('2d').drawImage(img,0,0,w,h);
-      resolve(canvas.toDataURL('image/jpeg',0.75));
+      canvas.width=Math.floor(w*scale);canvas.height=Math.floor(h*scale);
+      canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
+      resolve(canvas.toDataURL('image/jpeg',0.80));
     };
     img.src=base64;
   });
@@ -998,7 +973,8 @@ function compressIfNeeded(base64, maxBytes=2*1024*1024){
 
 function uploadCoverPhoto(event){
   event.stopPropagation();
-  const file=event.target.files[0]; if(!file) return;
+  const file=event.target.files[0];if(!file)return;
+  if(file.size>MAX_MEDIA_MB*1024*1024){showToast('⚠️',`Max size is ${MAX_MEDIA_MB}MB`);return;}
   const r=new FileReader();
   r.onload=async e=>{
     const compressed=await compressIfNeeded(e.target.result);
@@ -1013,9 +989,10 @@ function uploadCoverPhoto(event){
 
 function uploadMemMedia(event,memKey){
   event.stopPropagation();
-  const file=event.target.files[0]; if(!file) return;
+  const file=event.target.files[0];if(!file)return;
   const isVid=file.type.startsWith('video/');
-  if(isVid && file.size > 5*1024*1024){showToast('⚠️','Video too large — max 5 MB');return;}
+  if(file.size>MAX_MEDIA_MB*1024*1024){showToast('⚠️',`Max size is ${MAX_MEDIA_MB}MB`);return;}
+  showToast('⏳','Uploading…');
   const r=new FileReader();
   r.onload=async e=>{
     let src=e.target.result;
@@ -1030,13 +1007,11 @@ function uploadMemMedia(event,memKey){
   r.readAsDataURL(file);
 }
 
-/* ════════════════════════════════════════════════
-   MUSIC → FIREBASE
-════════════════════════════════════════════════ */
+/* ════════════ MUSIC ════════════ */
 const bgAudio=document.getElementById('bgAudio');
 document.getElementById('btnUploadSong').addEventListener('click',()=>openModal('musicPanel'));
 document.getElementById('songFileInput').addEventListener('change',function(){
-  const file=this.files[0]; if(!file) return;
+  const file=this.files[0];if(!file)return;
   if(file.size>5*1024*1024){showToast('⚠️','Song too large — max 5 MB');return;}
   pendingSongFile=file;
   cloudData.songName=file.name.replace(/\.[^.]+$/,'');
@@ -1052,7 +1027,7 @@ async function saveSong(){
     await dbSet('songName',cloudData.songName);
     document.getElementById('cloudBadge').classList.add('show');
     closeModal('musicPanel');
-    showToast('☁️',`Saved: ${cloudData.songName} — plays everywhere!`);
+    showToast('☁️',`Saved: ${cloudData.songName}`);
     spawnBurst(10,['🎵','💗','✨']);
   };
   r.readAsDataURL(pendingSongFile);
@@ -1075,15 +1050,13 @@ function stopMusic(){
 }
 document.getElementById('btnMusic').addEventListener('click',()=>{if(musicOn)stopMusic();else startMusic();spawnBurst(3,['💗','✨']);});
 
-/* ════════════════════════════════════════════════
-   ADD PAGE → FIREBASE
-════════════════════════════════════════════════ */
+/* ════════════ ADD PAGE ════════════ */
 const EMOJIS=['💗','❤️','🌸','✨','🌙','⭐','🎂','🎉','💫','🌹','💕','🤍','🌺','🎵','🌠','😂','💪','🚗','🗺️','☀️','🌧️','💛','🍕','🌿','📖','🤣','⏳','💬','💖','🌟'];
 function initEmojiPicker(){
   const row=document.getElementById('emojiRow');row.innerHTML='';
   EMOJIS.forEach(e=>{
     const btn=document.createElement('button');btn.className='em-pick';btn.textContent=e;
-    if(e==='💗') btn.classList.add('picked');
+    if(e==='💗')btn.classList.add('picked');
     btn.onclick=()=>{document.querySelectorAll('.em-pick').forEach(b=>b.classList.remove('picked'));btn.classList.add('picked');document.getElementById('inp-emoji-custom').value=e;};
     row.appendChild(btn);
   });
@@ -1091,14 +1064,16 @@ function initEmojiPicker(){
 function setupMediaUpload(){
   addMediaSrc=null;addMediaType='image';
   const box=document.getElementById('mediaUploadBox');
-  box.innerHTML=`<div class="ico">📷/🎬</div><span>Click to upload (max 2MB)</span><input type="file" accept="image/*,video/*" id="mediaInput">`;
+  box.innerHTML=`<div class="ico">📷/🎬</div><span>Click to upload (max ${MAX_MEDIA_MB}MB)</span><input type="file" accept="image/*,video/*" id="mediaInput">`;
   document.getElementById('mediaInput').addEventListener('change',function(){
     const file=this.files[0];if(!file)return;
+    if(file.size>MAX_MEDIA_MB*1024*1024){showToast('⚠️',`Max size is ${MAX_MEDIA_MB}MB`);return;}
     addMediaType=file.type.startsWith('video/')?'video':'image';
+    showToast('⏳','Loading media…');
     const r=new FileReader();
     r.onload=async ev=>{
       let src=ev.target.result;
-      if(addMediaType!=='video') src=await compressIfNeeded(src);
+      if(addMediaType!=='video')src=await compressIfNeeded(src);
       addMediaSrc=src;
       const prev=addMediaType==='video'
         ?`<video class="media-prev-vid" src="${src}" autoplay muted loop playsinline></video>`
@@ -1121,7 +1096,7 @@ function switchTab(name,btn){
   document.querySelectorAll('.add-tab').forEach(b=>b.classList.remove('active'));
   if(btn)btn.classList.add('active');
   ['memory','poetry','manage'].forEach(t=>{document.getElementById('tab-'+t).style.display=(t===name)?'block':'none';});
-  if(name==='manage') buildPageList();
+  if(name==='manage')buildPageList();
 }
 async function saveMemory(){
   const title=document.getElementById('inp-title').value.trim();
@@ -1159,39 +1134,129 @@ async function savePoetry(){
   document.getElementById('pgTotal').textContent=TOTAL();
   showToast('☁️','Poem saved to cloud!');spawnBurst(12,['🌸','✨','💫']);
 }
+
+/* ════════════ PAGE LIST WITH DRAG & DROP REORDER ════════════ */
+let dragSrcIdx = null;
+
 function buildPageList(){
   const wrap=document.getElementById('pageListWrap');wrap.innerHTML='';
   const icons={cover:'📖',intro:'💌',memory:'📸',poetry:'🌸',birthday:'🎂'};
   const types={cover:'Cover',intro:'Intro',memory:'Memory',poetry:'Poetry',birthday:'Birthday'};
+
   BOOK_PAGES.forEach((p,i)=>{
-    const div=document.createElement('div');div.className='page-item';
-    const canDel=p.type!=='cover'&&p.type!=='birthday'&&p.type!=='intro';
-    div.innerHTML=`<span class="pi-num">${i+1}</span><span class="pi-title">${icons[p.type]||'📄'} ${p.title||p.label||p.type}</span><span class="pi-type">${types[p.type]||p.type}</span>${canDel?`<button class="pi-del" onclick="deletePage(${i})">✕</button>`:''}`;
+    const isFixed=p._fixedStart||p._fixedEnd||p.type==='cover'||p.type==='birthday'||p.type==='intro';
+    const div=document.createElement('div');
+    div.className='page-item'+(isFixed?' fixed-page':'');
+    div.dataset.idx=i;
+    div.innerHTML=`
+      <span class="pi-drag">${isFixed?'🔒':'⠿'}</span>
+      <span class="pi-num">${i+1}</span>
+      <span class="pi-title">${icons[p.type]||'📄'} ${p.title||p.label||p.type}</span>
+      <span class="pi-type">${types[p.type]||p.type}</span>
+      ${!isFixed?`<button class="pi-del" onclick="deletePage(${i})">✕</button>`:''}
+    `;
+
+    if(!isFixed){
+      div.draggable=true;
+
+      div.addEventListener('dragstart',e=>{
+        dragSrcIdx=i;
+        div.classList.add('dragging');
+        e.dataTransfer.effectAllowed='move';
+      });
+      div.addEventListener('dragend',()=>{
+        div.classList.remove('dragging');
+        wrap.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));
+      });
+      div.addEventListener('dragover',e=>{
+        e.preventDefault();
+        e.dataTransfer.dropEffect='move';
+        wrap.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));
+        if(!document.querySelector(`[data-idx="${dragSrcIdx}"]`)?.classList.contains('fixed-page'))
+          div.classList.add('drag-over');
+      });
+      div.addEventListener('drop',e=>{
+        e.preventDefault();
+        if(dragSrcIdx===null||dragSrcIdx===i)return;
+        const target=BOOK_PAGES[i];
+        if(target._fixedStart||target._fixedEnd||target.type==='cover'||target.type==='birthday'||target.type==='intro'){
+          showToast('⚠️','Cannot move to this position');return;
+        }
+        // Reorder in BOOK_PAGES
+        const moved=BOOK_PAGES.splice(dragSrcIdx,1)[0];
+        const newIdx=dragSrcIdx<i?i:i;
+        BOOK_PAGES.splice(newIdx,0,moved);
+
+        savePageOrder();
+        buildPageList();
+        renderSpread(spread);
+        showToast('✦','Order saved! ☁️');
+        dragSrcIdx=null;
+      });
+
+      // Touch drag support
+      let touchStartY=0,touchItem=null;
+      div.addEventListener('touchstart',e=>{
+        touchStartY=e.touches[0].clientY;
+        touchItem=div;
+        dragSrcIdx=i;
+        div.classList.add('dragging');
+      },{passive:true});
+      div.addEventListener('touchmove',e=>{
+        e.preventDefault();
+        const y=e.touches[0].clientY;
+        const els=wrap.querySelectorAll('.page-item:not(.dragging)');
+        els.forEach(el=>el.classList.remove('drag-over'));
+        const el=document.elementFromPoint(e.touches[0].clientX,y);
+        if(el){const item=el.closest('.page-item');if(item&&!item.classList.contains('fixed-page'))item.classList.add('drag-over');}
+      },{passive:false});
+      div.addEventListener('touchend',e=>{
+        div.classList.remove('dragging');
+        const y=e.changedTouches[0].clientY;
+        const el=document.elementFromPoint(e.changedTouches[0].clientX,y);
+        if(el){
+          const item=el.closest('.page-item');
+          if(item&&item!==div&&!item.classList.contains('fixed-page')){
+            const targetIdx=parseInt(item.dataset.idx);
+            const moved=BOOK_PAGES.splice(dragSrcIdx,1)[0];
+            BOOK_PAGES.splice(targetIdx,0,moved);
+            savePageOrder();buildPageList();renderSpread(spread);
+            showToast('✦','Order saved! ☁️');
+          }
+        }
+        wrap.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));
+        dragSrcIdx=null;
+      },{passive:true});
+    }
+
     wrap.appendChild(div);
   });
 }
+
+async function savePageOrder(){
+  const order=BOOK_PAGES.filter(p=>!p._fixedStart&&!p._fixedEnd&&p.type!=='cover'&&p.type!=='birthday'&&p.type!=='intro').map(getPageKey);
+  cloudData.pageOrder=order;
+  await dbSet('pageOrder',order);
+}
+
 async function deletePage(idx){
   const p=BOOK_PAGES[idx];
-  if(p.type==='cover'||p.type==='birthday'||p.type==='intro') return;
-  if(!confirm('Delete this page from cloud?')) return;
+  if(p.type==='cover'||p.type==='birthday'||p.type==='intro')return;
+  if(!confirm('Delete this page from cloud?'))return;
   const id=p._id;
   const ui=cloudData.userPages.findIndex(x=>x._id===id);
   if(ui>=0){cloudData.userPages.splice(ui,1);await dbRemove('userPages/'+id);}
   BOOK_PAGES=buildPages(cloudData.lang);
-  if(spread>maxSpread()) spread=maxSpread();
+  if(spread>maxSpread())spread=maxSpread();
   buildPageList();renderSpread(spread);
   document.getElementById('pgTotal').textContent=TOTAL();
   showToast('🗑️','Page deleted from cloud');
 }
 
-/* ════════════════════════════════════════════════
-   SECRET
-════════════════════════════════════════════════ */
+/* ════════════ SECRET ════════════ */
 document.getElementById('btnSecret').addEventListener('click',()=>{openModal('secret');spawnBurst(24,['💗','✨','🌸','💖']);});
 
-/* ════════════════════════════════════════════════
-   FLOATERS
-════════════════════════════════════════════════ */
+/* ════════════ FLOATERS ════════════ */
 function spawnF(emoji,x,y){
   const el=document.createElement('div');el.className='floater';el.textContent=emoji;
   el.style.left=(x??Math.random()*innerWidth)+'px';el.style.top=(y??innerHeight)+'px';
@@ -1199,8 +1264,6 @@ function spawnF(emoji,x,y){
   document.body.appendChild(el);el.addEventListener('animationend',()=>el.remove());
 }
 function spawnBurst(n,emojis){for(let i=0;i<n;i++)setTimeout(()=>spawnF(emojis[~~(Math.random()*emojis.length)]),i*70);}
-document.getElementById('btnHearts').addEventListener('click',()=>spawnBurst(22,['💗','💕','❤️','💖','💝','🌸']));
-document.getElementById('btnStars').addEventListener('click',()=>spawnBurst(22,['✨','⭐','🌟','💫','🌠']));
 let lastT=0;
 document.addEventListener('mousemove',e=>{
   if(Date.now()-lastT>130&&Math.random()<.35){
@@ -1211,15 +1274,23 @@ document.addEventListener('mousemove',e=>{
 });
 setInterval(()=>{if(Math.random()<.28)spawnF(['💗','✨','🌸','💫'][~~(Math.random()*4)],Math.random()*innerWidth,innerHeight+10);},4500);
 
-/* ════════════════════════════════════════════════
-   NAV + KEYBOARD + SWIPE
-════════════════════════════════════════════════ */
+/* ════════════ NAV + KEYBOARD + SWIPE ════════════ */
 document.getElementById('navL').addEventListener('click',flipPrev);
 document.getElementById('navR').addEventListener('click',flipNext);
-document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowDown')flipNext();if(e.key==='ArrowLeft'||e.key==='ArrowUp')flipPrev();});
+document.addEventListener('keydown',e=>{
+  // Don't flip if editing text
+  if(e.target.isContentEditable||e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')flipNext();
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')flipPrev();
+});
 let tx=0;
 document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
-document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50){dx<0?flipNext():flipPrev();}},{passive:true});
+document.addEventListener('touchend',e=>{
+  // Don't flip if touch ended on a scrollable page
+  if(e.target.closest('.pg'))return;
+  const dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>50){dx<0?flipNext():flipPrev();}
+},{passive:true});
 
 function playFlip(){
   try{
@@ -1232,9 +1303,7 @@ function playFlip(){
   }catch(e){}
 }
 
-/* ════════════════════════════════════════════════
-   TOAST + STARS
-════════════════════════════════════════════════ */
+/* ════════════ TOAST + STARS ════════════ */
 let toastTmr=null;
 function showToast(ico,msg){
   const t=document.getElementById('toast');
@@ -1256,9 +1325,7 @@ function drawS(){
 window.addEventListener('resize',()=>{rszC();mkS();});
 rszC();mkS();drawS();
 
-/* ════════════════════════════════════════════════
-   BOOT — progress bar then launch
-════════════════════════════════════════════════ */
+/* ════════════ BOOT ════════════ */
 const ldF=document.getElementById('ldFill');
 let prog=0;
 const ldI=setInterval(()=>{
@@ -1268,16 +1335,14 @@ const ldI=setInterval(()=>{
 },80);
 
 async function boot(){
-  try {
+  try{
     document.getElementById('ldHint').textContent='Signing in ☁️';
     await signInOwner();
     document.getElementById('ldHint').textContent='Loading memories ❤️';
     await loadCloudData();
     BOOK_PAGES=buildPages('en');
-    // set secret text
- // Load secret from cloud or use default
-document.getElementById('scTitle').innerHTML = cloudData.editTexts?.scTitle || T.en.scTitle;
-document.getElementById('scBody').innerHTML  = cloudData.editTexts?.scBody || T.en.scBody;
+    document.getElementById('scTitle').innerHTML=cloudData.editTexts?.scTitle||T.en.scTitle;
+    document.getElementById('scBody').innerHTML=cloudData.editTexts?.scBody||T.en.scBody;
     if(cloudData.songData){
       bgAudio.src=cloudData.songData;
       document.getElementById('currentSongDisplay').innerHTML=`🎵 <strong>${cloudData.songName}</strong>`;
@@ -1295,10 +1360,14 @@ document.getElementById('scBody').innerHTML  = cloudData.editTexts?.scBody || T.
       showToast('☁️','Connected! Everything synced 💗');
     },800);
     setTimeout(()=>spawnBurst(10,['💗','✨','🌸']),2200);
-  } catch(e) {
-    console.error('Boot error:', e);
-    document.getElementById('ldHint').textContent='⚠️ Error: ' + e.message;
+  }catch(e){
+    console.error('Boot error:',e);
+    document.getElementById('ldHint').textContent='⚠️ Error: '+e.message;
   }
+}
+
+function applyLangUI(lang){
+  // no-op — always English UI now
 }
 </script>
 </body>
