@@ -14,7 +14,6 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-family:'Poppins',sans-serif;color:var(--text)}
-body.ar{font-family:'Tajawal',sans-serif;direction:rtl}
 
 #bgCanvas{position:fixed;inset:0;z-index:0;pointer-events:none}
 .blob{position:fixed;border-radius:50%;filter:blur(140px);opacity:.13;pointer-events:none;z-index:0;animation:blobD 20s ease-in-out infinite alternate}
@@ -23,7 +22,6 @@ body.ar{font-family:'Tajawal',sans-serif;direction:rtl}
 .b3{width:400px;height:400px;background:#4a0066;top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:-6s}
 @keyframes blobD{0%{transform:translate(0,0)scale(1)}100%{transform:translate(38px,28px)scale(1.09)}}
 
-/* LOADER */
 #loader{position:fixed;inset:0;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);transition:opacity 1s ease,visibility 1s ease}
 #loader.hide{opacity:0;visibility:hidden;pointer-events:none}
 .ld-heart{font-size:3.5rem;animation:hb 1.2s ease-in-out infinite;margin-bottom:20px}
@@ -34,7 +32,6 @@ body.ar{font-family:'Tajawal',sans-serif;direction:rtl}
 .ld-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--pink),var(--pu));border-radius:99px;box-shadow:0 0 14px var(--gp);transition:width .1s linear}
 .ld-hint{margin-top:14px;font-size:.62rem;letter-spacing:.14em;color:var(--muted2);text-align:center}
 
-/* SCENE */
 #scene{position:fixed;inset:0;z-index:1;display:flex;align-items:center;justify-content:center}
 #bookOuter{opacity:0;transform:scale(.83) translateY(30px);transition:opacity 1.4s ease,transform 1.4s cubic-bezier(.16,1,.3,1)}
 #bookOuter.show{opacity:1;transform:scale(1) translateY(0)}
@@ -63,29 +60,12 @@ body.ar{font-family:'Tajawal',sans-serif;direction:rtl}
 #rPanel .pshadow{background:linear-gradient(to right,rgba(0,0,0,.58),transparent)}
 #lCard.flip~.pshadow,#rCard.flip~.pshadow{opacity:1}
 
-/* ══ PAGE BASE — SCROLLABLE ══ */
-.pg{
-  width:100%;height:100%;
-  display:flex;flex-direction:column;align-items:center;
-  padding:16px 16px 20px;
-  position:relative;
-  overflow-y:auto;        /* ← scroll enabled */
-  overflow-x:hidden;
-  background:linear-gradient(155deg,#150024 0%,#090013 100%);
-  /* custom scrollbar */
-  scrollbar-width:thin;
-  scrollbar-color:rgba(200,120,138,.35) transparent;
-}
+/* PAGE BASE */
+.pg{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;padding:16px 16px 20px;position:relative;overflow-y:auto;overflow-x:hidden;background:linear-gradient(155deg,#150024 0%,#090013 100%);scrollbar-width:thin;scrollbar-color:rgba(200,120,138,.35) transparent}
 .pg::-webkit-scrollbar{width:3px}
 .pg::-webkit-scrollbar-thumb{background:rgba(200,120,138,.4);border-radius:3px}
-.pg::-webkit-scrollbar-track{background:transparent}
 .pg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(168,85,247,.07),transparent 55%),radial-gradient(ellipse at 80% 80%,rgba(255,45,120,.07),transparent 55%);pointer-events:none;flex-shrink:0}
-/* subtle fade hint at bottom when content overflows */
-.pg::after{
-  content:'';position:sticky;bottom:0;left:0;right:0;height:18px;
-  background:linear-gradient(to top,rgba(9,0,19,.75),transparent);
-  pointer-events:none;flex-shrink:0;margin-top:auto;
-}
+.pg::after{content:'';position:sticky;bottom:0;left:0;right:0;height:18px;background:linear-gradient(to top,rgba(9,0,19,.75),transparent);pointer-events:none;flex-shrink:0;margin-top:auto}
 .pgn{position:sticky;bottom:4px;font-size:.5rem;color:var(--muted2);letter-spacing:.13em;opacity:.5;width:100%;text-align:right}
 .pgn.l{text-align:left}
 .deco{width:44px;height:1px;background:linear-gradient(90deg,transparent,var(--pu3),transparent);margin:5px auto;flex-shrink:0}
@@ -99,6 +79,7 @@ body.editmode [contenteditable]{outline:1px dashed rgba(255,45,120,.45);border-r
 body.editmode [contenteditable]:focus{outline:1px solid rgba(255,45,120,.7);background:rgba(255,45,120,.08)}
 body.editmode .eu-btn{display:flex!important}
 body.editmode .eu-mem{display:flex!important}
+body.editmode .sticker-layer{pointer-events:all}
 #editBanner{position:fixed;top:0;left:0;right:0;z-index:25;background:rgba(255,200,0,.12);border-bottom:1px solid rgba(255,200,0,.28);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;gap:10px;padding:6px 16px;font-size:.54rem;letter-spacing:.13em;color:#ffd966;text-transform:uppercase}
 #editBanner.show{display:flex}
 
@@ -132,7 +113,6 @@ body.editmode .eu-mem{display:flex!important}
 /* MEMORY */
 .mtag{font-size:.48rem;letter-spacing:.23em;text-transform:uppercase;color:var(--pink);margin-bottom:3px;font-weight:500;flex-shrink:0}
 .mtitle{font-family:'Dancing Script',cursive;font-size:clamp(.93rem,2.3vw,1.32rem);background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:4px;flex-shrink:0}
-body.ar .mtitle{font-family:'Tajawal',sans-serif;font-size:clamp(.88rem,2.1vw,1.2rem);font-weight:500}
 .mthumb{width:100%;height:118px;border-radius:9px;border:1px solid rgba(255,45,120,.28);box-shadow:0 0 18px rgba(255,45,120,.13);margin:4px 0;background:rgba(255,45,120,.04);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;position:relative;overflow:hidden;flex-shrink:0}
 .mthumb::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(168,85,247,.05),transparent 60%,rgba(255,45,120,.05));pointer-events:none;z-index:1}
 .mthumb img,.mthumb video{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:8px}
@@ -141,14 +121,12 @@ body.ar .mtitle{font-family:'Tajawal',sans-serif;font-size:clamp(.88rem,2.1vw,1.
 .mthumb .lbl{font-size:.52rem;color:var(--muted2);z-index:2}
 .vid-badge{position:absolute;top:5px;left:5px;z-index:11;background:rgba(0,0,0,.55);border-radius:99px;padding:2px 7px;font-size:.44rem;color:var(--ps);backdrop-filter:blur(4px)}
 .mbody{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.67rem,1.6vw,.84rem);line-height:1.72;color:var(--muted);text-align:center}
-body.ar .mbody{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1.85}
 .mdate{font-size:.46rem;color:var(--pu3);letter-spacing:.15em;margin-top:4px;opacity:.75;flex-shrink:0}
 
 /* POETRY */
 .pg-po{background:radial-gradient(ellipse at 28% 72%,rgba(168,85,247,.1),transparent 62%),radial-gradient(ellipse at 72% 28%,rgba(255,45,120,.08),transparent 62%),#0b0014}
 .po-orn{font-size:1.4rem;opacity:.35;margin:6px 0;flex-shrink:0}
 .po-body{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.74rem,1.78vw,.94rem);line-height:1.95;color:var(--text);text-align:center;max-width:93%}
-body.ar .po-body{font-family:'Tajawal',sans-serif;font-style:normal;line-height:2.1}
 .po-body em{background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-style:normal}
 .po-body strong{color:var(--gold);font-style:normal;font-weight:400}
 .po-lbl{font-size:.48rem;letter-spacing:.24em;color:var(--pink);margin-top:10px;opacity:.55;text-transform:uppercase;flex-shrink:0}
@@ -157,16 +135,28 @@ body.ar .po-body{font-family:'Tajawal',sans-serif;font-style:normal;line-height:
 .pg-bd{background:radial-gradient(ellipse at center,#1e002e 0%,#05000e 80%);text-align:center}
 .bd-ico{font-size:2.1rem;animation:fY 2.4s ease-in-out infinite;flex-shrink:0}
 .bd-title{font-family:'Dancing Script',cursive;font-size:clamp(1rem,2.5vw,1.55rem);background:linear-gradient(135deg,var(--gold),var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 9px var(--gp));margin:5px 0 3px;flex-shrink:0}
-body.ar .bd-title{font-family:'Tajawal',sans-serif;font-weight:500}
 .bd-sub{font-family:'Cormorant Garamond',serif;font-size:.68rem;color:var(--muted);font-style:italic;margin-bottom:10px;flex-shrink:0}
-body.ar .bd-sub{font-family:'Tajawal',sans-serif;font-style:normal}
 .cd-row{display:flex;gap:5px;justify-content:center;margin:7px 0;flex-shrink:0}
 .cdb{background:rgba(255,45,120,.08);border:1px solid rgba(255,45,120,.28);border-radius:9px;padding:6px 7px;min-width:47px;box-shadow:0 0 13px rgba(255,45,120,.13)}
 .cdn{font-size:1.3rem;font-weight:300;color:var(--pink);display:block;line-height:1;text-shadow:0 0 11px var(--gp)}
 .cdl{font-size:.39rem;letter-spacing:.14em;color:var(--muted2);text-transform:uppercase;display:block;margin-top:3px}
 .bd-msg{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.71rem;line-height:1.78;color:var(--muted);max-width:90%;margin:6px auto 0}
-body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1.95}
 .bd-msg span{background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+/* CUSTOM PAGE */
+.pg-custom{background:linear-gradient(155deg,#150024 0%,#090013 100%)}
+.custom-title{font-family:'Dancing Script',cursive;font-size:clamp(1rem,2.5vw,1.5rem);background:linear-gradient(135deg,var(--ps),var(--gold),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:5px;flex-shrink:0}
+.custom-body{font-family:'Cormorant Garamond',serif;font-size:clamp(.72rem,1.7vw,.9rem);line-height:1.85;color:var(--muted);text-align:center;flex:1;width:100%}
+.custom-img{width:100%;border-radius:9px;border:1px solid rgba(255,45,120,.2);margin:6px 0;object-fit:cover;max-height:140px;flex-shrink:0}
+
+/* STICKER LAYER */
+.sticker-layer{position:absolute;inset:0;z-index:30;pointer-events:none;overflow:hidden}
+.sticker-item{position:absolute;display:flex;align-items:center;justify-content:center;user-select:none;transition:box-shadow .2s;line-height:1}
+.sticker-item.selected{outline:1px dashed rgba(255,45,120,.6);outline-offset:3px}
+.sticker-del{position:absolute;top:-8px;right:-8px;width:18px;height:18px;border-radius:50%;background:rgba(200,20,60,.85);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:.6rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;opacity:0;transition:opacity .2s}
+.sticker-item:hover .sticker-del{opacity:1}
+.sticker-rot{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);width:16px;height:16px;border-radius:50%;background:rgba(124,106,154,.85);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:.5rem;display:flex;align-items:center;justify-content:center;cursor:grab;z-index:5;opacity:0;transition:opacity .2s}
+.sticker-item:hover .sticker-rot{opacity:1}
 
 /* CONTROLS */
 #controls{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:96vw;opacity:0;transition:opacity .8s ease 2.2s}
@@ -181,6 +171,8 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
 .cb.amber{background:rgba(255,200,0,.08);border-color:rgba(255,200,0,.28);color:#ffd966}
 .cb.amber:hover{background:rgba(255,200,0,.2)}
 .cb.amber.active{background:rgba(255,200,0,.22);box-shadow:0 0 16px rgba(255,200,0,.4)}
+.cb.teal{background:rgba(0,200,200,.08);border-color:rgba(0,200,200,.28);color:#80ffff}
+.cb.teal:hover{background:rgba(0,200,200,.2)}
 #viz{display:flex;gap:2px;align-items:flex-end;height:16px}
 .vb{width:3px;border-radius:2px;background:linear-gradient(to top,var(--pink),var(--pu3));height:4px;opacity:.3}
 .vb.on{opacity:1;animation:vbA .5s ease-in-out infinite alternate}
@@ -199,13 +191,11 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
 #syncDot.syncing{background:var(--gold);animation:syncP .8s ease-in-out infinite alternate}
 @keyframes syncP{0%{opacity:.5}100%{opacity:1}}
 
-/* FLOATERS */
 .floater{position:fixed;pointer-events:none;z-index:30;animation:floatUp 4s ease-out forwards}
 @keyframes floatUp{0%{transform:translateY(0) rotate(0) scale(1);opacity:1}100%{transform:translateY(-100vh) rotate(400deg) scale(.2);opacity:0}}
 .ctrail{position:fixed;pointer-events:none;z-index:28;animation:trailF 1.3s ease-out forwards}
 @keyframes trailF{0%{transform:translateY(0) scale(1);opacity:.8}100%{transform:translateY(-28px) scale(.2);opacity:0}}
 
-/* TOAST */
 #toast{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:100;background:rgba(0,0,0,.65);border:1px solid rgba(255,45,120,.25);border-radius:99px;padding:7px 18px;font-size:.56rem;letter-spacing:.1em;color:var(--muted);backdrop-filter:blur(12px);opacity:0;transition:opacity .4s ease;pointer-events:none;display:flex;align-items:center;gap:7px;white-space:nowrap}
 #toast.show{opacity:1}
 
@@ -218,8 +208,8 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
 #pwModal .modal-box{border:1px solid rgba(255,200,0,.28);background:rgba(255,200,0,.04);text-align:center}
 .pw-title{font-family:'Dancing Script',cursive;font-size:1.7rem;background:linear-gradient(135deg,var(--gold),var(--ps));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
 .pw-sub{font-size:.6rem;letter-spacing:.14em;color:var(--muted2);margin-bottom:22px;text-transform:uppercase}
-.pw-input{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,200,0,.3);color:var(--text);font-family:'Poppins',sans-serif;font-size:1.4rem;letter-spacing:.35em;text-align:center;padding:12px;border-radius:12px;outline:none;margin-bottom:16px}
-.pw-input:focus{border-color:var(--gold);box-shadow:0 0 12px rgba(255,200,0,.2)}
+.pw-input-m{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,200,0,.3);color:var(--text);font-family:'Poppins',sans-serif;font-size:1.4rem;letter-spacing:.35em;text-align:center;padding:12px;border-radius:12px;outline:none;margin-bottom:16px}
+.pw-input-m:focus{border-color:var(--gold);box-shadow:0 0 12px rgba(255,200,0,.2)}
 .pw-err{font-size:.58rem;color:var(--pink);margin-bottom:12px;min-height:18px}
 .pw-actions{display:flex;gap:10px;justify-content:center}
 .pw-ok{background:linear-gradient(135deg,var(--gold),#e09000);border:none;color:#000;font-family:'Poppins',sans-serif;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;padding:10px 24px;border-radius:99px;cursor:pointer}
@@ -292,15 +282,9 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
 .add-save{background:linear-gradient(135deg,var(--pink),var(--pu2));border:none;color:#fff;font-family:'Poppins',sans-serif;font-size:.57rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 22px;border-radius:99px;cursor:pointer;box-shadow:0 0 14px var(--gp)}
 .add-cancel{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:var(--muted);font-family:'Poppins',sans-serif;font-size:.57rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 16px;border-radius:99px;cursor:pointer}
 
-/* ══ PAGE LIST — DRAG & DROP ══ */
+/* page list */
 .page-list{margin-top:4px}
-.page-item{
-  display:flex;align-items:center;gap:7px;padding:7px 10px;
-  border-radius:8px;background:rgba(255,255,255,.04);
-  border:1px solid rgba(168,85,247,.11);margin-bottom:6px;
-  cursor:grab;user-select:none;transition:all .2s ease;
-  position:relative;
-}
+.page-item{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid rgba(168,85,247,.11);margin-bottom:6px;cursor:grab;user-select:none;transition:all .2s ease;position:relative}
 .page-item:active{cursor:grabbing}
 .page-item.dragging{opacity:.4;border-color:var(--pink);transform:scale(.97)}
 .page-item.drag-over{border-color:var(--pink);background:rgba(255,45,120,.1);transform:translateY(-2px);box-shadow:0 4px 18px var(--gp)}
@@ -312,21 +296,22 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
 .pi-type{font-size:.45rem;color:var(--muted2);text-transform:uppercase}
 .pi-del{background:rgba(255,45,120,.12);border:1px solid rgba(255,45,120,.2);color:var(--pink);width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:.6rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .pi-del:hover{background:rgba(255,45,120,.3)}
+.pi-dup{background:rgba(124,106,154,.12);border:1px solid rgba(124,106,154,.2);color:var(--pu3);width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:.6rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:2px}
+.pi-dup:hover{background:rgba(124,106,154,.3)}
 .reorder-hint{font-size:.51rem;color:var(--muted2);text-align:center;padding:6px;border:1px dashed rgba(168,85,247,.2);border-radius:8px;margin-bottom:10px}
 
-/* lang */
-#langPanel .modal-box{border:1px solid rgba(168,85,247,.28);background:rgba(168,85,247,.05);text-align:center;position:relative}
-.lang-close-x{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--muted2);font-size:1.3rem;cursor:pointer}
-.lang-box-title{font-family:'Dancing Script',cursive;font-size:1.7rem;background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px}
-.lang-box-sub{font-size:.59rem;letter-spacing:.14em;color:var(--muted2);margin-bottom:24px;text-transform:uppercase}
-.lang-choices{display:flex;gap:13px;justify-content:center}
-.lang-choice{flex:1;min-width:120px;max-width:155px;padding:18px 12px;border-radius:14px;cursor:pointer;border:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);transition:all .3s ease;text-align:center}
-.lang-choice:hover{border-color:var(--pink);transform:translateY(-3px)}
-.lang-choice.picked{border-color:var(--pink);background:rgba(255,45,120,.1);box-shadow:0 0 20px var(--gp)}
-.lang-flag{font-size:2.4rem;margin-bottom:8px}
-.lang-name{font-size:.84rem;font-weight:500;color:var(--text);margin-bottom:3px}
-.lang-native{font-size:.68rem;color:var(--muted2)}
-.lang-apply{margin-top:22px;background:linear-gradient(135deg,var(--pink),var(--pu2));border:none;color:#fff;font-family:'Poppins',sans-serif;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;padding:10px 22px;border-radius:99px;cursor:pointer;box-shadow:0 0 14px var(--gp)}
+/* STICKER MODAL */
+#stickerPanel .modal-box{border:1px solid rgba(0,200,200,.28);background:rgba(0,200,200,.04);text-align:center}
+.sk-title{font-family:'Dancing Script',cursive;font-size:1.5rem;background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px}
+.sk-sub{font-size:.56rem;letter-spacing:.13em;color:var(--muted2);margin-bottom:18px;text-transform:uppercase}
+.sk-grid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:18px}
+.sk-btn{width:44px;height:44px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);font-size:1.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s ease}
+.sk-btn:hover{border-color:var(--pink);transform:scale(1.2);background:rgba(255,45,120,.1)}
+.sk-upload{border:2px dashed rgba(168,85,247,.3);border-radius:10px;padding:12px;margin-bottom:14px;position:relative;cursor:pointer;transition:border-color .3s}
+.sk-upload:hover{border-color:var(--pink)}
+.sk-upload input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.sk-upload-label{font-size:.58rem;color:var(--muted2)}
+.sk-cancel{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:var(--muted);font-family:'Poppins',sans-serif;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;padding:10px 22px;border-radius:99px;cursor:pointer}
 
 @media(max-width:720px){:root{--pw:min(44vw,200px);--ph:min(70vw,350px)}.cb{font-size:.46rem;padding:5px 8px}#navL{left:4px}#navR{right:4px}}
 @media(max-width:480px){:root{--pw:min(86vw,320px);--ph:470px}#book{width:var(--pw)}#rPanel{display:none}#lPanel{border-radius:10px}#book::after{display:none}#controls{bottom:10px;gap:4px}#addPanel .modal-box{padding:18px 14px}}
@@ -370,6 +355,7 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
   <button class="cb" id="btnStars">✨ Stars</button>
   <button class="cb" id="btnSecret">🔐 Secret</button>
   <button class="cb green" id="btnAddPage">✚ Add Page</button>
+  <button class="cb teal" id="btnSticker">🌸 Stickers</button>
   <button class="cb amber" id="btnEdit">✏️ Edit 🔒</button>
 </div>
 
@@ -378,7 +364,7 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
   <div class="modal-box">
     <div class="pw-title">🔐 Edit Mode</div>
     <div class="pw-sub">Enter password to unlock editing</div>
-    <input class="pw-input" id="pwInput" type="password" placeholder="••••" maxlength="10" onkeydown="if(event.key==='Enter')checkPw()">
+    <input class="pw-input-m" id="pwInput" type="password" placeholder="••••" maxlength="10" onkeydown="if(event.key==='Enter')checkPw()">
     <div class="pw-err" id="pwErr"></div>
     <div class="pw-actions">
       <button class="pw-ok" onclick="checkPw()">Unlock ✦</button>
@@ -403,15 +389,15 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
 <div class="modal-overlay" id="secret">
   <div class="modal-box">
     <div class="sc-ico">💌</div>
-    <div class="sc-title" id="scTitle" data-ek="scTitle" contenteditable="false">Only For You, Radwa</div>
-    <div class="sc-body" id="scBody" data-ek="scBody" contenteditable="false">
+    <div class="sc-title" id="scTitle" contenteditable="false">Only For You, Radwa</div>
+    <div class="sc-body" id="scBody" contenteditable="false">
       In every universe that has ever existed —<br>in every lifetime that could ever be lived —<br><br>
       I would search through all of it just to find you again.<br><br>
       You are not just my best friend.<br>You are the reason I believe that<br>
       <strong>some bonds are written before birth.</strong><br><br>
       Happy Birthday, Radwa. I love you endlessly. 🌸
     </div>
-    <div id="scEditHint" style="display:none;font-size:.5rem;color:var(--gold);letter-spacing:.12em;margin-bottom:12px;text-align:center">✏️ Click the text above to edit — changes save automatically</div>
+    <div id="scEditHint" style="display:none;font-size:.5rem;color:var(--gold);letter-spacing:.12em;margin-bottom:12px;text-align:center">✏️ Click the text above to edit</div>
     <button class="sc-close" onclick="closeModal('secret')">Close with love ✕</button>
   </div>
 </div>
@@ -419,7 +405,7 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
 <div class="modal-overlay" id="musicPanel">
   <div class="modal-box">
     <div class="mp-title">🎵 Upload Your Song</div>
-    <div class="mp-sub">بتتحفظ على السحابة — تشتغل على كل الأجهزة</div>
+    <div class="mp-sub">بتتحفظ على السحابة</div>
     <div id="currentSongDisplay">🎵 No song saved yet</div>
     <div class="mp-cloud-badge" id="cloudBadge">☁️ Song saved — plays on all devices</div>
     <div class="mp-upload-area">
@@ -427,10 +413,7 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
       <div class="mp-txt">Click to upload (MP3, M4A, WAV…)<span>ارفعي ملف الأغنية هنا 🎵</span></div>
       <input type="file" accept="audio/*" id="songFileInput">
     </div>
-    <div class="mp-note">
-      💡  <a href="https://ytmp3.cc" target="_blank">ytmp3.cc</a> .<br>
-      ⚠️ الملف لازم يكون أقل من <strong>5 MB</strong> عشان يتحفظ على السحابة.
-    </div>
+    <div class="mp-note">💡 <a href="https://ytmp3.cc" target="_blank">ytmp3.cc</a><br>⚠️ الملف لازم يكون أقل من <strong>5 MB</strong></div>
     <div class="mp-actions">
       <button class="mp-save" onclick="saveSong()">☁️ Save to Cloud</button>
       <button class="mp-cancel" onclick="closeModal('musicPanel')">Cancel</button>
@@ -445,6 +428,7 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
     <div class="add-tabs">
       <button class="add-tab active" onclick="switchTab('memory',this)">📸 Memory</button>
       <button class="add-tab" onclick="switchTab('poetry',this)">🌸 Poetry</button>
+      <button class="add-tab" onclick="switchTab('custom',this)">✨ Custom</button>
       <button class="add-tab" onclick="switchTab('manage',this)">📋 Manage</button>
     </div>
     <div id="tab-memory">
@@ -461,24 +445,37 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
       <div class="fg"><label>Ornament</label><select id="po-orn"><option value="❧">❧</option><option value="✦">✦</option><option value="🌸">🌸</option><option value="♡">♡</option></select></div>
       <div class="add-actions"><button class="add-save" onclick="savePoetry()">☁️ Save Poem</button><button class="add-cancel" onclick="closeModal('addPanel')">Cancel</button></div>
     </div>
+    <div id="tab-custom" style="display:none">
+      <div class="fg"><label>Page Title</label><input id="cu-title" type="text" maxlength="55" placeholder="My special page…"></div>
+      <div class="fg"><label>Content / Message</label><textarea id="cu-body" style="min-height:90px" placeholder="Write anything you want here…"></textarea></div>
+      <div class="fg"><label>Image (optional)</label><div class="media-upload" id="cuMediaBox"><div class="ico">📷</div><span>Click to add image</span><input type="file" accept="image/*" id="cuMediaInput"></div></div>
+      <div class="fg"><label>Background Style</label>
+        <select id="cu-bg">
+          <option value="dark">Dark Purple</option><option value="rose">Deep Rose</option>
+          <option value="night">Midnight</option><option value="forest">Forest Night</option>
+        </select>
+      </div>
+      <div class="add-actions"><button class="add-save" onclick="saveCustom()">☁️ Save Page</button><button class="add-cancel" onclick="closeModal('addPanel')">Cancel</button></div>
+    </div>
     <div id="tab-manage" style="display:none">
-      <div class="reorder-hint">⠿ اسحبي الصفحات لترتيبها — Drag to reorder pages</div>
+      <div class="reorder-hint">⠿ اسحبي الصفحات لترتيبها — Drag to reorder</div>
       <div class="page-list" id="pageListWrap"></div>
       <div style="text-align:center;margin-top:12px"><button class="add-cancel" onclick="closeModal('addPanel')">Done ✓</button></div>
     </div>
   </div>
 </div>
 
-<div class="modal-overlay" id="langPanel">
+<!-- STICKER MODAL -->
+<div class="modal-overlay" id="stickerPanel">
   <div class="modal-box">
-    <button class="lang-close-x" onclick="closeModal('langPanel')">✕</button>
-    <div class="lang-box-title">Choose Language</div>
-    <div class="lang-box-sub">اختاري لغتك المفضلة</div>
-    <div class="lang-choices">
-      <div class="lang-choice picked" id="lcEN" onclick="pickLang('en')"><div class="lang-flag">🇬🇧</div><div class="lang-name">English</div><div class="lang-native">English</div></div>
-      <div class="lang-choice" id="lcAR" onclick="pickLang('ar')"><div class="lang-flag">🇪🇬</div><div class="lang-name">Arabic</div><div class="lang-native">عربي</div></div>
+    <div class="sk-title">🌸 Add Sticker</div>
+    <div class="sk-sub">Pick one — it goes on the current page</div>
+    <div class="sk-grid" id="stickerGrid"></div>
+    <div class="sk-upload">
+      <div class="sk-upload-label">📷 Upload custom sticker image</div>
+      <input type="file" accept="image/*" id="stickerUploadInput">
     </div>
-    <button class="lang-apply" onclick="applyLang()">Apply ✦ تطبيق</button>
+    <button class="sk-cancel" onclick="closeModal('stickerPanel')">Cancel</button>
   </div>
 </div>
 
@@ -487,71 +484,19 @@ body.ar .bd-msg{font-family:'Tajawal',sans-serif;font-style:normal;line-height:1
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-
 <script>
 /* ════════════ FIREBASE ════════════ */
-const FB = {
-  apiKey:"AIzaSyDqrbZCuaVDZFhYbV-6pfne2wQyJkTRx58",
-  authDomain:"radwa-nour-book.firebaseapp.com",
-  databaseURL:"https://radwa-nour-book-default-rtdb.firebaseio.com",
-  projectId:"radwa-nour-book",
-  storageBucket:"radwa-nour-book.appspot.com",
-  messagingSenderId:"215096507762",
-  appId:"1:215096507762:web:0dc012f9274e91137731eb"
-};
-const OWNER_EMAIL  = "nourmessi629@gmail.com";
-const OWNER_PASS   = "Nour@2767";
-const EDIT_PASSWORD = "2767";
-
+const FB={apiKey:"AIzaSyDqrbZCuaVDZFhYbV-6pfne2wQyJkTRx58",authDomain:"radwa-nour-book.firebaseapp.com",databaseURL:"https://radwa-nour-book-default-rtdb.firebaseio.com",projectId:"radwa-nour-book",storageBucket:"radwa-nour-book.appspot.com",messagingSenderId:"215096507762",appId:"1:215096507762:web:0dc012f9274e91137731eb"};
+const OWNER_EMAIL="nourmessi629@gmail.com",OWNER_PASS="Nour@2767",EDIT_PASSWORD="2767";
 firebase.initializeApp(FB);
-const auth = firebase.auth();
-const db   = firebase.database();
-const REF  = p => db.ref('rnb/' + p);
+const auth=firebase.auth(),db=firebase.database();
+const REF=p=>db.ref('rnb/'+p);
 
-async function dbSet(path, val) {
-  syncStart();
-  try { await REF(path).set(val); syncDone(); }
-  catch(e) {
-    if(e.code==='PERMISSION_DENIED'){
-      showToast('⚠️','Re-logging in…');
-      await signInOwner();
-      await REF(path).set(val);
-      syncDone();
-    } else { showToast('⚠️','Sync error: '+e.message); syncDone(); }
-  }
-}
+async function dbSet(path,val){syncStart();try{await REF(path).set(val);syncDone();}catch(e){if(e.code==='PERMISSION_DENIED'){showToast('⚠️','Re-logging in…');await signInOwner();await REF(path).set(val);syncDone();}else{showToast('⚠️','Sync error: '+e.message);syncDone();}}}
 async function dbRemove(path){syncStart();try{await REF(path).remove();syncDone();}catch(e){syncDone();}}
 function syncStart(){document.getElementById('syncDot').className='show syncing';}
 function syncDone(){const d=document.getElementById('syncDot');d.className='show';setTimeout(()=>d.className='',1500);}
-
-async function signInOwner(){
-  try{await auth.signInWithEmailAndPassword(OWNER_EMAIL,OWNER_PASS);}
-  catch(e){console.warn('Sign in failed:',e.message);}
-}
-
-/* ════════════ TRANSLATIONS ════════════ */
-const T = {
-  en:{
-    coverSub:"A Book Full of Us",coverHint:"✦ touch to open ✦",
-    memTag:"Memory",memThumbLbl:"✦ add your media ✦",
-    bdTitle:"Happy Birthday, Radwa 🎉",bdSub:"Your special day is approaching…",
-    cdLabels:["Days","Hrs","Mins","Secs"],
-    bdMsg:`Every single year I get to celebrate you<br>feels like the universe giving me its greatest gift.<br>You are <span>irreplaceable, infinite,</span><br>and <span>so very, deeply loved.</span>`,
-    scTitle:"Only For You, Radwa",
-    scBody:`In every universe that has ever existed —<br>in every lifetime that could ever be lived —<br><br>I would search through all of it just to find you again.<br><br>You are not just my best friend.<br>You are the reason I believe that<br><strong>some bonds are written before birth.</strong><br><br>Happy Birthday, Radwa. I love you endlessly. 🌸`,
-    noMusic:"No music",
-  },
-  ar:{
-    coverSub:"كتاب مليان بينا",coverHint:"✦ لمسي لتفتحي ✦",
-    memTag:"ذكرى",memThumbLbl:"✦ أضيفي صورتك أو فيديوك ✦",
-    bdTitle:"عيد ميلاد سعيد، رضوى 🎉",bdSub:"عيد ميلادك بيقترب…",
-    cdLabels:["يوم","ساعة","دقيقة","ثانية"],
-    bdMsg:`كل سنة بتيجي فيها عيد ميلادك<br>بحس إن الكون بيديني أغلى هدية عنده.<br>إنتِ <span>مفيش زيك، لا نهاية،</span><br>و<span>محبوبة بعمق ما فيش كلام يوصفه.</span>`,
-    scTitle:"بس إنتِ يا رضوى",
-    scBody:`في كل كون ممكن يتخيله أحد —<br>في كل حياة ممكن تتعاش —<br><br>كنت هادور فيكِ في كل واحدة.<br><br>إنتِ مش بس صاحبتي الأحلى.<br>إنتِ السبب اللي بيخليني أصدق<br><strong>إن في صداقات بتتكتب قبل الميلاد.</strong><br><br>عيد ميلاد سعيد يا رضوى. بحبك للأبد. 🌸`,
-    noMusic:"لا موسيقى",
-  }
-};
+async function signInOwner(){try{await auth.signInWithEmailAndPassword(OWNER_EMAIL,OWNER_PASS);}catch(e){console.warn('Sign in failed:',e.message);}}
 
 /* ════════════ DEFAULT CONTENT ════════════ */
 const MEM_EN=[
@@ -575,70 +520,38 @@ const MEM_EN=[
   {title:"Your Strength",date:"You never knew I noticed",text:"The silent battles you fought with grace, the weight you carried without complaint. You are so much stronger than you know.",emoji:"💪🌟"},
   {title:"Every Little Thing",date:"The ones that sum to everything",text:"Every tiny, ordinary moment with you is a whole world I would choose to live inside — endlessly.",emoji:"📖❤️"},
 ];
-const MEM_AR=[
-  {title:"أول مرة قابلناك",date:"يوم غيّر كل حاجة",text:"اللحظة اللي الدنيا بتاعتنا تقابلت، الوقت قرر يبطّأ — كأن الكون بنفسه كان عايز يلفت نظرنا لبعض.",emoji:"👋✨"},
-  {title:"المكان المفضل",date:"الساعات تعدي زي دقايق",text:"الركن الصغير ده في الدنيا اللي ما حدش عرفه غيرنا. حوّلنا أعادي الأماكن لكون خاص بينا.",emoji:"🌆🌸"},
-  {title:"الكلام اللي بالليل",date:"لما الدنيا كلها بتهدى",text:"محادثات الساعة ٣ الصبح اللي كانت أصدق من أي حاجة. إنتِ الشخص الوحيد اللي ما بنفدش كلامي معاه.",emoji:"🌙💬"},
-  {title:"ضحكتك",date:"أحلى صوت في الدنيا",text:"الطريقة اللي بتضحكي بيها بجسمك كله — كنت عايزة أحبس الصوت ده وأعيش عليه لكل الأبد.",emoji:"😂💛"},
-  {title:"الأغنية دي",date:"لسّه شايلاها في دماغي",text:"كل ما بتشغل تلاقيني بغمض عيني وأرجع هناك — معاكِ، من غير أي قلق.",emoji:"🎵🎶"},
-  {title:"الرقص في المطر",date:"ما كناش بنهتم خالص",text:"مبلولين وبنضحك — اللحظة دي كانت هي اللي قالتلي إني هختارك في كل مرة.",emoji:"🌧️💃"},
-  {title:"الأكل المفضل",date:"دايمًا بنطلب أكتر من اللازم",text:"كل أكلة معاكِ كانت زي احتفال — بس عشان إنتِ قاعدة قدامي.",emoji:"🍕🥰"},
-  {title:"لما عيّطتِ",date:"وأنا مسكتك",text:"كنت عايزة أسحب منك كل الوجع. مشوفتيش حاجة تتعب قلبي زي ما تتعبي إنتِ.",emoji:"🤍🌸"},
-  {title:"صوتك الصبح",date:"نايمة وناعم",text:"عينيكِ مش طالعة تتفتح — وبرضو أجمل حاجة شفتيها في ضوء الصبح.",emoji:"☀️💫"},
-  {title:"الرحلة دي",date:"شبابيك نازلة والموسيقى عالية",text:"كيلومترات من غير وجهة. طول ما إنتِ جنبي، إحنا وصلنا بالفعل.",emoji:"🚗🗺️"},
-  {title:"الوعد اللي عملناه",date:"بتهامس تحت النجوم",text:"ما احتجناش لأي كلام كبير. بس كلمتين: 'أنا هنا' — وكانوا بيساووا الكون كله.",emoji:"⭐🤝"},
-  {title:"طيبتك",date:"اللي بتحرّكني كل مرة",text:"الطريقة اللي بتتعاملي بيها مع كل الناس — إنتِ بتخلّي الدنيا أحسن.",emoji:"💛🌿"},
-  {title:"لما اتوهنا",date:"وضحكنا لحد ما ما قدرناش",text:"الاتجاه الغلط اللي بقى أحلى مغامرة. معاكِ، التوه بيحسسني إني في المكان الصح.",emoji:"🗺️😄"},
-  {title:"النجوم مع بعض",date:"الليلة دي السما كانت شخصية",text:"سميّنا نجوم زي ما كانوا بتوعنا. أحلى واحدة اديتها اسمك.",emoji:"🌠🔭"},
-  {title:"عيد ميلادك السنة اللي فاتت",date:"كنت عايزة كل لحظة تبقى تمام",text:"اللي كنت عايزاه بس هو أشوف عينيكِ بتضوّي. لما حصل، حسيت إني كسبت الدنيا.",emoji:"🎂🎉"},
-  {title:"النكت اللي بينا",date:"اللي بس إحنا نفهمها",text:"بصة وحدة وإحنا بنضحك في صمت. اللغة السرية بتاعتنا.",emoji:"🤣💜"},
-  {title:"لما الوقت وقف",date:"لحظة هادية وكاملة",text:"مافيش كلام. مافيش حركة. بس إحنا، بنتنفس نفس الهوا.",emoji:"⏳🌸"},
-  {title:"قوتك",date:"ما كنتِيش عارفة إني بلاحظ",text:"المعارك الصامتة اللي اتحاربتيها بهدوء — إنتِ أقوى بكتير مما بتعرفي.",emoji:"💪🌟"},
-  {title:"كل حاجة صغيرة",date:"اللي بتتجمع وتبقى كل حاجة",text:"كل لحظة عادية معاكِ هي دنيا كاملة كنت عايزة أعيش فيها مرارًا.",emoji:"📖❤️"},
-];
 const POE_EN=[
   {label:"I. Home",orn:"❧",text:`In the quiet spaces between your words,\nI found a home I hadn't known\nI was searching for.\n\nYou are the poem\nI never knew how to write —\nuntil you walked into the room\nand [everything made sense.]`},
   {label:"II. Time",orn:"✦",text:`Time is strange.\nIt moves fast and slow\ndepending on whether you're with me.\n\nWith you, I beg the clocks to stop.\nWithout you, I count *every second*\nuntil I hear your voice again.`},
   {label:"III. Saved",orn:"🌸",text:`If I could save one fragment\nfrom this entire existence —\none thing to carry into whatever comes next —\n\nit would be the memory of you laughing,\ncompletely free,\n[completely mine to witness.]`},
   {label:"IV. Constant",orn:"♡",text:`They say love is a feeling.\nBut with you, it is a [place] —\na soft, lit room I return to\nno matter how far I wander.\n\nYou are my *constant.*\nYou are my [home.]\nYou are my *everything.*`},
 ];
-const POE_AR=[
-  {label:"١. البيت",orn:"❧",text:`في المساحات الهادية بين كلامك،\nلقيت بيتًا كنت بادور عليه.\n\nإنتِ القصيدة اللي ما عرفتش أكتبها —\nلحد ما دخلتِ\nو[كل حاجة اتحلّت].`},
-  {label:"٢. الوقت",orn:"✦",text:`الوقت غريب.\nبيمشي بسرعة وببطء\nحسب إنتِ معايا ولا لأ.\n\nمعاكِ، عايزة الساعات توقف.\nمن غيرك، *بعدّ كل ثانية*.`},
-  {label:"٣. محفوظة",orn:"🌸",text:`لو قدرت أحتفظ بحاجة وحدة\nمن الوجود ده كله —\n\nكانت هتبقى ذكرى ضحكتك،\nحرة خالص،\n[اللي كنت بشوفها أنا].`},
-  {label:"٤. الثابت",orn:"♡",text:`بيقولوا الحب إحساس.\nبس معاكِ هو *مكان* —\nأوضة ضيّاها بتاعتي.\n\nإنتِ [الثابت] بتاعي.\nإنتِ *بيتي*. إنتِ [كل حاجة].`},
-];
 
 /* ════════════ CLOUD STATE ════════════ */
-let cloudData={lang:'en',coverPhoto:null,songName:'',songData:null,userPages:[],pageOrder:[],memoryMedia:{},editTexts:{}};
+let cloudData={coverPhoto:null,songName:'',songData:null,userPages:[],pageOrder:[],memoryMedia:{},editTexts:{},stickers:{}};
 let BOOK_PAGES=[],spread=0,flipping=false,cdTimer=null;
 let editMode=false,musicOn=false,pendingSongFile=null;
-let addMediaSrc=null,addMediaType='image',pendingLang='en';
+let addMediaSrc=null,addMediaType='image',cuMediaSrc=null;
 
 /* ════════════ LOAD FROM FIREBASE ════════════ */
 async function loadCloudData(){
   try{
     const snap=await db.ref('rnb').once('value');
     mergeSnapshot(snap.val());
-    db.ref('rnb').on('value',s=>{
-      mergeSnapshot(s.val());
-      BOOK_PAGES=buildPages(cloudData.lang);
-      renderSpread(spread);
-      applyLangUI(cloudData.lang);
-    });
+    db.ref('rnb').on('value',s=>{mergeSnapshot(s.val());BOOK_PAGES=buildPages();renderSpread(spread);});
   }catch(e){console.error('loadCloudData:',e);showToast('⚠️','Failed to load');}
 }
 
 function mergeSnapshot(v){
   if(!v)return;
-  cloudData.lang        ='en';
-  cloudData.coverPhoto  =v.coverPhoto||null;
-  cloudData.songName    =v.songName||'';
-  cloudData.songData    =v.songData||null;
-  cloudData.userPages   =v.userPages?Object.values(v.userPages):[];
-  cloudData.pageOrder   =v.pageOrder||[];
-  cloudData.memoryMedia =v.memoryMedia||{};
-  cloudData.editTexts   =v.editTexts||{};
+  cloudData.coverPhoto=v.coverPhoto||null;
+  cloudData.songName=v.songName||'';
+  cloudData.songData=v.songData||null;
+  cloudData.userPages=v.userPages?Object.values(v.userPages):[];
+  cloudData.pageOrder=v.pageOrder||[];
+  cloudData.memoryMedia=v.memoryMedia||{};
+  cloudData.editTexts=v.editTexts||{};
+  cloudData.stickers=v.stickers||{};
   if(cloudData.songData){
     const a=document.getElementById('bgAudio');
     if(a.src!==cloudData.songData)a.src=cloudData.songData;
@@ -647,49 +560,55 @@ function mergeSnapshot(v){
   }
 }
 
-/* ════════════ BUILD PAGES ════════════ */
-function buildPages(lang){
-  const mems  = lang==='ar'?MEM_AR:MEM_EN;
-  const poems = lang==='ar'?POE_AR:POE_EN;
-  const core  = [];
-  core.push({type:'cover',lang,_fixedStart:true});
-  core.push({type:'intro',_fixedStart:true});
-  mems.forEach((m,i)=>core.push({type:'memory',...m,lang,memKey:`orig-${i}`}));
-  poems.forEach(p=>core.push({type:'poetry',...p,lang}));
-  cloudData.userPages.forEach(p=>core.push(p));
-  core.push({type:'birthday',lang,_fixedEnd:true});
+/* ════════════ STABLE PAGE IDs ════════════ */
+function getPageStableId(p){
+  if(!p)return'unknown';
+  if(p._id)return p._id;
+  if(p.type==='cover')return'page_cover';
+  if(p.type==='intro')return'page_intro';
+  if(p.type==='birthday')return'page_birthday';
+  if(p.memKey)return p.memKey;
+  if(p.type==='poetry'&&p.label)return'poetry_'+p.label.replace(/[^a-zA-Z0-9]/g,'_');
+  return'page_'+p.type+'_'+Math.abs(hashStr(JSON.stringify(p).slice(0,50)));
+}
+function hashStr(s){let h=0;for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return h;}
 
-  // Apply page order if saved — only reorder non-fixed middle pages
-  if(cloudData.pageOrder && cloudData.pageOrder.length>2){
-    const fixed_start=core.filter(p=>p._fixedStart);
-    const fixed_end  =core.filter(p=>p._fixedEnd);
-    const movable    =core.filter(p=>!p._fixedStart&&!p._fixedEnd);
-    const reordered  =[];
-    cloudData.pageOrder.forEach(key=>{
-      const found=movable.find(p=>getPageKey(p)===key);
-      if(found)reordered.push(found);
-    });
-    // add any pages not in order list
+/* ════════════ BUILD PAGES ════════════ */
+function buildPages(){
+  const core=[];
+  core.push({type:'cover',_id:'page_cover',_fixedStart:true});
+  core.push({type:'intro',_id:'page_intro',_fixedStart:true});
+  MEM_EN.forEach((m,i)=>core.push({type:'memory',...m,_id:`orig-${i}`,memKey:`orig-${i}`,_fixedStart:true}));
+  POE_EN.forEach((p,i)=>core.push({type:'poetry',...p,_id:`orig-poem-${i}`,_fixedStart:true}));
+  cloudData.userPages.forEach(p=>core.push(p));
+  core.push({type:'birthday',_id:'page_birthday',_fixedEnd:true});
+
+  if(cloudData.pageOrder&&cloudData.pageOrder.length>0){
+    const fixedS=core.filter(p=>p._fixedStart);
+    const fixedE=core.filter(p=>p._fixedEnd);
+    const movable=core.filter(p=>!p._fixedStart&&!p._fixedEnd);
+    const reordered=[];
+    cloudData.pageOrder.forEach(key=>{const found=movable.find(p=>getPageStableId(p)===key);if(found)reordered.push(found);});
     movable.forEach(p=>{if(!reordered.includes(p))reordered.push(p);});
-    return [...fixed_start,...reordered,...fixed_end];
+    return[...fixedS,...reordered,...fixedE];
   }
   return core;
 }
 
-function getPageKey(p){
-  if(p._id) return p._id;
-  if(p.type==='memory') return p.memKey||p.title;
-  if(p.type==='poetry') return p.label;
-  return p.type+'_'+p.title;
+/* ════════════ EDIT TEXTS (stable key system) ════════════ */
+function getET(stableId,field,def){
+  const key=`${stableId}__${field}`;
+  return Object.prototype.hasOwnProperty.call(cloudData.editTexts,key)?cloudData.editTexts[key]:def;
+}
+async function saveET(stableId,field,html){
+  const key=`${stableId}__${field}`;
+  cloudData.editTexts[key]=html;
+  await dbSet('editTexts/'+key.replace(/\//g,'_'),html);
 }
 
-/* ════════════ EDIT TEXTS ════════════ */
-function getET(key,def){return Object.prototype.hasOwnProperty.call(cloudData.editTexts,key)?cloudData.editTexts[key]:def;}
-async function saveET(key,html){cloudData.editTexts[key]=html;await dbSet('editTexts/'+key,html);}
-
 /* ════════════ RENDERERS ════════════ */
-function makeCover(p,gi){
-  const t=T[p.lang||cloudData.lang];
+function makeCover(p){
+  const sid=getPageStableId(p);
   const photo=cloudData.coverPhoto?`<img src="${cloudData.coverPhoto}" alt="us">`:'💑';
   return `<div class="pg pg-cover">
     <div class="cv-roses">🌹 🌸 🌹</div>
@@ -697,132 +616,250 @@ function makeCover(p,gi){
       <div class="cv-img">${photo}</div>
       <label class="eu-btn" title="Change cover photo">📷<input type="file" accept="image/*" onchange="uploadCoverPhoto(event)"></label>
     </div>
-    <div class="cv-title" data-ek="cvtitle" contenteditable="false">${getET(`pg${gi}_cvtitle`,'Radwa &amp; Nour ❤️')}</div>
+    <div class="cv-title" data-sid="${sid}" data-field="cvtitle" contenteditable="false">${getET(sid,'cvtitle','Radwa &amp; Nour ❤️')}</div>
     <div class="cv-line"></div>
-    <div class="cv-sub" data-ek="cvsub" contenteditable="false">${getET(`pg${gi}_cvsub`,t.coverSub)}</div>
+    <div class="cv-sub" data-sid="${sid}" data-field="cvsub" contenteditable="false">${getET(sid,'cvsub','A Book Full of Us')}</div>
     <div class="deco decoP" style="margin:5px auto"></div>
-    <div class="cv-hint" onclick="if(!editMode)flipNext()">${t.coverHint}</div>
+    <div class="cv-hint" onclick="if(!editMode)flipNext()">✦ touch to open ✦</div>
     <div class="pgn r">1</div>
   </div>`;
 }
 
-function makeIntro(){
+function makeIntro(p){
+  const sid='page_intro';
   const D={
-    title:getET('intro_title','كتابُ حُبِّنا'),
-    p1:getET('intro_p1','من الممكن أن أُطلق عليه <span class="hi">«كتابُ حُبِّنا»</span>، لأنني لم أجد أجمل من الكلمات — وتاللهِ إنها لا تكفي — لتُعبّر عن مدى <span class="hi">حُبّي لكِ</span>، وعن حلاوة أيّامي معكِ.'),
-    p2:getET('intro_p2','حتى أنّني أعجز عن تخيّل انتهاء حقبةٍ من حياتي أراكِ فيها يوميًا. وأكاد أجزم أنّ ذلك سيكون من <span class="hi">أسوأ المشاعر</span> التي قد أصفها يومًا.'),
-    p3:getET('intro_p3','سيبقى هذا الكتاب، ويبقى حُبّي دائمًا، سواء استطاعت الكلمات التعبير عنه أم عجزت… حتى نصل — بإذن الله — إلى <span class="hi">«الألفيّة في حُبِّ رضوى»</span>.'),
-    list:getET('intro_list','<span class="hi">يتكوّن الكتاب من:</span><br>• بعض <span class="hi">ذكرياتنا</span>،<br>• بعض <span class="hi">الكلمات</span> — التي لا تكفيكِ —،<br>• بعض <span class="hi">الصور</span> التي تجمعنا،<br>• <span class="hi">الموسيقى</span> التي نُحبّها،<br>• وكلّ شيءٍ يحمل أثرًا منكِ أو يشبهكِ قليلًا…<br><br>وفي النهاية، <span class="hi">Countdown</span> ليوم ميلادك القادم، لتعودي إليه في كلّ عام.'),
-    sig:getET('intro_sig','مع خالص حُبّي، نور شهاب'),
-    sigsm:getET('intro_sigsm','( خوختك 🍑 )'),
+    title:getET(sid,'title','كتابُ حُبِّنا'),
+    p1:getET(sid,'p1','من الممكن أن أُطلق عليه <span class="hi">«كتابُ حُبِّنا»</span>، لأنني لم أجد أجمل من الكلمات — وتاللهِ إنها لا تكفي — لتُعبّر عن مدى <span class="hi">حُبّي لكِ</span>، وعن حلاوة أيّامي معكِ.'),
+    p2:getET(sid,'p2','حتى أنّني أعجز عن تخيّل انتهاء حقبةٍ من حياتي أراكِ فيها يوميًا. وأكاد أجزم أنّ ذلك سيكون من <span class="hi">أسوأ المشاعر</span> التي قد أصفها يومًا.'),
+    p3:getET(sid,'p3','سيبقى هذا الكتاب، ويبقى حُبّي دائمًا، سواء استطاعت الكلمات التعبير عنه أم عجزت… حتى نصل — بإذن الله — إلى <span class="hi">«الألفيّة في حُبِّ رضوى»</span>.'),
+    list:getET(sid,'list','<span class="hi">يتكوّن الكتاب من:</span><br>• بعض <span class="hi">ذكرياتنا</span>،<br>• بعض <span class="hi">الكلمات</span> — التي لا تكفيكِ —،<br>• بعض <span class="hi">الصور</span> التي تجمعنا،<br>• <span class="hi">الموسيقى</span> التي نُحبّها،<br>• وكلّ شيءٍ يحمل أثرًا منكِ أو يشبهكِ قليلًا…<br><br>وفي النهاية، <span class="hi">Countdown</span> ليوم ميلادك القادم، لتعودي إليه في كلّ عام.'),
+    sig:getET(sid,'sig','مع خالص حُبّي، نور شهاب'),
+    sigsm:getET(sid,'sigsm','( خوختك 🍑 )'),
   };
   return `<div class="pg pg-intro">
     <div class="intro-orn">🌸 ✦ 🌸</div>
-    <div class="intro-title-el" data-ek="intro_title" contenteditable="false">${D.title}</div>
+    <div class="intro-title-el" data-sid="${sid}" data-field="title" contenteditable="false">${D.title}</div>
     <div class="intro-divider"></div>
     <div class="intro-body">
-      <p data-ek="intro_p1" contenteditable="false">${D.p1}</p>
-      <p data-ek="intro_p2" contenteditable="false">${D.p2}</p>
-      <p data-ek="intro_p3" contenteditable="false">${D.p3}</p>
-      <div class="intro-list" data-ek="intro_list" contenteditable="false">${D.list}</div>
+      <p data-sid="${sid}" data-field="p1" contenteditable="false">${D.p1}</p>
+      <p data-sid="${sid}" data-field="p2" contenteditable="false">${D.p2}</p>
+      <p data-sid="${sid}" data-field="p3" contenteditable="false">${D.p3}</p>
+      <div class="intro-list" data-sid="${sid}" data-field="list" contenteditable="false">${D.list}</div>
     </div>
     <div class="intro-sig">
-      <span data-ek="intro_sig" contenteditable="false">${D.sig}</span>
-      <small data-ek="intro_sigsm" contenteditable="false">${D.sigsm}</small>
+      <span data-sid="${sid}" data-field="sig" contenteditable="false">${D.sig}</span>
+      <small data-sid="${sid}" data-field="sigsm" contenteditable="false">${D.sigsm}</small>
     </div>
     <div class="pgn r" style="direction:ltr">2</div>
   </div>`;
 }
 
 function makeMemory(m,gi){
-  const t=T[m.lang||cloudData.lang];
+  const sid=getPageStableId(m);
   const cnt=BOOK_PAGES.slice(0,gi+1).filter(p=>p.type==='memory').length;
   const side=gi%2===0?'r':'l';
-  const med=cloudData.memoryMedia[m.memKey];
+  const med=cloudData.memoryMedia[m.memKey||m._id];
   let mh='';
   if(med&&med.type==='video')mh=`<video src="${med.src}" autoplay muted loop playsinline></video><div class="vid-badge">▶ VIDEO</div>`;
   else if(med)mh=`<img src="${med.src}" alt="memory">`;
-  else mh=`<div class="big">${m.emoji}</div><div class="lbl">${t.memThumbLbl}</div>`;
-  const k=`pg${gi}`;
+  else mh=`<div class="big">${m.emoji||'💗'}</div><div class="lbl">✦ add your media ✦</div>`;
   return `<div class="pg">
-    <div class="mtag">${t.memTag} ${String(cnt).padStart(2,'0')}</div>
-    <div class="mtitle" data-ek="title" contenteditable="false">${getET(`${k}_title`,m.title)}</div>
+    <div class="mtag">Memory ${String(cnt).padStart(2,'0')}</div>
+    <div class="mtitle" data-sid="${sid}" data-field="title" contenteditable="false">${getET(sid,'title',m.title)}</div>
     <div class="deco"></div>
     <div class="mthumb">${mh}
-      <label class="eu-mem">📷/🎬 ${med?'Change':'Add'}<input type="file" accept="image/*,video/*" onchange="uploadMemMedia(event,'${m.memKey}')"></label>
+      <label class="eu-mem">📷/🎬 ${med?'Change':'Add'}<input type="file" accept="image/*,video/*" onchange="uploadMemMedia(event,'${m.memKey||m._id}')"></label>
     </div>
     <div class="deco"></div>
-    <div class="mbody" data-ek="body" contenteditable="false">${getET(`${k}_body`,m.text)}</div>
-    <div class="mdate" data-ek="date" contenteditable="false">${getET(`${k}_date`,`✦ ${m.date} ✦`)}</div>
+    <div class="mbody" data-sid="${sid}" data-field="body" contenteditable="false">${getET(sid,'body',m.text)}</div>
+    <div class="mdate" data-sid="${sid}" data-field="date" contenteditable="false">${getET(sid,'date','✦ '+m.date+' ✦')}</div>
     <div class="pgn ${side}">${gi+1}</div>
   </div>`;
 }
 
 function makePoetry(p,gi){
+  const sid=getPageStableId(p);
   const side=gi%2===0?'r':'l';
   const body=p.text.replace(/\[([^\]]+)\]/g,'<em>$1</em>').replace(/\*([^*]+)\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
-  const k=`pg${gi}`;
   return `<div class="pg pg-po">
     <div class="po-orn">${p.orn||'❧'}</div>
-    <div class="po-body" data-ek="body" contenteditable="false">${getET(`${k}_body`,body)}</div>
+    <div class="po-body" data-sid="${sid}" data-field="body" contenteditable="false">${getET(sid,'body',body)}</div>
     <div class="po-orn">${p.orn||'❧'}</div>
-    <div class="po-lbl" data-ek="lbl" contenteditable="false">${getET(`${k}_lbl`,p.label)}</div>
+    <div class="po-lbl" data-sid="${sid}" data-field="lbl" contenteditable="false">${getET(sid,'lbl',p.label)}</div>
     <div class="pgn ${side}">${gi+1}</div>
   </div>`;
 }
 
-function makeBirthday(gi,lang){
-  const t=T[lang||cloudData.lang];const k=`pg${gi}`;
+function makeBirthday(p,gi){
+  const sid='page_birthday';
   return `<div class="pg pg-bd">
     <div class="bd-ico">🎂</div>
-    <div class="bd-title" data-ek="bdtitle" contenteditable="false">${getET(`${k}_bdtitle`,t.bdTitle)}</div>
-    <div class="bd-sub" data-ek="bdsub" contenteditable="false">${getET(`${k}_bdsub`,t.bdSub)}</div>
+    <div class="bd-title" data-sid="${sid}" data-field="bdtitle" contenteditable="false">${getET(sid,'bdtitle','Happy Birthday, Radwa 🎉')}</div>
+    <div class="bd-sub" data-sid="${sid}" data-field="bdsub" contenteditable="false">${getET(sid,'bdsub','Your special day is approaching…')}</div>
     <div class="cd-row">
-      <div class="cdb"><span class="cdn" id="cdD">--</span><span class="cdl">${t.cdLabels[0]}</span></div>
-      <div class="cdb"><span class="cdn" id="cdH">--</span><span class="cdl">${t.cdLabels[1]}</span></div>
-      <div class="cdb"><span class="cdn" id="cdM">--</span><span class="cdl">${t.cdLabels[2]}</span></div>
-      <div class="cdb"><span class="cdn" id="cdS">--</span><span class="cdl">${t.cdLabels[3]}</span></div>
+      <div class="cdb"><span class="cdn" id="cdD">--</span><span class="cdl">Days</span></div>
+      <div class="cdb"><span class="cdn" id="cdH">--</span><span class="cdl">Hrs</span></div>
+      <div class="cdb"><span class="cdn" id="cdM">--</span><span class="cdl">Mins</span></div>
+      <div class="cdb"><span class="cdn" id="cdS">--</span><span class="cdl">Secs</span></div>
     </div>
-    <div class="bd-msg" data-ek="bdmsg" contenteditable="false">${getET(`${k}_bdmsg`,t.bdMsg)}</div>
+    <div class="bd-msg" data-sid="${sid}" data-field="bdmsg" contenteditable="false">${getET(sid,'bdmsg','Every single year I get to celebrate you<br>feels like the universe giving me its greatest gift.<br>You are <span>irreplaceable, infinite,</span><br>and <span>so very, deeply loved.</span>')}</div>
     <div class="pgn r">${gi+1}</div>
   </div>`;
 }
 
+function makeCustom(p,gi){
+  const sid=getPageStableId(p);
+  const side=gi%2===0?'r':'l';
+  const bgMap={dark:'linear-gradient(155deg,#150024 0%,#090013 100%)',rose:'linear-gradient(155deg,#250015 0%,#0e0008 100%)',night:'linear-gradient(155deg,#050520 0%,#020210 100%)',forest:'linear-gradient(155deg,#051508 0%,#020a03 100%)'};
+  const bg=bgMap[p.background||'dark']||bgMap.dark;
+  const med=cloudData.memoryMedia[sid];
+  let imgHtml='';
+  if(med)imgHtml=`<img class="custom-img" src="${med.src}" alt="custom">`;
+  return `<div class="pg pg-custom" style="background:${bg}">
+    <div class="custom-title" data-sid="${sid}" data-field="title" contenteditable="false">${getET(sid,'title',p.title||'My Page')}</div>
+    <div class="deco decoP"></div>
+    ${imgHtml}
+    <div class="custom-body" data-sid="${sid}" data-field="body" contenteditable="false">${getET(sid,'body',p.body||'')}</div>
+    <label class="eu-mem">📷 ${med?'Change':'Add'}<input type="file" accept="image/*" onchange="uploadMemMedia(event,'${sid}')"></label>
+    <div class="pgn ${side}">${gi+1}</div>
+  </div>`;
+}
+
 function renderPage(gi){
-  if(gi<0||gi>=TOTAL())return '<div class="pg" style="background:#090013"></div>';
+  if(gi<0||gi>=TOTAL())return'<div class="pg" style="background:#090013"></div>';
   const p=BOOK_PAGES[gi];
-  if(p.type==='cover')    return makeCover(p,gi);
-  if(p.type==='intro')    return makeIntro();
-  if(p.type==='memory')   return makeMemory(p,gi);
-  if(p.type==='poetry')   return makePoetry(p,gi);
-  if(p.type==='birthday') return makeBirthday(gi,p.lang);
-  return '<div class="pg"></div>';
+  if(p.type==='cover')return makeCover(p);
+  if(p.type==='intro')return makeIntro(p);
+  if(p.type==='memory')return makeMemory(p,gi);
+  if(p.type==='poetry')return makePoetry(p,gi);
+  if(p.type==='birthday')return makeBirthday(p,gi);
+  if(p.type==='custom')return makeCustom(p,gi);
+  return'<div class="pg"></div>';
 }
 
 const TOTAL=()=>BOOK_PAGES.length;
 const maxSpread=()=>Math.ceil((TOTAL()-1)/2);
 
-/* ════════════ FLIP ENGINE ════════════ */
-function spreadIdx(s){return{l:s*2,r:s*2+1};}
+/* ════════════ RENDER FACE (with stable edit IDs + stickers) ════════════ */
 function renderFace(el,idx){
   if(idx<0||idx>=TOTAL()){el.innerHTML='<div class="pg" style="background:#090013"></div>';return;}
   el.innerHTML=renderPage(idx);
-  const pageType=BOOK_PAGES[idx]?.type;
-  const k=`pg${idx}`;
-  el.querySelectorAll('[data-ek]').forEach(node=>{
+  const p=BOOK_PAGES[idx];
+  const sid=getPageStableId(p);
+
+  // Wire editable fields
+  el.querySelectorAll('[data-sid][data-field]').forEach(node=>{
     if(editMode){
       node.contentEditable='true';
       node.addEventListener('blur',async()=>{
-        const ek=node.dataset.ek;
-        const storageKey=ek.startsWith('intro_')?ek:`${k}_${ek}`;
-        await saveET(storageKey,node.innerHTML);
-        showToast('☁️','Saved to cloud!');
+        await saveET(node.dataset.sid,node.dataset.field,node.innerHTML);
+        showToast('☁️','Saved!');
       });
-    } else node.contentEditable='false';
+    } else {
+      node.contentEditable='false';
+    }
   });
-  if(pageType==='birthday')startCountdown();
+
+  // Add sticker layer
+  const sLayer=document.createElement('div');
+  sLayer.className='sticker-layer';
+  sLayer.dataset.sid=sid;
+  el.appendChild(sLayer);
+  renderStickers(sLayer,sid);
+
+  if(p.type==='birthday')startCountdown();
 }
 
+/* ════════════ STICKER SYSTEM ════════════ */
+const STICKER_EMOJIS=['🌸','💗','✨','🌹','💕','🌺','💫','⭐','🌙','🎀','🦋','🌼','💝','🌟','🎵','🍓','🌈','💐','🌻','❤️','🔮','🌷','🦄','🍭','🎉'];
+let activeStickerDrag=null;
+
+function initStickerPicker(){
+  const grid=document.getElementById('stickerGrid');grid.innerHTML='';
+  STICKER_EMOJIS.forEach(e=>{
+    const btn=document.createElement('button');btn.className='sk-btn';btn.textContent=e;
+    btn.onclick=()=>{closeModal('stickerPanel');addStickerToPage(e,null);};
+    grid.appendChild(btn);
+  });
+}
+
+function renderStickers(layer,sid){
+  layer.innerHTML='';
+  const stickers=cloudData.stickers[sid]||{};
+  Object.entries(stickers).forEach(([stId,s])=>{
+    const el=document.createElement('div');
+    el.className='sticker-item';
+    el.style.cssText=`left:${s.x}%;top:${s.y}%;transform:translate(-50%,-50%) scale(${s.scale||1}) rotate(${s.rotation||0}deg);opacity:${s.opacity||1};z-index:${(s.zIndex||1)+10};font-size:${s.emoji?'2.4rem':'auto'};${!s.emoji?'width:60px;height:60px;':''}`;
+    if(s.emoji){el.textContent=s.emoji;}
+    else if(s.imgSrc){const img=document.createElement('img');img.src=s.imgSrc;img.style.cssText='width:60px;height:60px;object-fit:contain;border-radius:4px';el.appendChild(img);}
+    if(editMode){
+      el.style.cursor='move';
+      // Delete button
+      const del=document.createElement('button');del.className='sticker-del';del.textContent='✕';
+      del.onclick=e=>{e.stopPropagation();deleteStickerFromPage(sid,stId);};
+      el.appendChild(del);
+      // Drag
+      el.addEventListener('pointerdown',ev=>{
+        ev.stopPropagation();ev.preventDefault();
+        activeStickerDrag={el,sid,stId,s,startX:ev.clientX,startY:ev.clientY};
+        el.setPointerCapture(ev.pointerId);
+        el.classList.add('selected');
+      });
+      el.addEventListener('pointermove',ev=>{
+        if(!activeStickerDrag||activeStickerDrag.el!==el)return;
+        const rect=layer.getBoundingClientRect();
+        const nx=((ev.clientX-rect.left)/rect.width)*100;
+        const ny=((ev.clientY-rect.top)/rect.height)*100;
+        el.style.left=nx+'%';el.style.top=ny+'%';
+        activeStickerDrag.newX=nx;activeStickerDrag.newY=ny;
+      });
+      el.addEventListener('pointerup',async ev=>{
+        if(!activeStickerDrag||activeStickerDrag.el!==el)return;
+        el.classList.remove('selected');
+        if(activeStickerDrag.newX!==undefined){
+          const upd={...activeStickerDrag.s,x:activeStickerDrag.newX,y:activeStickerDrag.newY};
+          cloudData.stickers[sid]=cloudData.stickers[sid]||{};
+          cloudData.stickers[sid][activeStickerDrag.stId]=upd;
+          await dbSet('stickers/'+sid+'/'+activeStickerDrag.stId,upd);
+        }
+        activeStickerDrag=null;
+      });
+    }
+    layer.appendChild(el);
+  });
+}
+
+async function addStickerToPage(emoji,imgSrc){
+  const p=BOOK_PAGES[spread*2]||BOOK_PAGES[0];
+  const sid=getPageStableId(p);
+  const stId='st-'+Date.now();
+  const sticker={emoji:emoji||null,imgSrc:imgSrc||null,x:50,y:50,scale:1,rotation:0,opacity:1,zIndex:1};
+  cloudData.stickers[sid]=cloudData.stickers[sid]||{};
+  cloudData.stickers[sid][stId]=sticker;
+  await dbSet('stickers/'+sid+'/'+stId,sticker);
+  renderSpread(spread);
+  showToast('🌸','Sticker added!');
+}
+
+async function deleteStickerFromPage(sid,stId){
+  if(cloudData.stickers[sid])delete cloudData.stickers[sid][stId];
+  await dbRemove('stickers/'+sid+'/'+stId);
+  renderSpread(spread);
+  showToast('🗑️','Sticker removed');
+}
+
+document.getElementById('btnSticker').addEventListener('click',()=>{
+  if(!editMode){showToast('🔒','Enable Edit Mode first!');return;}
+  initStickerPicker();openModal('stickerPanel');
+});
+
+document.getElementById('stickerUploadInput').addEventListener('change',function(){
+  const file=this.files[0];if(!file)return;
+  const r=new FileReader();r.onload=async e=>{closeModal('stickerPanel');await addStickerToPage(null,e.target.result);};r.readAsDataURL(file);
+});
+
+/* ════════════ FLIP ENGINE ════════════ */
+function spreadIdx(s){return{l:s*2,r:s*2+1};}
 function renderSpread(s){
   const{l,r}=spreadIdx(s);
   renderFace(document.getElementById('lFront'),l);
@@ -855,21 +892,18 @@ function flipPrev(){
   setTimeout(()=>{spread=ps;renderSpread(spread);flipping=false;},680);
 }
 function goToPage(n){
-  const t=Math.max(1,Math.min(n,TOTAL()));
-  spread=Math.floor((t-1)/2);renderSpread(spread);
-  closeModal('gotoModal');showToast('📖',`Page ${t}`);
+  const t=Math.max(1,Math.min(n,TOTAL()));spread=Math.floor((t-1)/2);renderSpread(spread);
+  closeModal('gotoModal');showToast('📖','Page '+t);
 }
 
 /* ════════════ COUNTDOWN ════════════ */
 function startCountdown(){
   if(cdTimer)clearInterval(cdTimer);
   function tick(){
-    const now=new Date();
-    let t=new Date(now.getFullYear(),5,27,0,0,0);
+    const now=new Date();let t=new Date(now.getFullYear(),5,27,0,0,0);
     if(now>=t)t=new Date(now.getFullYear()+1,5,27,0,0,0);
     const df=t-now;
-    const d=Math.floor(df/86400000),h=Math.floor((df%86400000)/3600000),
-          m=Math.floor((df%3600000)/60000),s=Math.floor((df%60000)/1000);
+    const d=Math.floor(df/86400000),h=Math.floor((df%86400000)/3600000),m=Math.floor((df%3600000)/60000),s=Math.floor((df%60000)/1000);
     const pad=n=>String(n).padStart(2,'0');
     const g=id=>document.getElementById(id);
     if(g('cdD')){g('cdD').textContent=d;g('cdH').textContent=pad(h);g('cdM').textContent=pad(m);g('cdS').textContent=pad(s);}
@@ -881,130 +915,66 @@ function startCountdown(){
 /* ════════════ EDIT MODE ════════════ */
 document.getElementById('btnEdit').addEventListener('click',()=>{
   if(editMode){disableEditMode();return;}
-  openModal('pwModal');
-  document.getElementById('pwInput').value='';
-  document.getElementById('pwErr').textContent='';
+  openModal('pwModal');document.getElementById('pwInput').value='';document.getElementById('pwErr').textContent='';
   setTimeout(()=>document.getElementById('pwInput').focus(),200);
 });
 function checkPw(){
   const v=document.getElementById('pwInput').value;
   if(v===EDIT_PASSWORD){closeModal('pwModal');enableEditMode();}
-  else{
-    document.getElementById('pwErr').textContent='Wrong password ✕';
-    document.getElementById('pwInput').value='';
-    document.getElementById('pwInput').focus();
-    setTimeout(()=>document.getElementById('pwErr').textContent='',2000);
-  }
+  else{document.getElementById('pwErr').textContent='Wrong password ✕';document.getElementById('pwInput').value='';document.getElementById('pwInput').focus();setTimeout(()=>document.getElementById('pwErr').textContent='',2000);}
 }
 function enableEditMode(){
   editMode=true;document.body.classList.add('editmode');
-  document.getElementById('btnEdit').classList.add('active');
-  document.getElementById('editBanner').classList.add('show');
-  renderSpread(spread);
-  wireSecretEdit(true);
-  showToast('✏️','Edit Mode ON!');
+  document.getElementById('btnEdit').classList.add('active');document.getElementById('editBanner').classList.add('show');
+  renderSpread(spread);wireSecretEdit(true);showToast('✏️','Edit Mode ON!');
 }
 function disableEditMode(){
   editMode=false;document.body.classList.remove('editmode');
-  document.getElementById('btnEdit').classList.remove('active');
-  document.getElementById('editBanner').classList.remove('show');
-  renderSpread(spread);
-  wireSecretEdit(false);
-  showToast('🔒','Edit Mode OFF — locked');
+  document.getElementById('btnEdit').classList.remove('active');document.getElementById('editBanner').classList.remove('show');
+  renderSpread(spread);wireSecretEdit(false);showToast('🔒','Locked');
 }
 function wireSecretEdit(on){
-  const title=document.getElementById('scTitle');
-  const body=document.getElementById('scBody');
-  const hint=document.getElementById('scEditHint');
+  const title=document.getElementById('scTitle'),body=document.getElementById('scBody'),hint=document.getElementById('scEditHint');
   if(on){
     title.contentEditable='true';body.contentEditable='true';hint.style.display='block';
-    if(!title._wired){title._wired=true;title.addEventListener('blur',async()=>{await saveET('scTitle',title.innerHTML);showToast('☁️','Secret title saved!');});}
-    if(!body._wired){body._wired=true;body.addEventListener('blur',async()=>{await saveET('scBody',body.innerHTML);showToast('☁️','Secret message saved!');});}
+    if(!title._wired){title._wired=true;title.addEventListener('blur',async()=>{await saveET('secret','scTitle',title.innerHTML);showToast('☁️','Secret title saved!');});}
+    if(!body._wired){body._wired=true;body.addEventListener('blur',async()=>{await saveET('secret','scBody',body.innerHTML);showToast('☁️','Secret message saved!');});}
   } else {title.contentEditable='false';body.contentEditable='false';hint.style.display='none';}
 }
 
 /* ════════════ MODALS ════════════ */
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
-document.querySelectorAll('.modal-overlay').forEach(el=>{
-  el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');});
-});
-document.getElementById('pgCtr').addEventListener('click',()=>{
-  document.getElementById('gotoInput').value='';
-  openModal('gotoModal');
-  setTimeout(()=>document.getElementById('gotoInput').focus(),200);
-});
-function doGoto(){
-  const v=parseInt(document.getElementById('gotoInput').value);
-  if(isNaN(v)||v<1){showToast('⚠️','Enter a valid page number');return;}
-  goToPage(v);
-}
+document.querySelectorAll('.modal-overlay').forEach(el=>{el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');});});
+document.getElementById('pgCtr').addEventListener('click',()=>{document.getElementById('gotoInput').value='';openModal('gotoModal');setTimeout(()=>document.getElementById('gotoInput').focus(),200);});
+function doGoto(){const v=parseInt(document.getElementById('gotoInput').value);if(isNaN(v)||v<1){showToast('⚠️','Enter valid page number');return;}goToPage(v);}
 
-/* ════════════ MEDIA UPLOADS — UP TO 20MB ════════════ */
-const MAX_MEDIA_MB = 20; // ← changed from 2 to 20
-
-function compressIfNeeded(base64, maxBytes = MAX_MEDIA_MB * 1024 * 1024){
-  if(base64.length * 0.75 <= maxBytes) return Promise.resolve(base64);
+/* ════════════ MEDIA UPLOADS ════════════ */
+const MAX_MEDIA_MB=20;
+function compressIfNeeded(base64,maxBytes=MAX_MEDIA_MB*1024*1024){
+  if(base64.length*.75<=maxBytes)return Promise.resolve(base64);
   return new Promise(resolve=>{
     if(!base64.startsWith('data:image')){resolve(base64);return;}
-    const img=new Image();
-    img.onload=()=>{
-      const canvas=document.createElement('canvas');
-      let {width:w,height:h}=img;
-      // Keep reducing quality rather than size for better results
-      canvas.width=w;canvas.height=h;
-      const ctx=canvas.getContext('2d');
-      ctx.drawImage(img,0,0,w,h);
-      // Try quality 0.85 first
-      let result=canvas.toDataURL('image/jpeg',0.85);
-      if(result.length*0.75<=maxBytes){resolve(result);return;}
-      // Try quality 0.7
-      result=canvas.toDataURL('image/jpeg',0.70);
-      if(result.length*0.75<=maxBytes){resolve(result);return;}
-      // Scale down
-      const scale=Math.sqrt(maxBytes/(base64.length*.75));
-      canvas.width=Math.floor(w*scale);canvas.height=Math.floor(h*scale);
-      canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
-      resolve(canvas.toDataURL('image/jpeg',0.80));
-    };
-    img.src=base64;
+    const img=new Image();img.onload=()=>{
+      const canvas=document.createElement('canvas');let{width:w,height:h}=img;
+      canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);
+      let result=canvas.toDataURL('image/jpeg',.85);if(result.length*.75<=maxBytes){resolve(result);return;}
+      result=canvas.toDataURL('image/jpeg',.70);if(result.length*.75<=maxBytes){resolve(result);return;}
+      const scale=Math.sqrt(maxBytes/(base64.length*.75));canvas.width=Math.floor(w*scale);canvas.height=Math.floor(h*scale);
+      canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);resolve(canvas.toDataURL('image/jpeg',.80));
+    };img.src=base64;
   });
 }
-
 function uploadCoverPhoto(event){
-  event.stopPropagation();
-  const file=event.target.files[0];if(!file)return;
-  if(file.size>MAX_MEDIA_MB*1024*1024){showToast('⚠️',`Max size is ${MAX_MEDIA_MB}MB`);return;}
-  const r=new FileReader();
-  r.onload=async e=>{
-    const compressed=await compressIfNeeded(e.target.result);
-    cloudData.coverPhoto=compressed;
-    await dbSet('coverPhoto',compressed);
-    renderSpread(spread);
-    showToast('📷','Cover photo saved! ☁️');
-    spawnBurst(10,['💗','🌸','✨']);
-  };
-  r.readAsDataURL(file);
+  event.stopPropagation();const file=event.target.files[0];if(!file)return;
+  if(file.size>MAX_MEDIA_MB*1024*1024){showToast('⚠️',`Max ${MAX_MEDIA_MB}MB`);return;}
+  const r=new FileReader();r.onload=async e=>{const c=await compressIfNeeded(e.target.result);cloudData.coverPhoto=c;await dbSet('coverPhoto',c);renderSpread(spread);showToast('📷','Cover photo saved! ☁️');spawnBurst(10,['💗','🌸','✨']);};r.readAsDataURL(file);
 }
-
 function uploadMemMedia(event,memKey){
-  event.stopPropagation();
-  const file=event.target.files[0];if(!file)return;
-  const isVid=file.type.startsWith('video/');
-  if(file.size>MAX_MEDIA_MB*1024*1024){showToast('⚠️',`Max size is ${MAX_MEDIA_MB}MB`);return;}
+  event.stopPropagation();const file=event.target.files[0];if(!file)return;
+  const isVid=file.type.startsWith('video/');if(file.size>MAX_MEDIA_MB*1024*1024){showToast('⚠️',`Max ${MAX_MEDIA_MB}MB`);return;}
   showToast('⏳','Uploading…');
-  const r=new FileReader();
-  r.onload=async e=>{
-    let src=e.target.result;
-    if(!isVid) src=await compressIfNeeded(src);
-    const data={type:isVid?'video':'image',src};
-    cloudData.memoryMedia[memKey]=data;
-    await dbSet('memoryMedia/'+memKey,data);
-    renderSpread(spread);
-    showToast(isVid?'🎬':'📷',isVid?'Video saved! ☁️':'Photo saved! ☁️');
-    spawnBurst(8,['💗','✨','🌸']);
-  };
-  r.readAsDataURL(file);
+  const r=new FileReader();r.onload=async e=>{let src=e.target.result;if(!isVid)src=await compressIfNeeded(src);const data={type:isVid?'video':'image',src};cloudData.memoryMedia[memKey]=data;await dbSet('memoryMedia/'+memKey,data);renderSpread(spread);showToast(isVid?'🎬':'📷','Saved! ☁️');spawnBurst(8,['💗','✨','🌸']);};r.readAsDataURL(file);
 }
 
 /* ════════════ MUSIC ════════════ */
@@ -1013,41 +983,15 @@ document.getElementById('btnUploadSong').addEventListener('click',()=>openModal(
 document.getElementById('songFileInput').addEventListener('change',function(){
   const file=this.files[0];if(!file)return;
   if(file.size>5*1024*1024){showToast('⚠️','Song too large — max 5 MB');return;}
-  pendingSongFile=file;
-  cloudData.songName=file.name.replace(/\.[^.]+$/,'');
+  pendingSongFile=file;cloudData.songName=file.name.replace(/\.[^.]+$/,'');
   document.getElementById('currentSongDisplay').innerHTML=`🎵 Ready: <strong>${cloudData.songName}</strong>`;
 });
 async function saveSong(){
   if(!pendingSongFile){showToast('⚠️','Choose a song file first!');return;}
-  const r=new FileReader();
-  r.onload=async e=>{
-    cloudData.songData=e.target.result;
-    bgAudio.src=cloudData.songData;
-    await dbSet('songData',cloudData.songData);
-    await dbSet('songName',cloudData.songName);
-    document.getElementById('cloudBadge').classList.add('show');
-    closeModal('musicPanel');
-    showToast('☁️',`Saved: ${cloudData.songName}`);
-    spawnBurst(10,['🎵','💗','✨']);
-  };
-  r.readAsDataURL(pendingSongFile);
+  const r=new FileReader();r.onload=async e=>{cloudData.songData=e.target.result;bgAudio.src=cloudData.songData;await dbSet('songData',cloudData.songData);await dbSet('songName',cloudData.songName);document.getElementById('cloudBadge').classList.add('show');closeModal('musicPanel');showToast('☁️',`Saved: ${cloudData.songName}`);spawnBurst(10,['🎵','💗','✨']);};r.readAsDataURL(pendingSongFile);
 }
-function startMusic(){
-  if(!cloudData.songData){openModal('musicPanel');showToast('🎵','Upload your song first!');return;}
-  bgAudio.play().then(()=>{
-    musicOn=true;
-    document.querySelectorAll('.vb').forEach(b=>b.classList.add('on'));
-    document.getElementById('btnMusic').classList.add('on');
-    document.getElementById('musicInfo').textContent=cloudData.songName||'Playing…';
-    showToast('♪',cloudData.songName||'Playing…');
-  }).catch(()=>showToast('⚠️','Tap the screen first, then press Music'));
-}
-function stopMusic(){
-  bgAudio.pause();musicOn=false;
-  document.querySelectorAll('.vb').forEach(b=>b.classList.remove('on'));
-  document.getElementById('btnMusic').classList.remove('on');
-  document.getElementById('musicInfo').textContent=T[cloudData.lang].noMusic;
-}
+function startMusic(){if(!cloudData.songData){openModal('musicPanel');showToast('🎵','Upload your song first!');return;}bgAudio.play().then(()=>{musicOn=true;document.querySelectorAll('.vb').forEach(b=>b.classList.add('on'));document.getElementById('btnMusic').classList.add('on');document.getElementById('musicInfo').textContent=cloudData.songName||'Playing…';showToast('♪',cloudData.songName||'Playing…');}).catch(()=>showToast('⚠️','Tap the screen first, then press Music'));}
+function stopMusic(){bgAudio.pause();musicOn=false;document.querySelectorAll('.vb').forEach(b=>b.classList.remove('on'));document.getElementById('btnMusic').classList.remove('on');document.getElementById('musicInfo').textContent='No music';}
 document.getElementById('btnMusic').addEventListener('click',()=>{if(musicOn)stopMusic();else startMusic();spawnBurst(3,['💗','✨']);});
 
 /* ════════════ ADD PAGE ════════════ */
@@ -1067,35 +1011,31 @@ function setupMediaUpload(){
   box.innerHTML=`<div class="ico">📷/🎬</div><span>Click to upload (max ${MAX_MEDIA_MB}MB)</span><input type="file" accept="image/*,video/*" id="mediaInput">`;
   document.getElementById('mediaInput').addEventListener('change',function(){
     const file=this.files[0];if(!file)return;
-    if(file.size>MAX_MEDIA_MB*1024*1024){showToast('⚠️',`Max size is ${MAX_MEDIA_MB}MB`);return;}
+    if(file.size>MAX_MEDIA_MB*1024*1024){showToast('⚠️',`Max ${MAX_MEDIA_MB}MB`);return;}
     addMediaType=file.type.startsWith('video/')?'video':'image';
-    showToast('⏳','Loading media…');
-    const r=new FileReader();
-    r.onload=async ev=>{
-      let src=ev.target.result;
-      if(addMediaType!=='video')src=await compressIfNeeded(src);
-      addMediaSrc=src;
-      const prev=addMediaType==='video'
-        ?`<video class="media-prev-vid" src="${src}" autoplay muted loop playsinline></video>`
-        :`<img class="media-prev-img" src="${src}">`;
-      box.innerHTML=prev+`<input type="file" accept="image/*,video/*" id="mediaInput">`;
-      document.getElementById('mediaInput').addEventListener('change',arguments.callee);
-      showToast(addMediaType==='video'?'🎬':'📷','Media ready!');
-    };
-    r.readAsDataURL(file);
+    showToast('⏳','Loading…');
+    const r=new FileReader();r.onload=async ev=>{let src=ev.target.result;if(addMediaType!=='video')src=await compressIfNeeded(src);addMediaSrc=src;const prev=addMediaType==='video'?`<video class="media-prev-vid" src="${src}" autoplay muted loop playsinline></video>`:`<img class="media-prev-img" src="${src}">`;box.innerHTML=prev+`<input type="file" accept="image/*,video/*" id="mediaInput">`;document.getElementById('mediaInput').addEventListener('change',arguments.callee);showToast(addMediaType==='video'?'🎬':'📷','Ready!');};r.readAsDataURL(file);
+  });
+}
+function setupCuMedia(){
+  cuMediaSrc=null;
+  const box=document.getElementById('cuMediaBox');
+  box.innerHTML=`<div class="ico">📷</div><span>Click to add image</span><input type="file" accept="image/*" id="cuMediaInput">`;
+  document.getElementById('cuMediaInput').addEventListener('change',function(){
+    const file=this.files[0];if(!file)return;
+    const r=new FileReader();r.onload=async ev=>{let src=ev.target.result;src=await compressIfNeeded(src);cuMediaSrc=src;box.innerHTML=`<img class="media-prev-img" src="${src}"><input type="file" accept="image/*" id="cuMediaInput">`;document.getElementById('cuMediaInput').addEventListener('change',arguments.callee);showToast('📷','Image ready!');};r.readAsDataURL(file);
   });
 }
 document.getElementById('btnAddPage').addEventListener('click',()=>{
-  initEmojiPicker();setupMediaUpload();
-  ['inp-title','inp-date','inp-text','inp-emoji-custom','po-label','po-text'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  initEmojiPicker();setupMediaUpload();setupCuMedia();
+  ['inp-title','inp-date','inp-text','inp-emoji-custom','po-label','po-text','cu-title','cu-body'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('inp-emoji-custom').value='💗';
-  switchTab('memory',document.querySelector('.add-tab'));
-  openModal('addPanel');
+  switchTab('memory',document.querySelector('.add-tab'));openModal('addPanel');
 });
 function switchTab(name,btn){
   document.querySelectorAll('.add-tab').forEach(b=>b.classList.remove('active'));
   if(btn)btn.classList.add('active');
-  ['memory','poetry','manage'].forEach(t=>{document.getElementById('tab-'+t).style.display=(t===name)?'block':'none';});
+  ['memory','poetry','custom','manage'].forEach(t=>{document.getElementById('tab-'+t).style.display=(t===name)?'block':'none';});
   if(name==='manage')buildPageList();
 }
 async function saveMemory(){
@@ -1106,179 +1046,101 @@ async function saveMemory(){
   if(!title){showToast('⚠️','Please enter a title!');return;}
   if(!text){showToast('⚠️','Please write something!');return;}
   const key='user-'+Date.now();
-  const page={type:'memory',title,date:date||'a moment in time',text,emoji:emoji+' '+emoji,lang:cloudData.lang,memKey:key,_id:key};
-  if(addMediaSrc){
-    const md={type:addMediaType,src:addMediaSrc};
-    cloudData.memoryMedia[key]=md;
-    await dbSet('memoryMedia/'+key,md);
-  }
-  cloudData.userPages.push(page);
-  await dbSet('userPages/'+key,page);
-  BOOK_PAGES=buildPages(cloudData.lang);
-  closeModal('addPanel');renderSpread(spread);
-  document.getElementById('pgTotal').textContent=TOTAL();
-  showToast('☁️','Page saved to cloud!');spawnBurst(12,['💗','✨','🌸','📖']);
+  const page={type:'memory',title,date:date||'a moment in time',text,emoji:emoji+' '+emoji,_id:key,memKey:key};
+  if(addMediaSrc){const md={type:addMediaType,src:addMediaSrc};cloudData.memoryMedia[key]=md;await dbSet('memoryMedia/'+key,md);}
+  cloudData.userPages.push(page);await dbSet('userPages/'+key,page);
+  BOOK_PAGES=buildPages();closeModal('addPanel');renderSpread(spread);
+  document.getElementById('pgTotal').textContent=TOTAL();showToast('☁️','Page saved!');spawnBurst(12,['💗','✨','🌸','📖']);
 }
 async function savePoetry(){
   const label=document.getElementById('po-label').value.trim();
   const text=document.getElementById('po-text').value.trim();
   const orn=document.getElementById('po-orn').value;
-  if(!label){showToast('⚠️','Please enter a label!');return;}
-  if(!text){showToast('⚠️','Please write your poem!');return;}
+  if(!label||!text){showToast('⚠️','Fill in all fields!');return;}
   const key='poem-'+Date.now();
-  const page={type:'poetry',label,text,orn,lang:cloudData.lang,_id:key};
-  cloudData.userPages.push(page);
-  await dbSet('userPages/'+key,page);
-  BOOK_PAGES=buildPages(cloudData.lang);
-  closeModal('addPanel');renderSpread(spread);
-  document.getElementById('pgTotal').textContent=TOTAL();
-  showToast('☁️','Poem saved to cloud!');spawnBurst(12,['🌸','✨','💫']);
+  const page={type:'poetry',label,text,orn,_id:key};
+  cloudData.userPages.push(page);await dbSet('userPages/'+key,page);
+  BOOK_PAGES=buildPages();closeModal('addPanel');renderSpread(spread);
+  document.getElementById('pgTotal').textContent=TOTAL();showToast('☁️','Poem saved!');spawnBurst(12,['🌸','✨','💫']);
+}
+async function saveCustom(){
+  const title=document.getElementById('cu-title').value.trim()||'My Page';
+  const body=document.getElementById('cu-body').value.trim();
+  const bg=document.getElementById('cu-bg').value;
+  const key='custom-'+Date.now();
+  const page={type:'custom',title,body,background:bg,_id:key};
+  if(cuMediaSrc){const md={type:'image',src:cuMediaSrc};cloudData.memoryMedia[key]=md;await dbSet('memoryMedia/'+key,md);}
+  cloudData.userPages.push(page);await dbSet('userPages/'+key,page);
+  BOOK_PAGES=buildPages();closeModal('addPanel');renderSpread(spread);
+  document.getElementById('pgTotal').textContent=TOTAL();showToast('☁️','Custom page saved!');spawnBurst(10,['✨','🌸','💫']);
 }
 
-/* ════════════ PAGE LIST WITH DRAG & DROP REORDER ════════════ */
-let dragSrcIdx = null;
-
+/* ════════════ PAGE MANAGEMENT ════════════ */
+let dragSrcIdx=null;
 function buildPageList(){
   const wrap=document.getElementById('pageListWrap');wrap.innerHTML='';
-  const icons={cover:'📖',intro:'💌',memory:'📸',poetry:'🌸',birthday:'🎂'};
-  const types={cover:'Cover',intro:'Intro',memory:'Memory',poetry:'Poetry',birthday:'Birthday'};
-
+  const icons={cover:'📖',intro:'💌',memory:'📸',poetry:'🌸',birthday:'🎂',custom:'✨'};
+  const types={cover:'Cover',intro:'Intro',memory:'Memory',poetry:'Poetry',birthday:'Birthday',custom:'Custom'};
   BOOK_PAGES.forEach((p,i)=>{
-    const isFixed=p._fixedStart||p._fixedEnd||p.type==='cover'||p.type==='birthday'||p.type==='intro';
-    const div=document.createElement('div');
-    div.className='page-item'+(isFixed?' fixed-page':'');
-    div.dataset.idx=i;
-    div.innerHTML=`
-      <span class="pi-drag">${isFixed?'🔒':'⠿'}</span>
-      <span class="pi-num">${i+1}</span>
-      <span class="pi-title">${icons[p.type]||'📄'} ${p.title||p.label||p.type}</span>
-      <span class="pi-type">${types[p.type]||p.type}</span>
-      ${!isFixed?`<button class="pi-del" onclick="deletePage(${i})">✕</button>`:''}
-    `;
-
+    const isFixed=p._fixedStart||p._fixedEnd;
+    const div=document.createElement('div');div.className='page-item'+(isFixed?' fixed-page':'');div.dataset.idx=i;
+    div.innerHTML=`<span class="pi-drag">${isFixed?'🔒':'⠿'}</span><span class="pi-num">${i+1}</span><span class="pi-title">${icons[p.type]||'📄'} ${p.title||p.label||p.type}</span><span class="pi-type">${types[p.type]||p.type}</span>${!isFixed?`<button class="pi-dup" title="Duplicate" onclick="duplicatePage(${i})">⎘</button><button class="pi-del" onclick="deletePage(${i})">✕</button>`:''}`;
     if(!isFixed){
       div.draggable=true;
-
-      div.addEventListener('dragstart',e=>{
-        dragSrcIdx=i;
-        div.classList.add('dragging');
-        e.dataTransfer.effectAllowed='move';
-      });
-      div.addEventListener('dragend',()=>{
-        div.classList.remove('dragging');
-        wrap.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));
-      });
-      div.addEventListener('dragover',e=>{
-        e.preventDefault();
-        e.dataTransfer.dropEffect='move';
-        wrap.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));
-        if(!document.querySelector(`[data-idx="${dragSrcIdx}"]`)?.classList.contains('fixed-page'))
-          div.classList.add('drag-over');
-      });
+      div.addEventListener('dragstart',e=>{dragSrcIdx=i;div.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
+      div.addEventListener('dragend',()=>{div.classList.remove('dragging');wrap.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));});
+      div.addEventListener('dragover',e=>{e.preventDefault();e.dataTransfer.dropEffect='move';wrap.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));div.classList.add('drag-over');});
       div.addEventListener('drop',e=>{
-        e.preventDefault();
-        if(dragSrcIdx===null||dragSrcIdx===i)return;
-        const target=BOOK_PAGES[i];
-        if(target._fixedStart||target._fixedEnd||target.type==='cover'||target.type==='birthday'||target.type==='intro'){
-          showToast('⚠️','Cannot move to this position');return;
-        }
-        // Reorder in BOOK_PAGES
-        const moved=BOOK_PAGES.splice(dragSrcIdx,1)[0];
-        const newIdx=dragSrcIdx<i?i:i;
-        BOOK_PAGES.splice(newIdx,0,moved);
-
-        savePageOrder();
-        buildPageList();
-        renderSpread(spread);
-        showToast('✦','Order saved! ☁️');
-        dragSrcIdx=null;
+        e.preventDefault();if(dragSrcIdx===null||dragSrcIdx===i)return;
+        const target=BOOK_PAGES[i];if(target._fixedStart||target._fixedEnd){showToast('⚠️','Cannot move here');return;}
+        const moved=BOOK_PAGES.splice(dragSrcIdx,1)[0];BOOK_PAGES.splice(i,0,moved);
+        savePageOrder();buildPageList();renderSpread(spread);showToast('✦','Order saved! ☁️');dragSrcIdx=null;
       });
-
-      // Touch drag support
-      let touchStartY=0,touchItem=null;
-      div.addEventListener('touchstart',e=>{
-        touchStartY=e.touches[0].clientY;
-        touchItem=div;
-        dragSrcIdx=i;
-        div.classList.add('dragging');
-      },{passive:true});
-      div.addEventListener('touchmove',e=>{
-        e.preventDefault();
-        const y=e.touches[0].clientY;
-        const els=wrap.querySelectorAll('.page-item:not(.dragging)');
-        els.forEach(el=>el.classList.remove('drag-over'));
-        const el=document.elementFromPoint(e.touches[0].clientX,y);
-        if(el){const item=el.closest('.page-item');if(item&&!item.classList.contains('fixed-page'))item.classList.add('drag-over');}
-      },{passive:false});
-      div.addEventListener('touchend',e=>{
-        div.classList.remove('dragging');
-        const y=e.changedTouches[0].clientY;
-        const el=document.elementFromPoint(e.changedTouches[0].clientX,y);
-        if(el){
-          const item=el.closest('.page-item');
-          if(item&&item!==div&&!item.classList.contains('fixed-page')){
-            const targetIdx=parseInt(item.dataset.idx);
-            const moved=BOOK_PAGES.splice(dragSrcIdx,1)[0];
-            BOOK_PAGES.splice(targetIdx,0,moved);
-            savePageOrder();buildPageList();renderSpread(spread);
-            showToast('✦','Order saved! ☁️');
-          }
-        }
-        wrap.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));
-        dragSrcIdx=null;
-      },{passive:true});
     }
-
     wrap.appendChild(div);
   });
 }
-
 async function savePageOrder(){
-  const order=BOOK_PAGES.filter(p=>!p._fixedStart&&!p._fixedEnd&&p.type!=='cover'&&p.type!=='birthday'&&p.type!=='intro').map(getPageKey);
-  cloudData.pageOrder=order;
-  await dbSet('pageOrder',order);
+  const order=BOOK_PAGES.filter(p=>!p._fixedStart&&!p._fixedEnd).map(getPageStableId);
+  cloudData.pageOrder=order;await dbSet('pageOrder',order);
 }
-
 async function deletePage(idx){
-  const p=BOOK_PAGES[idx];
-  if(p.type==='cover'||p.type==='birthday'||p.type==='intro')return;
-  if(!confirm('Delete this page from cloud?'))return;
-  const id=p._id;
-  const ui=cloudData.userPages.findIndex(x=>x._id===id);
+  const p=BOOK_PAGES[idx];if(p._fixedStart||p._fixedEnd)return;
+  if(!confirm('Delete this page?'))return;
+  const id=p._id;const ui=cloudData.userPages.findIndex(x=>x._id===id);
   if(ui>=0){cloudData.userPages.splice(ui,1);await dbRemove('userPages/'+id);}
-  BOOK_PAGES=buildPages(cloudData.lang);
-  if(spread>maxSpread())spread=maxSpread();
-  buildPageList();renderSpread(spread);
-  document.getElementById('pgTotal').textContent=TOTAL();
-  showToast('🗑️','Page deleted from cloud');
+  BOOK_PAGES=buildPages();if(spread>maxSpread())spread=maxSpread();
+  buildPageList();renderSpread(spread);document.getElementById('pgTotal').textContent=TOTAL();showToast('🗑️','Page deleted');
+}
+async function duplicatePage(idx){
+  const p=BOOK_PAGES[idx];if(p._fixedStart||p._fixedEnd)return;
+  const key=(p.type||'page')+'-dup-'+Date.now();
+  const dup={...p,_id:key,memKey:p.type==='memory'?key:undefined,title:(p.title||'Page')+' (copy)'};
+  delete dup._fixedStart;delete dup._fixedEnd;
+  cloudData.userPages.push(dup);await dbSet('userPages/'+key,dup);
+  BOOK_PAGES=buildPages();buildPageList();renderSpread(spread);
+  document.getElementById('pgTotal').textContent=TOTAL();showToast('⎘','Page duplicated!');
 }
 
 /* ════════════ SECRET ════════════ */
-document.getElementById('btnSecret').addEventListener('click',()=>{openModal('secret');spawnBurst(24,['💗','✨','🌸','💖']);});
+document.getElementById('btnSecret').addEventListener('click',()=>{
+  // Load saved secret texts
+  document.getElementById('scTitle').innerHTML=cloudData.editTexts?.['secret__scTitle']||'Only For You, Radwa';
+  document.getElementById('scBody').innerHTML=cloudData.editTexts?.['secret__scBody']||document.getElementById('scBody').innerHTML;
+  openModal('secret');spawnBurst(24,['💗','✨','🌸','💖']);
+});
 
 /* ════════════ FLOATERS ════════════ */
-function spawnF(emoji,x,y){
-  const el=document.createElement('div');el.className='floater';el.textContent=emoji;
-  el.style.left=(x??Math.random()*innerWidth)+'px';el.style.top=(y??innerHeight)+'px';
-  el.style.fontSize=(.7+Math.random()*1.1)+'rem';el.style.animationDuration=(2.8+Math.random()*2.5)+'s';
-  document.body.appendChild(el);el.addEventListener('animationend',()=>el.remove());
-}
+function spawnF(emoji,x,y){const el=document.createElement('div');el.className='floater';el.textContent=emoji;el.style.left=(x??Math.random()*innerWidth)+'px';el.style.top=(y??innerHeight)+'px';el.style.fontSize=(.7+Math.random()*1.1)+'rem';el.style.animationDuration=(2.8+Math.random()*2.5)+'s';document.body.appendChild(el);el.addEventListener('animationend',()=>el.remove());}
 function spawnBurst(n,emojis){for(let i=0;i<n;i++)setTimeout(()=>spawnF(emojis[~~(Math.random()*emojis.length)]),i*70);}
 let lastT=0;
-document.addEventListener('mousemove',e=>{
-  if(Date.now()-lastT>130&&Math.random()<.35){
-    const el=document.createElement('div');el.className='ctrail';el.textContent=Math.random()<.6?'💗':'✨';
-    el.style.left=e.clientX+'px';el.style.top=e.clientY+'px';
-    document.body.appendChild(el);el.addEventListener('animationend',()=>el.remove());lastT=Date.now();
-  }
-});
+document.addEventListener('mousemove',e=>{if(Date.now()-lastT>130&&Math.random()<.35){const el=document.createElement('div');el.className='ctrail';el.textContent=Math.random()<.6?'💗':'✨';el.style.left=e.clientX+'px';el.style.top=e.clientY+'px';document.body.appendChild(el);el.addEventListener('animationend',()=>el.remove());lastT=Date.now();}});
 setInterval(()=>{if(Math.random()<.28)spawnF(['💗','✨','🌸','💫'][~~(Math.random()*4)],Math.random()*innerWidth,innerHeight+10);},4500);
 
 /* ════════════ NAV + KEYBOARD + SWIPE ════════════ */
 document.getElementById('navL').addEventListener('click',flipPrev);
 document.getElementById('navR').addEventListener('click',flipNext);
 document.addEventListener('keydown',e=>{
-  // Don't flip if editing text
   if(e.target.isContentEditable||e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
   if(e.key==='ArrowRight'||e.key==='ArrowDown')flipNext();
   if(e.key==='ArrowLeft'||e.key==='ArrowUp')flipPrev();
@@ -1286,53 +1148,30 @@ document.addEventListener('keydown',e=>{
 let tx=0;
 document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
 document.addEventListener('touchend',e=>{
-  // Don't flip if touch ended on a scrollable page
   if(e.target.closest('.pg'))return;
-  const dx=e.changedTouches[0].clientX-tx;
-  if(Math.abs(dx)>50){dx<0?flipNext():flipPrev();}
+  const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50){dx<0?flipNext():flipPrev();}
 },{passive:true});
 
-function playFlip(){
-  try{
-    const a=new(window.AudioContext||window.webkitAudioContext)();
-    const o=a.createOscillator(),g=a.createGain(),f=a.createBiquadFilter();
-    o.connect(f);f.connect(g);g.connect(a.destination);f.type='lowpass';f.frequency.value=1400;o.type='triangle';
-    o.frequency.setValueAtTime(750,a.currentTime);o.frequency.exponentialRampToValueAtTime(180,a.currentTime+.14);
-    g.gain.setValueAtTime(.08,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.2);
-    o.start(a.currentTime);o.stop(a.currentTime+.22);
-  }catch(e){}
-}
+function playFlip(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator(),g=a.createGain(),f=a.createBiquadFilter();o.connect(f);f.connect(g);g.connect(a.destination);f.type='lowpass';f.frequency.value=1400;o.type='triangle';o.frequency.setValueAtTime(750,a.currentTime);o.frequency.exponentialRampToValueAtTime(180,a.currentTime+.14);g.gain.setValueAtTime(.08,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.2);o.start(a.currentTime);o.stop(a.currentTime+.22);}catch(e){}}
 
 /* ════════════ TOAST + STARS ════════════ */
 let toastTmr=null;
-function showToast(ico,msg){
-  const t=document.getElementById('toast');
-  document.getElementById('toastIco').textContent=ico;
-  document.getElementById('toastMsg').textContent=msg;
-  t.classList.add('show');
-  if(toastTmr)clearTimeout(toastTmr);
-  toastTmr=setTimeout(()=>t.classList.remove('show'),3200);
-}
+function showToast(ico,msg){const t=document.getElementById('toast');document.getElementById('toastIco').textContent=ico;document.getElementById('toastMsg').textContent=msg;t.classList.add('show');if(toastTmr)clearTimeout(toastTmr);toastTmr=setTimeout(()=>t.classList.remove('show'),3200);}
 
 const bgC=document.getElementById('bgCanvas'),bgX=bgC.getContext('2d');let stars=[];
 function rszC(){bgC.width=innerWidth;bgC.height=innerHeight;}
 function mkS(n=210){stars=[];for(let i=0;i<n;i++)stars.push({x:Math.random()*bgC.width,y:Math.random()*bgC.height,r:Math.random()*1.4+.2,a:Math.random(),da:(Math.random()*.007+.002)*(Math.random()<.5?1:-1),vx:(Math.random()-.5)*.055,vy:(Math.random()-.5)*.055});}
-function drawS(){
-  bgX.clearRect(0,0,bgC.width,bgC.height);
-  stars.forEach(s=>{s.a+=s.da;if(s.a<=0||s.a>=1)s.da*=-1;s.x+=s.vx;s.y+=s.vy;if(s.x<0)s.x=bgC.width;if(s.x>bgC.width)s.x=0;if(s.y<0)s.y=bgC.height;if(s.y>bgC.height)s.y=0;bgX.beginPath();bgX.arc(s.x,s.y,s.r,0,Math.PI*2);bgX.fillStyle=`rgba(255,255,255,${s.a*.72})`;bgX.fill();});
-  requestAnimationFrame(drawS);
-}
+function drawS(){bgX.clearRect(0,0,bgC.width,bgC.height);stars.forEach(s=>{s.a+=s.da;if(s.a<=0||s.a>=1)s.da*=-1;s.x+=s.vx;s.y+=s.vy;if(s.x<0)s.x=bgC.width;if(s.x>bgC.width)s.x=0;if(s.y<0)s.y=bgC.height;if(s.y>bgC.height)s.y=0;bgX.beginPath();bgX.arc(s.x,s.y,s.r,0,Math.PI*2);bgX.fillStyle=`rgba(255,255,255,${s.a*.72})`;bgX.fill();});requestAnimationFrame(drawS);}
 window.addEventListener('resize',()=>{rszC();mkS();});
 rszC();mkS();drawS();
 
+/* Hearts / Stars buttons */
+document.getElementById('btnHearts').addEventListener('click',()=>spawnBurst(20,['💗','💕','🤍','💖']));
+document.getElementById('btnStars').addEventListener('click',()=>spawnBurst(20,['✨','⭐','💫','🌟']));
+
 /* ════════════ BOOT ════════════ */
-const ldF=document.getElementById('ldFill');
-let prog=0;
-const ldI=setInterval(()=>{
-  prog+=Math.random()*8+2;
-  if(prog>=100){prog=100;clearInterval(ldI);boot();}
-  ldF.style.width=prog+'%';
-},80);
+const ldF=document.getElementById('ldFill');let prog=0;
+const ldI=setInterval(()=>{prog+=Math.random()*8+2;if(prog>=100){prog=100;clearInterval(ldI);boot();}ldF.style.width=prog+'%';},80);
 
 async function boot(){
   try{
@@ -1340,34 +1179,14 @@ async function boot(){
     await signInOwner();
     document.getElementById('ldHint').textContent='Loading memories ❤️';
     await loadCloudData();
-    BOOK_PAGES=buildPages('en');
-    document.getElementById('scTitle').innerHTML=cloudData.editTexts?.scTitle||T.en.scTitle;
-    document.getElementById('scBody').innerHTML=cloudData.editTexts?.scBody||T.en.scBody;
-    if(cloudData.songData){
-      bgAudio.src=cloudData.songData;
-      document.getElementById('currentSongDisplay').innerHTML=`🎵 <strong>${cloudData.songName}</strong>`;
-      document.getElementById('cloudBadge').classList.add('show');
-    }
+    BOOK_PAGES=buildPages();
+    if(cloudData.songData){bgAudio.src=cloudData.songData;document.getElementById('currentSongDisplay').innerHTML=`🎵 <strong>${cloudData.songName}</strong>`;document.getElementById('cloudBadge').classList.add('show');}
     renderSpread(0);
     document.getElementById('pgTotal').textContent=TOTAL();
     setTimeout(()=>document.getElementById('loader').classList.add('hide'),400);
-    setTimeout(()=>{
-      document.getElementById('bookOuter').classList.add('show');
-      document.getElementById('controls').classList.add('show');
-      document.getElementById('pgCtr').classList.add('show');
-      document.getElementById('navL').classList.add('show');
-      document.getElementById('navR').classList.add('show');
-      showToast('☁️','Connected! Everything synced 💗');
-    },800);
+    setTimeout(()=>{document.getElementById('bookOuter').classList.add('show');document.getElementById('controls').classList.add('show');document.getElementById('pgCtr').classList.add('show');document.getElementById('navL').classList.add('show');document.getElementById('navR').classList.add('show');showToast('☁️','Connected! Everything synced 💗');},800);
     setTimeout(()=>spawnBurst(10,['💗','✨','🌸']),2200);
-  }catch(e){
-    console.error('Boot error:',e);
-    document.getElementById('ldHint').textContent='⚠️ Error: '+e.message;
-  }
-}
-
-function applyLangUI(lang){
-  // no-op — always English UI now
+  }catch(e){console.error('Boot error:',e);document.getElementById('ldHint').textContent='⚠️ Error: '+e.message;}
 }
 </script>
 </body>
