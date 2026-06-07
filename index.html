@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Radwa — A Gift</title>
@@ -170,13 +171,15 @@ body{background:var(--ink);color:var(--white);height:100vh;overflow:hidden;curso
 }
 /* FIX: gradient applied per-char so inline spans inherit it correctly */
 #cinMessage{
-  font-family:var(--arabic);
-  font-size:clamp(1.6rem,5vw,2.8rem);
-  font-weight:400;
-  filter:drop-shadow(0 0 18px rgba(200,120,138,.5));
-  line-height:1.6;
+  font-family:'Cairo',sans-serif;
+  font-size:clamp(1.8rem,5vw,3rem);
+  font-weight:700;
+  color:#ffd8e5;
+  text-align:center;
+  line-height:1.8;
   direction:rtl;
-  letter-spacing:.04em;
+  unicode-bidi:plaintext;
+  filter:drop-shadow(0 0 18px rgba(200,120,138,.5));
 }
 /* FIX: gradient on .cin-char directly — background-clip:text doesn't inherit to child spans */
 .cin-char{
@@ -678,20 +681,17 @@ function triggerNourCinematic(){
 
 function revealCinMessage(){
   const msgEl=document.getElementById('cinMessage');
-  const message='وانا كمان بحبك يا قلبي 😊❤️';
-  const chars=[...message];
-  msgEl.innerHTML='';
-  chars.forEach((ch,i)=>{
-    const span=document.createElement('span');span.className='cin-char';span.textContent=ch;
-    span.style.animationDelay=`${i*85}ms`;
-    msgEl.appendChild(span);
-    setTimeout(()=>{
-      const rect=span.getBoundingClientRect();
-      CIN.spawnSparkles(rect.left+rect.width/2,rect.top+rect.height/2,3);
-    },i*85+300);
-  });
-}
 
+  msgEl.innerHTML = `
+    <span style="
+      direction:rtl;
+      unicode-bidi:plaintext;
+      display:inline-block;
+    ">
+      وانا كمان بحبك يا قلبي 😊❤️
+    </span>
+  `;
+}
 document.getElementById('cinContinue').addEventListener('click',()=>{
   const overlay=document.getElementById('cinematicOverlay');
   overlay.style.transition='opacity .8s ease';overlay.style.opacity='0';
@@ -708,4 +708,4 @@ musicBtn.addEventListener('click',async()=>{
 </body>
 </html>
 
-for-radwa.html written: 0
+
