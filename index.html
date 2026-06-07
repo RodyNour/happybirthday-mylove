@@ -1,3 +1,4 @@
+cat > /mnt/user-data/outputs/for-radwa.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -159,31 +160,33 @@ body{background:var(--ink);color:var(--white);height:100vh;overflow:hidden;curso
 #cinCrown{filter:drop-shadow(0 0 12px rgba(200,169,110,.7)) drop-shadow(0 0 30px rgba(200,169,110,.3))}
 #cinMessageWrap{
   position:absolute;
-  top:calc(28% + 40px);
+  top:calc(28% + 60px);
   left:50%;
   transform:translateX(-50%);
   z-index:9;
   text-align:center;
   width:90vw;
-  max-width:600px;
+  max-width:620px;
 }
+/* FIX: gradient applied per-char so inline spans inherit it correctly */
 #cinMessage{
   font-family:var(--arabic);
   font-size:clamp(1.6rem,5vw,2.8rem);
   font-weight:400;
-  color:transparent;
-  background:linear-gradient(135deg,#f0c0c8,#f5e0a8,#c8788a);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
   filter:drop-shadow(0 0 18px rgba(200,120,138,.5));
   line-height:1.6;
   direction:rtl;
   letter-spacing:.04em;
 }
+/* FIX: gradient on .cin-char directly — background-clip:text doesn't inherit to child spans */
 .cin-char{
   display:inline-block;
   opacity:0;
   animation:cinCharReveal 0.6s ease forwards;
+  background:linear-gradient(135deg,#f0c0c8,#f5e0a8,#c8788a);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 @keyframes cinCharReveal{
   0%{opacity:0;transform:translateY(15px) scale(0.6);filter:blur(5px)}
@@ -200,7 +203,6 @@ body{background:var(--ink);color:var(--white);height:100vh;overflow:hidden;curso
   color:var(--rose);
   font-family:var(--sans);font-size:.68rem;letter-spacing:.35em;text-transform:uppercase;
   padding:16px 44px;cursor:none;
-  position:absolute;
   overflow:hidden;
   opacity:0;
   transition:opacity 1s ease,border-color .3s,color .3s;
@@ -335,13 +337,11 @@ body{background:var(--ink);color:var(--white);height:100vh;overflow:hidden;curso
   <div id="cinBg"></div>
   <canvas id="cinCanvas"></canvas>
   <div id="cinGlow"></div>
-  <!-- Light rays -->
   <div class="cin-light-ray" id="cinRay1" style="transform:rotate(-30deg)"></div>
   <div class="cin-light-ray" id="cinRay2" style="transform:rotate(-15deg)"></div>
   <div class="cin-light-ray" id="cinRay3" style="transform:rotate(0deg)"></div>
   <div class="cin-light-ray" id="cinRay4" style="transform:rotate(15deg)"></div>
   <div class="cin-light-ray" id="cinRay5" style="transform:rotate(30deg)"></div>
-  <!-- Crown -->
   <div id="cinCrownWrap">
     <svg id="cinCrown" width="180" height="70" viewBox="0 0 180 70" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -356,25 +356,19 @@ body{background:var(--ink);color:var(--white);height:100vh;overflow:hidden;curso
         </filter>
       </defs>
       <g filter="url(#crownGlow)">
-        <!-- Main crown body -->
         <path d="M8,60 L8,32 L45,6 L68,34 L90,2 L112,34 L135,6 L172,32 L172,60 Z"
           fill="none" stroke="url(#crownGrad)" stroke-width="1.8" stroke-linejoin="round"/>
-        <!-- Base bar -->
         <line x1="8" y1="60" x2="172" y2="60" stroke="url(#crownGrad)" stroke-width="2.5"/>
-        <!-- Top jewels -->
         <circle cx="90" cy="2" r="4" fill="#c8a96e" opacity=".95"/>
         <circle cx="45" cy="6" r="2.8" fill="#c8a96e" opacity=".8"/>
         <circle cx="135" cy="6" r="2.8" fill="#c8a96e" opacity=".8"/>
-        <!-- Small accent diamonds -->
         <path d="M30,46 L33,40 L36,46 L33,52 Z" fill="rgba(200,169,110,.5)"/>
         <path d="M87,46 L90,40 L93,46 L90,52 Z" fill="rgba(200,169,110,.6)"/>
         <path d="M144,46 L147,40 L150,46 L147,52 Z" fill="rgba(200,169,110,.5)"/>
-        <!-- Delicate inner detail -->
         <path d="M8,42 Q45,36 90,38 Q135,36 172,42" fill="none" stroke="rgba(200,169,110,.3)" stroke-width="1"/>
       </g>
     </svg>
   </div>
-  <!-- Butterflies -->
   <div class="cin-butterfly" id="cinBfly1" style="left:15%;top:35%;animation:butterflyPath1 12s ease-in-out infinite">
     <svg width="50" height="38" viewBox="0 0 50 38">
       <path class="bfly-wing-l" d="M25,22 C14,8 2,14 6,24 C10,32 25,27 25,22" fill="rgba(255,220,190,.75)"/>
@@ -404,11 +398,9 @@ body{background:var(--ink);color:var(--white);height:100vh;overflow:hidden;curso
       <ellipse cx="25" cy="24" rx="1.8" ry="7" fill="rgba(110,65,45,.75)"/>
     </svg>
   </div>
-  <!-- Message -->
   <div id="cinMessageWrap">
     <div id="cinMessage"></div>
   </div>
-  <!-- Continue -->
   <button id="cinContinue">Open the Book &nbsp;<span class="cta-arrow"></span></button>
 </div>
 
@@ -544,7 +536,7 @@ document.getElementById('backBtn').addEventListener('click',()=>{
 });
 
 /* ═══════════════════════════════════
-   NOUR CINEMATIC — Full Implementation
+   NOUR CINEMATIC
 ═══════════════════════════════════ */
 let cinAnimFrame=null,cinStartTime=0;
 
@@ -557,14 +549,11 @@ class FlowerObj {
     const{x,y,size,bloom,hue,petals}=this;
     ctx.save();ctx.translate(x,y);
     const s=size*bloom;
-    // Stem
     if(bloom>0.08){
       ctx.beginPath();ctx.moveTo(0,5);ctx.bezierCurveTo(-4,-s*.4,4,-s*.9,0,-s*1.6);
       ctx.strokeStyle=`rgba(50,110,60,${bloom*.7})`;ctx.lineWidth=2;ctx.stroke();
-      // Leaf
       if(bloom>0.3){ctx.beginPath();ctx.moveTo(0,-s*.5);ctx.quadraticCurveTo(-s*.5,-s*.8,-s*.45,-s*1.1);ctx.quadraticCurveTo(-s*.15,-s*.75,0,-s*.5);ctx.fillStyle=`rgba(40,100,50,${bloom*.5})`;ctx.fill();}
     }
-    // Outer petals
     for(let i=0;i<petals;i++){
       const angle=(i/petals)*Math.PI*2;
       ctx.save();ctx.rotate(angle);
@@ -575,7 +564,6 @@ class FlowerObj {
       pg.addColorStop(0,`hsla(${hue},62%,55%,${bloom*.9})`);pg.addColorStop(.5,`hsla(${hue-8},68%,72%,${bloom*.85})`);pg.addColorStop(1,`hsla(${hue+12},55%,88%,${bloom*.75})`);
       ctx.fillStyle=pg;ctx.fill();ctx.restore();
     }
-    // Inner petals
     const ip=petals-1;
     for(let i=0;i<ip;i++){
       const angle=(i/ip)*Math.PI*2+Math.PI/ip;
@@ -587,14 +575,11 @@ class FlowerObj {
       pig.addColorStop(0,`hsla(${hue+5},72%,48%,${bloom*.9})`);pig.addColorStop(1,`hsla(${hue-8},62%,70%,${bloom*.7})`);
       ctx.fillStyle=pig;ctx.fill();ctx.restore();
     }
-    // Center
     const cr=s*.17;
     const cg=ctx.createRadialGradient(0,0,0,0,0,cr);
     cg.addColorStop(0,`hsla(50,92%,78%,${bloom})`);cg.addColorStop(.5,`hsla(45,82%,62%,${bloom})`);cg.addColorStop(1,`hsla(40,72%,52%,${bloom})`);
     ctx.beginPath();ctx.arc(0,0,cr,0,Math.PI*2);ctx.fillStyle=cg;ctx.fill();
-    // Stamen dots
     if(bloom>0.65){const dotR=cr*.6;for(let i=0;i<6;i++){const a=(i/6)*Math.PI*2;ctx.beginPath();ctx.arc(Math.cos(a)*dotR,Math.sin(a)*dotR,1.2,0,Math.PI*2);ctx.fillStyle=`rgba(255,210,80,${(bloom-.5)*2})`;ctx.fill();}}
-    // Soft glow halo
     if(bloom>0.5){ctx.beginPath();ctx.arc(0,0,s*.9,0,Math.PI*2);const gg=ctx.createRadialGradient(0,0,0,0,0,s*.9);gg.addColorStop(0,`hsla(${hue},70%,70%,${.08*bloom})`);gg.addColorStop(1,'transparent');ctx.fillStyle=gg;ctx.fill();}
     ctx.restore();
   }
@@ -608,11 +593,10 @@ class RosePetal {
     this.vAngle=(Math.random()-.5)*.06;this.angle=Math.random()*Math.PI*2;
     this.size=5+Math.random()*9;this.osc=Math.random()*Math.PI*2;this.oscS=.018+Math.random()*.025;
     this.layer=Math.random();
-    const lt=this.layer>.5;
     this.color=Math.random()<.65
       ?`hsla(${338+Math.random()*20},${60+Math.random()*20}%,${70+Math.random()*15}%,${.35+this.layer*.45})`
       :`hsla(${35+Math.random()*15},${75+Math.random()*15}%,${85+Math.random()*10}%,${.25+this.layer*.35})`;
-    this.scale=lt?.85+Math.random()*.3:.5+Math.random()*.4;
+    this.scale=this.layer>.5?.85+Math.random()*.3:.5+Math.random()*.4;
   }
   update(){this.osc+=this.oscS;this.x+=this.vx+Math.sin(this.osc)*(.6+this.layer*.5);this.y+=this.vy*this.scale;this.angle+=this.vAngle;if(this.y>this.ch+60||this.x<-60||this.x>this.cw+60)this.reset();}
   draw(ctx){
@@ -631,9 +615,7 @@ class CinSparkle {
 }
 
 const CIN={
-  canvas:null,ctx:null,flowers:[],petals:[],sparkles:[],
-  running:false,
-
+  canvas:null,ctx:null,flowers:[],petals:[],sparkles:[],running:false,
   init(){
     this.canvas=document.getElementById('cinCanvas');this.ctx=this.canvas.getContext('2d');
     this.resize();window.addEventListener('resize',()=>this.resize());
@@ -643,22 +625,10 @@ const CIN={
   resize(){this.canvas.width=innerWidth;this.canvas.height=innerHeight;},
   buildFlowers(){
     this.flowers=[];
-    const pos=[
-      [.08,.92,.65,500],[.18,.88,.55,700],[.28,.94,.7,900],[.38,.90,.6,1100],
-      [.50,.95,.75,300],[.62,.89,.58,800],[.72,.93,.68,1000],[.82,.87,.62,600],
-      [.92,.91,.55,1200],[.14,.78,.45,1400],[.50,.85,.5,1600],[.80,.80,.48,1300],
-    ];
-    pos.forEach(([xr,yr,sz,d])=>{
-      const hue=330+Math.random()*30;const pc=5+(Math.random()<.4?1:0);
-      this.flowers.push(new FlowerObj(xr*innerWidth,yr*innerHeight,sz*innerHeight*.1,d,hue,pc));
-    });
+    const pos=[[.08,.92,.65,500],[.18,.88,.55,700],[.28,.94,.7,900],[.38,.90,.6,1100],[.50,.95,.75,300],[.62,.89,.58,800],[.72,.93,.68,1000],[.82,.87,.62,600],[.92,.91,.55,1200],[.14,.78,.45,1400],[.50,.85,.5,1600],[.80,.80,.48,1300]];
+    pos.forEach(([xr,yr,sz,d])=>{const hue=330+Math.random()*30;const pc=5+(Math.random()<.4?1:0);this.flowers.push(new FlowerObj(xr*innerWidth,yr*innerHeight,sz*innerHeight*.1,d,hue,pc));});
   },
-  tick(){
-    if(!this.running)return;
-    const t=Date.now()-cinStartTime;
-    this.update(t);this.draw();
-    cinAnimFrame=requestAnimationFrame(()=>this.tick());
-  },
+  tick(){if(!this.running)return;const t=Date.now()-cinStartTime;this.update(t);this.draw();cinAnimFrame=requestAnimationFrame(()=>this.tick());},
   update(t){
     this.flowers.forEach(f=>f.update(t));
     if(t>1000&&this.petals.length<100&&Math.random()<.12)this.petals.push(new RosePetal(innerWidth,innerHeight));
@@ -669,17 +639,13 @@ const CIN={
   draw(){
     const ctx=this.ctx,w=innerWidth,h=innerHeight;
     ctx.clearRect(0,0,w,h);
-    // Subtle ambient bg glow on canvas
-    const t=Date.now()-cinStartTime;
-    const gAmt=Math.min(1,t/4000);
+    const t=Date.now()-cinStartTime;const gAmt=Math.min(1,t/4000);
     const ag=ctx.createRadialGradient(w*.5,h*.65,0,w*.5,h*.5,h*.9);
     ag.addColorStop(0,`rgba(60,15,40,${.18*gAmt})`);ag.addColorStop(.5,`rgba(30,5,25,${.1*gAmt})`);ag.addColorStop(1,'rgba(0,0,0,0)');
     ctx.fillStyle=ag;ctx.fillRect(0,0,w,h);
     this.flowers.forEach(f=>f.draw(ctx));
-    // Back-layer petals
     this.petals.filter(p=>p.layer<.5).forEach(p=>p.draw(ctx));
     this.sparkles.forEach(s=>s.draw(ctx));
-    // Front-layer petals
     this.petals.filter(p=>p.layer>=.5).forEach(p=>p.draw(ctx));
   },
   spawnSparkles(x,y,n=6){for(let i=0;i<n;i++)this.sparkles.push(new CinSparkle(x,y));},
@@ -690,34 +656,20 @@ function triggerNourCinematic(){
   const overlay=document.getElementById('cinematicOverlay');
   overlay.style.display='flex';
   document.getElementById('actQuiz').classList.remove('visible');
-
-  // Start canvas engine
   CIN.init();
-
-  // Background brightens
   setTimeout(()=>{document.getElementById('cinBg').style.background='radial-gradient(ellipse at 50% 70%,#3a0a28 0%,#180425 45%,#05040a 100%)';},1000);
-
-  // Crown descends at t=2500
   setTimeout(()=>{
     document.getElementById('cinCrownWrap').classList.add('show');
-    // Light rays appear
     setTimeout(()=>{['cinRay1','cinRay2','cinRay3','cinRay4','cinRay5'].forEach(id=>document.getElementById(id).classList.add('show'));},800);
-    // Crown glow
     setTimeout(()=>document.getElementById('cinGlow').classList.add('show'),600);
-    // Sparkles burst from crown position
     setTimeout(()=>{
       const cw=document.getElementById('cinCrownWrap').getBoundingClientRect();
       for(let i=0;i<30;i++)setTimeout(()=>CIN.spawnSparkles(cw.left+90,cw.top+35,3),i*50);
     },1600);
   },2500);
-
-  // Butterflies appear
   setTimeout(()=>{['cinBfly1','cinBfly2','cinBfly3'].forEach((id,i)=>{setTimeout(()=>document.getElementById(id).classList.add('show'),i*400);});},1800);
-
-  // Message reveal at t=3800
-setTimeout(()=>{revealCinMessage();},2500);
-
-  // Continue button at t=7200
+  /* FIX: message reveal now visible — .cin-char has gradient applied directly */
+  setTimeout(()=>{revealCinMessage();},2500);
   setTimeout(()=>{
     const btn=document.getElementById('cinContinue');btn.style.display='flex';
     requestAnimationFrame(()=>btn.classList.add('show'));
@@ -733,7 +685,6 @@ function revealCinMessage(){
     const span=document.createElement('span');span.className='cin-char';span.textContent=ch;
     span.style.animationDelay=`${i*85}ms`;
     msgEl.appendChild(span);
-    // Sparkle effect per visible char
     setTimeout(()=>{
       const rect=span.getBoundingClientRect();
       CIN.spawnSparkles(rect.left+rect.width/2,rect.top+rect.height/2,3);
@@ -742,7 +693,6 @@ function revealCinMessage(){
 }
 
 document.getElementById('cinContinue').addEventListener('click',()=>{
-  // Fade out cinematic, open book
   const overlay=document.getElementById('cinematicOverlay');
   overlay.style.transition='opacity .8s ease';overlay.style.opacity='0';
   setTimeout(()=>{overlay.style.display='none';overlay.style.opacity='';overlay.style.transition='';CIN.stop();openBook();},820);
@@ -757,3 +707,8 @@ musicBtn.addEventListener('click',async()=>{
 </script>
 </body>
 </html>
+HTMLEOF
+echo "for-radwa.html written: $?"
+Output
+
+for-radwa.html written: 0
