@@ -51,8 +51,9 @@
 @keyframes fY{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 @keyframes blk{0%,100%{opacity:.3}50%{opacity:.85}}
 @keyframes mGlow{0%{box-shadow:0 0 22px var(--gp),0 0 50px var(--gpu)}100%{box-shadow:0 0 38px var(--gp),0 0 80px var(--gpu)}}
-body.editmode [contenteditable]{outline:1px dashed rgba(255,45,120,.45);border-radius:4px;min-width:20px;min-height:14px;cursor:text;background:rgba(255,45,120,.04)}
-body.editmode [contenteditable]:focus{outline:1px solid rgba(255,45,120,.7);background:rgba(255,45,120,.08)}
+/* FIX: only highlight truly editable elements */
+body.editmode [contenteditable="true"]{outline:1px dashed rgba(255,45,120,.45);border-radius:4px;min-width:20px;min-height:14px;cursor:text;background:rgba(255,45,120,.04)}
+body.editmode [contenteditable="true"]:focus{outline:1px solid rgba(255,45,120,.7);background:rgba(255,45,120,.08)}
 body.editmode .eu-btn{display:flex!important}body.editmode .eu-mem{display:flex!important}body.editmode .img-edit-click{cursor:pointer!important;outline:1px dashed rgba(0,200,200,.5)!important;outline-offset:2px}
 #editBanner{position:fixed;top:0;left:0;right:0;z-index:25;background:rgba(255,200,0,.12);border-bottom:1px solid rgba(255,200,0,.28);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;gap:10px;padding:6px 16px;font-size:.54rem;letter-spacing:.13em;color:#ffd966;text-transform:uppercase}
 #editBanner.show{display:flex}
@@ -109,8 +110,10 @@ body.editmode .eu-img-edit{display:flex!important}
 .custom-title{font-family:'Dancing Script',cursive;font-size:clamp(1rem,2.5vw,1.5rem);background:linear-gradient(135deg,var(--ps),var(--gold),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:5px;flex-shrink:0}
 .custom-body{font-family:'Cormorant Garamond',serif;font-size:clamp(.72rem,1.7vw,.9rem);line-height:1.85;color:var(--muted);text-align:center;flex:1;width:100%}
 .custom-img{width:100%;border-radius:9px;border:1px solid rgba(255,45,120,.2);margin:6px 0;object-fit:cover;max-height:140px;flex-shrink:0;transition:transform .2s,object-position .2s}
+/* FIX: sticker layer never blocks clicks; only .sticker-item captures in edit mode */
 .sticker-layer{position:absolute;inset:0;z-index:30;pointer-events:none;overflow:hidden}
-body.editmode .sticker-layer{pointer-events:all}
+body.editmode .sticker-layer{pointer-events:none}
+body.editmode .sticker-item{pointer-events:all}
 .sticker-item{position:absolute;display:flex;align-items:center;justify-content:center;user-select:none;line-height:1;touch-action:none}
 .sticker-del{position:absolute;top:-8px;right:-8px;width:18px;height:18px;border-radius:50%;background:rgba(200,20,60,.9);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:.6rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;opacity:0;transition:opacity .2s}
 .sticker-item:hover .sticker-del{opacity:1}
@@ -130,6 +133,10 @@ body.editmode .sticker-layer{pointer-events:all}
 .ib-cancel{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--muted2);font-family:'Poppins',sans-serif;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;padding:7px 14px;border-radius:99px;cursor:pointer}
 .ib-sep{height:1px;background:rgba(255,255,255,.07);margin:8px 0}
 .ib-cover-only{display:none}.ib-cover-only.visible{display:flex}
+
+/* STICKER EDIT BAR */
+#stickerEditBar{position:fixed;bottom:60px;right:14px;z-index:50;background:rgba(3,0,10,.96);border:1px solid rgba(255,45,120,.4);border-radius:18px;padding:14px 18px;width:265px;max-width:88vw;backdrop-filter:blur(20px);box-shadow:0 0 35px rgba(255,45,120,.18),0 0 70px rgba(124,106,154,.12);transform:translateY(140px);transition:transform .4s cubic-bezier(.16,1,.3,1),opacity .4s ease;pointer-events:none;opacity:0}
+#stickerEditBar.show{transform:translateY(0);pointer-events:all;opacity:1}
 
 #controls{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:96vw;opacity:0;transition:opacity .8s ease 2.2s}
 #controls.show{opacity:1}
@@ -235,7 +242,7 @@ body.editmode .sticker-layer{pointer-events:all}
 <body>
 <canvas id="bgCanvas"></canvas>
 <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
-<div id="editBanner">✏️ &nbsp;Edit Mode — click any text to edit · click images to resize/reposition &nbsp;|&nbsp; <strong>"Edit 🔒" to lock</strong></div>
+<div id="editBanner">✏️ &nbsp;Edit Mode — click any text to edit · click stickers to resize &nbsp;|&nbsp; <strong>"Edit 🔒" to lock</strong></div>
 <div id="syncDot"></div>
 
 <div id="loader">
@@ -273,6 +280,25 @@ body.editmode .sticker-layer{pointer-events:all}
   <div class="ib-actions">
     <button class="ib-save" onclick="imgEditSave()">☁️ Save Changes</button>
     <button class="ib-cancel" onclick="imgEditCancel()">✕ Cancel</button>
+  </div>
+</div>
+
+<!-- STICKER EDIT BAR -->
+<div id="stickerEditBar">
+  <div class="ib-title">🌸 Sticker — Size &amp; Rotation</div>
+  <div class="ib-row">
+    <span class="ib-lbl">Size</span>
+    <input type="range" class="ib-range" id="stickerScale" min="0.2" max="5" step="0.1" value="1" oninput="stickerEditApply()">
+    <span class="ib-val" id="stickerScaleVal">1×</span>
+  </div>
+  <div class="ib-row">
+    <span class="ib-lbl">Rotate</span>
+    <input type="range" class="ib-range" id="stickerRot" min="-180" max="180" step="5" value="0" oninput="stickerEditApply()">
+    <span class="ib-val" id="stickerRotVal">0°</span>
+  </div>
+  <div class="ib-actions">
+    <button class="ib-save" onclick="stickerEditSave()">☁️ Save</button>
+    <button class="ib-cancel" onclick="stickerEditCancel()">✕ Cancel</button>
   </div>
 </div>
 
@@ -389,7 +415,7 @@ body.editmode .sticker-layer{pointer-events:all}
 <div class="modal-overlay" id="stickerPanel">
   <div class="modal-box">
     <div class="sk-title">🌸 Add Sticker</div>
-    <div class="sk-sub">Pick one — goes on the current page</div>
+    <div class="sk-sub">Pick one — goes on the current page · tap sticker to resize</div>
     <div class="sk-grid" id="stickerGrid"></div>
     <div class="sk-upload"><div class="sk-upload-label">📷 Upload custom sticker image</div><input type="file" accept="image/*" id="stickerUploadInput"></div>
     <button class="sk-cancel" onclick="closeModal('stickerPanel')">Cancel</button>
@@ -544,30 +570,64 @@ async function imgEditSave(){
 }
 function imgEditCancel(){document.getElementById('imgEditBar').classList.remove('show');imgEditState.active=false;renderSpread(spread);}
 
+/* ══ STICKER EDIT — size & rotation control ══ */
+let stickerEditSt={active:false,sid:null,stId:null,s:null,el:null};
+function stickerEditOpen(sid,stId,s,el){
+  stickerEditSt={active:true,sid,stId,s:{...s},el};
+  document.getElementById('stickerScale').value=s.scale||1;
+  document.getElementById('stickerRot').value=s.rotation||0;
+  document.getElementById('stickerScaleVal').textContent=parseFloat(s.scale||1).toFixed(1)+'×';
+  document.getElementById('stickerRotVal').textContent=(s.rotation||0)+'°';
+  document.getElementById('stickerEditBar').classList.add('show');
+}
+function stickerEditApply(){
+  if(!stickerEditSt.active)return;
+  const sc=parseFloat(document.getElementById('stickerScale').value);
+  const rt=parseFloat(document.getElementById('stickerRot').value);
+  document.getElementById('stickerScaleVal').textContent=sc.toFixed(1)+'×';
+  document.getElementById('stickerRotVal').textContent=rt+'°';
+  stickerEditSt.s.scale=sc;stickerEditSt.s.rotation=rt;
+  if(stickerEditSt.el)stickerEditSt.el.style.transform=`translate(-50%,-50%) scale(${sc}) rotate(${rt}deg)`;
+}
+async function stickerEditSave(){
+  if(!stickerEditSt.active)return;
+  const{sid,stId,s}=stickerEditSt;
+  if(!cloudData.stickers[sid])cloudData.stickers[sid]={};
+  const upd={...(cloudData.stickers[sid][stId]||{}),...s};
+  cloudData.stickers[sid][stId]=upd;
+  await dbSet('stickers/'+sid+'/'+stId,upd);
+  document.getElementById('stickerEditBar').classList.remove('show');
+  stickerEditSt.active=false;renderSpread(spread);showToast('☁️','Sticker saved!');
+}
+function stickerEditCancel(){
+  document.getElementById('stickerEditBar').classList.remove('show');
+  stickerEditSt.active=false;renderSpread(spread);
+}
+
 /* ══ RENDERERS ══ */
 function makeCover(p){
   const sid='page_cover';const cs=cloudData.coverSettings||{};
   const sz=cs.size||116;const sc=cs.scale||1;const px=cs.posX!==undefined?cs.posX:50;const py=cs.posY!==undefined?cs.posY:50;
   const photo=cloudData.coverPhoto?`<img src="${cloudData.coverPhoto}" alt="us" style="object-position:${px}% ${py}%;transform:scale(${sc});transform-origin:${px}% ${py}%" ${editMode?'onclick="imgEditOpen(\'cover\',true,this)"':''}>`:'💑';
   return`<div class="pg pg-cover">
-    <div class="cv-roses">🌹 🌸 🌹</div>
+    <div class="cv-roses" data-sid="${sid}" data-field="cvroses" contenteditable="false">${getET(sid,'cvroses','🌹 🌸 🌹')}</div>
     <div class="cv-img-wrap" style="width:${sz}px;height:${sz}px">
       <div class="cv-img" style="width:${sz}px;height:${sz}px">${photo}</div>
       <label class="eu-btn" title="Change photo">📷<input type="file" accept="image/*" onchange="uploadCoverPhoto(event)"></label>
-      <button class="eu-img-edit" onclick="imgEditOpen('cover',true,this.closest('.cv-img-wrap').querySelector('img'))">🔍 Edit</button>
+      <button class="eu-img-edit" onclick="var img=this.closest('.cv-img-wrap').querySelector('img');imgEditOpen('cover',true,img)">🔍 Edit</button>
     </div>
     <div class="cv-title" data-sid="${sid}" data-field="cvtitle" contenteditable="false">${getET(sid,'cvtitle','Radwa &amp; Nour ❤️')}</div>
     <div class="cv-line"></div>
     <div class="cv-sub" data-sid="${sid}" data-field="cvsub" contenteditable="false">${getET(sid,'cvsub','A Book Full of Us')}</div>
     <div class="deco decoP" style="margin:5px auto"></div>
-    <div class="cv-hint" onclick="if(!editMode)flipNext()">✦ touch to open ✦</div>
+    <div class="cv-hint" data-sid="${sid}" data-field="cvhint" contenteditable="false" onclick="if(!editMode)flipNext()">${getET(sid,'cvhint','✦ touch to open ✦')}</div>
     <div class="pgn r">1</div>
   </div>`;
 }
 function makeIntro(p){
   const sid='page_intro';
   return`<div class="pg pg-intro">
-    <div class="intro-orn">🌸 ✦ 🌸</div>
+    <div class="intro-orn" data-sid="${sid}" data-field="orn" contenteditable="false">${getET(sid,'orn','🌸 ✦ 🌸')}</div>
     <div class="intro-title-el" data-sid="${sid}" data-field="title" contenteditable="false">${getET(sid,'title','كتابُ حُبِّنا')}</div>
     <div class="intro-divider"></div>
     <div class="intro-body">
@@ -590,7 +650,7 @@ function makeMemory(m,gi){
     <button class="eu-img-edit" onclick="imgEditOpen('${mk}',false,this.closest('.mthumb').querySelector('img'))">🔍 Edit</button>`;}
   else{mh=`<div class="big">${m.emoji||'💗'}</div><div class="lbl">✦ add your media ✦</div>`;}
   return`<div class="pg">
-    <div class="mtag">Memory ${String(cnt).padStart(2,'0')}</div>
+    <div class="mtag" data-sid="${sid}" data-field="mtag" contenteditable="false">${getET(sid,'mtag','Memory '+String(cnt).padStart(2,'0'))}</div>
     <div class="mtitle" data-sid="${sid}" data-field="title" contenteditable="false">${getET(sid,'title',m.title)}</div>
     <div class="deco"></div>
     <div class="mthumb">${mh}<label class="eu-mem">📷 ${med?'Change':'Add'}<input type="file" accept="image/*,video/*" onchange="uploadMemMedia(event,'${mk}')"></label></div>
@@ -604,9 +664,9 @@ function makePoetry(p,gi){
   const sid=getSID(p);const side=gi%2===0?'r':'l';
   const body=p.text.replace(/\[([^\]]+)\]/g,'<em>$1</em>').replace(/\*([^*]+)\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
   return`<div class="pg pg-po">
-    <div class="po-orn">${p.orn||'❧'}</div>
+    <div class="po-orn" data-sid="${sid}" data-field="orn1" contenteditable="false">${getET(sid,'orn1',p.orn||'❧')}</div>
     <div class="po-body" data-sid="${sid}" data-field="body" contenteditable="false">${getET(sid,'body',body)}</div>
-    <div class="po-orn">${p.orn||'❧'}</div>
+    <div class="po-orn" data-sid="${sid}" data-field="orn2" contenteditable="false">${getET(sid,'orn2',p.orn||'❧')}</div>
     <div class="po-lbl" data-sid="${sid}" data-field="lbl" contenteditable="false">${getET(sid,'lbl',p.label)}</div>
     <div class="pgn ${side}">${gi+1}</div>
   </div>`;
@@ -614,7 +674,7 @@ function makePoetry(p,gi){
 function makeBirthday(p,gi){
   const sid='page_birthday';
   return`<div class="pg pg-bd">
-    <div class="bd-ico">🎂</div>
+    <div class="bd-ico" data-sid="${sid}" data-field="bdico" contenteditable="false">${getET(sid,'bdico','🎂')}</div>
     <div class="bd-title" data-sid="${sid}" data-field="bdtitle" contenteditable="false">${getET(sid,'bdtitle','Happy Birthday, Radwa 🎉')}</div>
     <div class="bd-sub" data-sid="${sid}" data-field="bdsub" contenteditable="false">${getET(sid,'bdsub','Your special day is approaching…')}</div>
     <div class="cd-row">
@@ -638,7 +698,7 @@ function makeCustom(p,gi){
     <div class="custom-title" data-sid="${sid}" data-field="title" contenteditable="false">${getET(sid,'title',p.title||'My Page')}</div>
     <div class="deco decoP"></div>${imgHtml}
     <div class="custom-body" data-sid="${sid}" data-field="body" contenteditable="false">${getET(sid,'body',p.body||'')}</div>
-    ${med?`<button class="eu-img-edit" onclick="imgEditOpen('${sid}',false,this.closest('.pg').querySelector('img'))">🔍 Edit Image</button>`:``}
+    ${med?`<button class="eu-img-edit" onclick="imgEditOpen('${sid}',false,this.closest('.pg').querySelector('img'))">🔍 Edit Image</button>`:''}
     <label class="eu-mem">📷 ${med?'Change':'Add'} Image<input type="file" accept="image/*" onchange="uploadMemMedia(event,'${sid}')"></label>
     <div class="pgn ${side}">${gi+1}</div>
   </div>`;
@@ -671,6 +731,8 @@ function renderFace(el,idx){
 const SK_EMOJIS=['🌸','💗','✨','🌹','💕','🌺','💫','⭐','🌙','🎀','🦋','🌼','💝','🌟','🎵','🍓','🌈','💐','🌻','❤️','🔮','🌷','🦄','🍭','🎉','🎀','🍒','🌊','🦩','💎'];
 let stickerDrag=null;
 function initStickerPicker(){const grid=document.getElementById('stickerGrid');grid.innerHTML='';SK_EMOJIS.forEach(e=>{const btn=document.createElement('button');btn.className='sk-btn';btn.textContent=e;btn.onclick=()=>{closeModal('stickerPanel');addStickerToPage(e,null);};grid.appendChild(btn);});}
+
+/* FIX: renderStickers — tap (< 350ms / < 6px) opens size bar, longer = drag */
 function renderStickers(layer,sid){
   layer.innerHTML='';const stickers=cloudData.stickers[sid]||{};
   Object.entries(stickers).forEach(([stId,s])=>{
@@ -683,17 +745,34 @@ function renderStickers(layer,sid){
       const del=document.createElement('button');del.className='sticker-del';del.textContent='✕';
       del.onclick=e=>{e.stopPropagation();dbRemove('stickers/'+sid+'/'+stId);delete cloudData.stickers[sid][stId];renderSpread(spread);showToast('🗑️','Sticker removed');};
       el.appendChild(del);
-      el.addEventListener('pointerdown',ev=>{ev.stopPropagation();ev.preventDefault();stickerDrag={el,sid,stId,s};el.setPointerCapture(ev.pointerId);});
+      let pdTime=0,pdX=0,pdY=0,wasDragged=false;
+      el.addEventListener('pointerdown',ev=>{
+        ev.stopPropagation();ev.preventDefault();
+        pdTime=Date.now();pdX=ev.clientX;pdY=ev.clientY;wasDragged=false;
+        stickerDrag={el,sid,stId,s};el.setPointerCapture(ev.pointerId);
+      });
       el.addEventListener('pointermove',ev=>{
         if(!stickerDrag||stickerDrag.el!==el)return;
+        const dx=ev.clientX-pdX,dy=ev.clientY-pdY;
+        if(Math.abs(dx)>6||Math.abs(dy)>6)wasDragged=true;
         const rect=layer.getBoundingClientRect();
         const nx=((ev.clientX-rect.left)/rect.width)*100,ny=((ev.clientY-rect.top)/rect.height)*100;
-        el.style.left=nx+'%';el.style.top=ny+'%';stickerDrag.newX=nx;stickerDrag.newY=ny;
+        el.style.left=nx+'%';el.style.top=ny+'%';
+        el.style.transform=`translate(-50%,-50%) scale(${s.scale||1}) rotate(${s.rotation||0}deg)`;
+        stickerDrag.newX=nx;stickerDrag.newY=ny;
       });
       el.addEventListener('pointerup',async()=>{
         if(!stickerDrag||stickerDrag.el!==el)return;
-        if(stickerDrag.newX!==undefined){const upd={...stickerDrag.s,x:stickerDrag.newX,y:stickerDrag.newY};cloudData.stickers[sid][stId]=upd;await dbSet('stickers/'+sid+'/'+stId,upd);}
-        stickerDrag=null;
+        if(!wasDragged&&Date.now()-pdTime<350){
+          // TAP → open sticker size/rotation editor
+          stickerDrag=null;
+          stickerEditOpen(sid,stId,s,el);
+        } else if(stickerDrag.newX!==undefined){
+          const upd={...stickerDrag.s,x:stickerDrag.newX,y:stickerDrag.newY};
+          cloudData.stickers[sid][stId]=upd;
+          await dbSet('stickers/'+sid+'/'+stId,upd);
+          stickerDrag=null;
+        } else {stickerDrag=null;}
       });
     }
     layer.appendChild(el);
@@ -703,7 +782,7 @@ async function addStickerToPage(emoji,imgSrc){
   const p=BOOK_PAGES[spread*2]||BOOK_PAGES[0];const sid=getSID(p);
   const stId='st-'+Date.now();const sticker={emoji:emoji||null,imgSrc:imgSrc||null,x:50,y:50,scale:1,rotation:0,opacity:1,zIndex:1};
   cloudData.stickers[sid]=cloudData.stickers[sid]||{};cloudData.stickers[sid][stId]=sticker;
-  await dbSet('stickers/'+sid+'/'+stId,sticker);renderSpread(spread);showToast('🌸','Sticker added!');
+  await dbSet('stickers/'+sid+'/'+stId,sticker);renderSpread(spread);showToast('🌸','Sticker added! Tap it to resize.');
 }
 document.getElementById('btnSticker').addEventListener('click',()=>{if(!editMode){showToast('🔒','Enable Edit Mode first!');return;}initStickerPicker();openModal('stickerPanel');});
 document.getElementById('stickerUploadInput').addEventListener('change',function(){const file=this.files[0];if(!file)return;const r=new FileReader();r.onload=async e=>{closeModal('stickerPanel');await addStickerToPage(null,e.target.result);};r.readAsDataURL(file);});
@@ -711,6 +790,8 @@ document.getElementById('stickerUploadInput').addEventListener('change',function
 /* ══ FLIP ENGINE ══ */
 function spreadIdx(s){return{l:s*2,r:s*2+1};}
 function renderSpread(s){
+  /* Close sticker edit bar on page change */
+  if(stickerEditSt&&stickerEditSt.active){document.getElementById('stickerEditBar').classList.remove('show');stickerEditSt.active=false;}
   const{l,r}=spreadIdx(s);
   renderFace(document.getElementById('lFront'),l);renderFace(document.getElementById('rFront'),r<TOTAL()?r:-1);
   document.getElementById('pgNum').textContent=l+1;document.getElementById('pgTotal').textContent=TOTAL();document.getElementById('gotoRange').textContent='Pages 1 – '+TOTAL();
@@ -741,8 +822,8 @@ function startCountdown(){
 /* ══ EDIT MODE ══ */
 document.getElementById('btnEdit').addEventListener('click',()=>{if(editMode){disableEditMode();return;}openModal('pwModal');document.getElementById('pwInput').value='';document.getElementById('pwErr').textContent='';setTimeout(()=>document.getElementById('pwInput').focus(),200);});
 function checkPw(){const v=document.getElementById('pwInput').value;if(v===EDIT_PASSWORD){closeModal('pwModal');enableEditMode();}else{document.getElementById('pwErr').textContent='Wrong password ✕';document.getElementById('pwInput').value='';document.getElementById('pwInput').focus();setTimeout(()=>document.getElementById('pwErr').textContent='',2000);}}
-function enableEditMode(){editMode=true;document.body.classList.add('editmode');document.getElementById('btnEdit').classList.add('active');document.getElementById('editBanner').classList.add('show');renderSpread(spread);wireSecretEdit(true);showToast('✏️','Edit Mode ON — click any text or image!');}
-function disableEditMode(){editMode=false;document.body.classList.remove('editmode');document.getElementById('btnEdit').classList.remove('active');document.getElementById('editBanner').classList.remove('show');document.getElementById('imgEditBar').classList.remove('show');imgEditState.active=false;renderSpread(spread);wireSecretEdit(false);showToast('🔒','Locked');}
+function enableEditMode(){editMode=true;document.body.classList.add('editmode');document.getElementById('btnEdit').classList.add('active');document.getElementById('editBanner').classList.add('show');renderSpread(spread);wireSecretEdit(true);showToast('✏️','Edit Mode ON — tap any text · tap stickers to resize!');}
+function disableEditMode(){editMode=false;document.body.classList.remove('editmode');document.getElementById('btnEdit').classList.remove('active');document.getElementById('editBanner').classList.remove('show');document.getElementById('imgEditBar').classList.remove('show');document.getElementById('stickerEditBar').classList.remove('show');imgEditState.active=false;stickerEditSt.active=false;renderSpread(spread);wireSecretEdit(false);showToast('🔒','Locked');}
 function wireSecretEdit(on){const title=document.getElementById('scTitle'),body=document.getElementById('scBody'),hint=document.getElementById('scEditHint');if(on){title.contentEditable='true';body.contentEditable='true';hint.style.display='block';if(!title._w){title._w=true;title.addEventListener('blur',async()=>{await saveET('secret','scTitle',title.innerHTML);showToast('☁️','Saved!');});}if(!body._w){body._w=true;body.addEventListener('blur',async()=>{await saveET('secret','scBody',body.innerHTML);showToast('☁️','Saved!');});}}else{title.contentEditable='false';body.contentEditable='false';hint.style.display='none';}}
 
 /* ══ MODALS ══ */
@@ -834,3 +915,5 @@ async function boot(){
 </script>
 </body>
 </html>
+
+radwa-nour-book.html written: 1
