@@ -1,13 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>A Book Full of Us – Radwa & Nour ❤️</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Poppins:wght@200;300;400;500;600&family=Dancing+Script:wght@400;600;700&family=Tajawal:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Poppins:wght@200;300;400;500;600&family=Dancing+Script:wght@400;600;700&family=Tajawal:wght@300;400;500&family=Great+Vibes:wght@400&family=Pacifico&family=Satisfy&display=swap" rel="stylesheet">
 <style>
-:root{--pink:#c8788a;--ps:#d4909f;--pu:#7c6a9a;--pu2:#5a4d7a;--pu3:#9e8fc0;--gold:#c8a96e;--bg:#05040a;--text:#f0eef6;--muted:#a8a0b8;--muted2:#5a5a72;--gp:rgba(200,120,138,.55);--gpu:rgba(124,106,154,.45);--pw:330px;--ph:460px;--ft:680ms}
+:root{--pink:#c8788a;--ps:#d4909f;--pu:#7c6a9a;--pu2:#5a4d7a;--pu3:#9e8fc0;--gold:#c8a96e;--bg:#05040a;--text:#f0eef6;--muted:#a8a0b8;--muted2:#5a5a72;--gp:rgba(200,120,138,.55);--gpu:rgba(124,106,154,.45);--pw:330px;--ph:460px;--ft:680ms;--book-scale:1;--font-script:'Dancing Script',cursive}
 *{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-family:'Poppins',sans-serif;color:var(--text)}
 #bgCanvas{position:fixed;inset:0;z-index:0;pointer-events:none}
 .blob{position:fixed;border-radius:50%;filter:blur(140px);opacity:.13;pointer-events:none;z-index:0;animation:blobD 20s ease-in-out infinite alternate}
@@ -17,14 +16,14 @@
 #loader.hide{opacity:0;visibility:hidden;pointer-events:none}
 .ld-heart{font-size:3.5rem;animation:hb 1.2s ease-in-out infinite;margin-bottom:20px}
 @keyframes hb{0%,100%{transform:scale(1);filter:drop-shadow(0 0 8px var(--gp))}50%{transform:scale(1.25);filter:drop-shadow(0 0 22px var(--gp))}}
-.ld-title{font-family:'Dancing Script',cursive;font-size:clamp(2rem,5vw,3.5rem);background:linear-gradient(135deg,var(--ps),var(--gold),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.ld-title{font-family:var(--font-script);font-size:clamp(2rem,5vw,3.5rem);background:linear-gradient(135deg,var(--ps),var(--gold),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
 .ld-sub{font-size:.7rem;letter-spacing:.2em;color:var(--muted);margin-bottom:36px;text-transform:uppercase}
 .ld-track{width:260px;height:3px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden}
 .ld-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--pink),var(--pu));border-radius:99px;box-shadow:0 0 14px var(--gp);transition:width .1s linear}
 .ld-hint{margin-top:14px;font-size:.62rem;letter-spacing:.14em;color:var(--muted2);text-align:center}
 #scene{position:fixed;inset:0;z-index:1;display:flex;align-items:center;justify-content:center}
 #bookOuter{opacity:0;transform:scale(.83) translateY(30px);transition:opacity 1.4s ease,transform 1.4s cubic-bezier(.16,1,.3,1)}
-#bookOuter.show{opacity:1;transform:scale(1) translateY(0)}
+#bookOuter.show{opacity:1;transform:scale(var(--book-scale,1)) translateY(0)}
 #book{display:flex;width:calc(var(--pw)*2);height:var(--ph);position:relative;animation:bGlow 4.5s ease-in-out infinite alternate}
 @keyframes bGlow{0%{filter:drop-shadow(0 0 36px var(--gp)) drop-shadow(0 0 85px var(--gpu)) drop-shadow(0 30px 60px rgba(0,0,0,.8))}100%{filter:drop-shadow(0 0 58px var(--gp)) drop-shadow(0 0 130px var(--gpu)) drop-shadow(0 30px 60px rgba(0,0,0,.8))}}
 #book::after{content:'';position:absolute;left:50%;top:0;transform:translateX(-50%);width:9px;height:100%;background:linear-gradient(to right,#08000e,#250040,#08000e);z-index:60;box-shadow:0 0 18px rgba(168,85,247,.65)}
@@ -51,7 +50,6 @@
 @keyframes fY{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 @keyframes blk{0%,100%{opacity:.3}50%{opacity:.85}}
 @keyframes mGlow{0%{box-shadow:0 0 22px var(--gp),0 0 50px var(--gpu)}100%{box-shadow:0 0 38px var(--gp),0 0 80px var(--gpu)}}
-/* FIX: only highlight truly editable elements */
 body.editmode [contenteditable="true"]{outline:1px dashed rgba(255,45,120,.45);border-radius:4px;min-width:20px;min-height:14px;cursor:text;background:rgba(255,45,120,.04)}
 body.editmode [contenteditable="true"]:focus{outline:1px solid rgba(255,45,120,.7);background:rgba(255,45,120,.08)}
 body.editmode .eu-btn{display:flex!important}body.editmode .eu-mem{display:flex!important}body.editmode .img-edit-click{cursor:pointer!important;outline:1px dashed rgba(0,200,200,.5)!important;outline-offset:2px}
@@ -68,22 +66,22 @@ body.editmode .eu-btn{display:flex!important}body.editmode .eu-mem{display:flex!
 .eu-mem input{position:absolute;inset:0;opacity:0;cursor:pointer}
 .eu-img-edit{display:none;position:absolute;top:5px;left:5px;z-index:10;background:rgba(0,200,200,.75);border:1px solid rgba(0,200,200,.5);color:#000;font-size:.44rem;padding:2px 6px;border-radius:99px;cursor:pointer;backdrop-filter:blur(6px);align-items:center;gap:2px;font-weight:600}
 body.editmode .eu-img-edit{display:flex!important}
-.cv-title{font-family:'Dancing Script',cursive;font-size:clamp(1.25rem,3vw,1.9rem);background:linear-gradient(135deg,var(--ps),var(--gold),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 12px var(--gp));text-align:center;line-height:1.2;flex-shrink:0}
+.cv-title{font-family:var(--font-script);font-size:clamp(1.25rem,3vw,1.9rem);background:linear-gradient(135deg,var(--ps),var(--gold),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 12px var(--gp));text-align:center;line-height:1.2;flex-shrink:0}
 .cv-line{width:66px;height:1px;background:linear-gradient(90deg,transparent,var(--pink),transparent);margin:5px auto;flex-shrink:0}
 .cv-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.82rem;color:var(--muted);letter-spacing:.12em;text-align:center;margin:3px 0 8px;flex-shrink:0}
 .cv-hint{font-size:.54rem;letter-spacing:.2em;color:var(--pink);opacity:.72;text-transform:uppercase;animation:blk 2.2s ease-in-out infinite;text-align:center;cursor:pointer;flex-shrink:0}
 .pg-intro{background:radial-gradient(ellipse at 40% 30%,#1a0030 0%,#060010 75%);direction:rtl;font-family:'Tajawal',sans-serif;align-items:flex-start;padding:14px 13px 20px}
 .intro-orn{font-size:1.1rem;opacity:.45;margin:4px auto 7px;text-align:center;animation:fY 3s ease-in-out infinite;flex-shrink:0;width:100%}
-.intro-title-el{font-family:'Dancing Script',cursive;font-size:clamp(.86rem,2vw,1.08rem);background:linear-gradient(135deg,var(--ps),var(--gold),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;line-height:1.5;margin-bottom:4px;width:100%;flex-shrink:0}
+.intro-title-el{font-family:var(--font-script);font-size:clamp(.86rem,2vw,1.08rem);background:linear-gradient(135deg,var(--ps),var(--gold),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;line-height:1.5;margin-bottom:4px;width:100%;flex-shrink:0}
 .intro-divider{width:52px;height:1px;background:linear-gradient(90deg,transparent,var(--pink),transparent);margin:3px auto 7px;flex-shrink:0}
 .intro-body{font-size:clamp(.57rem,1.38vw,.7rem);line-height:1.95;color:var(--muted);text-align:right;direction:rtl;width:100%}
 .intro-body p{margin-bottom:5px}
 .hi{background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:500}
 .intro-list{font-size:.56rem;color:var(--muted2);margin:4px 0;padding:5px 7px;border-top:1px solid rgba(255,45,120,.13);border-bottom:1px solid rgba(255,45,120,.13);line-height:2}
-.intro-sig{margin-top:7px;text-align:center;font-family:'Dancing Script',cursive;font-size:clamp(.78rem,1.75vw,.95rem);color:var(--pink);line-height:1.7;flex-shrink:0;width:100%}
+.intro-sig{margin-top:7px;text-align:center;font-family:var(--font-script);font-size:clamp(.78rem,1.75vw,.95rem);color:var(--pink);line-height:1.7;flex-shrink:0;width:100%}
 .intro-sig small{display:block;font-family:'Tajawal',sans-serif;font-size:.55rem;color:var(--muted2);margin-top:2px}
 .mtag{font-size:.48rem;letter-spacing:.23em;text-transform:uppercase;color:var(--pink);margin-bottom:3px;font-weight:500;flex-shrink:0}
-.mtitle{font-family:'Dancing Script',cursive;font-size:clamp(.93rem,2.3vw,1.32rem);background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:4px;flex-shrink:0}
+.mtitle{font-family:var(--font-script);font-size:clamp(.93rem,2.3vw,1.32rem);background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:4px;flex-shrink:0}
 .mthumb{width:100%;height:118px;border-radius:9px;border:1px solid rgba(255,45,120,.28);box-shadow:0 0 18px rgba(255,45,120,.13);margin:4px 0;background:rgba(255,45,120,.04);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;position:relative;overflow:hidden;flex-shrink:0}
 .mthumb::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(168,85,247,.05),transparent 60%,rgba(255,45,120,.05));pointer-events:none;z-index:1}
 .mthumb img,.mthumb video{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:8px;transition:transform .2s,object-position .2s}
@@ -99,7 +97,7 @@ body.editmode .eu-img-edit{display:flex!important}
 .po-lbl{font-size:.48rem;letter-spacing:.24em;color:var(--pink);margin-top:10px;opacity:.55;text-transform:uppercase;flex-shrink:0}
 .pg-bd{background:radial-gradient(ellipse at center,#1e002e 0%,#05000e 80%);text-align:center}
 .bd-ico{font-size:2.1rem;animation:fY 2.4s ease-in-out infinite;flex-shrink:0}
-.bd-title{font-family:'Dancing Script',cursive;font-size:clamp(1rem,2.5vw,1.55rem);background:linear-gradient(135deg,var(--gold),var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 9px var(--gp));margin:5px 0 3px;flex-shrink:0}
+.bd-title{font-family:var(--font-script);font-size:clamp(1rem,2.5vw,1.55rem);background:linear-gradient(135deg,var(--gold),var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 9px var(--gp));margin:5px 0 3px;flex-shrink:0}
 .bd-sub{font-family:'Cormorant Garamond',serif;font-size:.68rem;color:var(--muted);font-style:italic;margin-bottom:10px;flex-shrink:0}
 .cd-row{display:flex;gap:5px;justify-content:center;margin:7px 0;flex-shrink:0}
 .cdb{background:rgba(255,45,120,.08);border:1px solid rgba(255,45,120,.28);border-radius:9px;padding:6px 7px;min-width:47px;box-shadow:0 0 13px rgba(255,45,120,.13)}
@@ -107,18 +105,17 @@ body.editmode .eu-img-edit{display:flex!important}
 .bd-msg{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.71rem;line-height:1.78;color:var(--muted);max-width:90%;margin:6px auto 0}
 .bd-msg span{background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .pg-custom{background:linear-gradient(155deg,#150024 0%,#090013 100%)}
-.custom-title{font-family:'Dancing Script',cursive;font-size:clamp(1rem,2.5vw,1.5rem);background:linear-gradient(135deg,var(--ps),var(--gold),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:5px;flex-shrink:0}
+.custom-title{font-family:var(--font-script);font-size:clamp(1rem,2.5vw,1.5rem);background:linear-gradient(135deg,var(--ps),var(--gold),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:5px;flex-shrink:0}
 .custom-body{font-family:'Cormorant Garamond',serif;font-size:clamp(.72rem,1.7vw,.9rem);line-height:1.85;color:var(--muted);text-align:center;flex:1;width:100%}
 .custom-img{width:100%;border-radius:9px;border:1px solid rgba(255,45,120,.2);margin:6px 0;object-fit:cover;max-height:140px;flex-shrink:0;transition:transform .2s,object-position .2s}
-/* FIX: sticker layer never blocks clicks; only .sticker-item captures in edit mode */
 .sticker-layer{position:absolute;inset:0;z-index:30;pointer-events:none;overflow:hidden}
 body.editmode .sticker-layer{pointer-events:none}
 body.editmode .sticker-item{pointer-events:all}
 .sticker-item{position:absolute;display:flex;align-items:center;justify-content:center;user-select:none;line-height:1;touch-action:none}
-.sticker-del{position:absolute;top:-8px;right:-8px;width:18px;height:18px;border-radius:50%;background:rgba(200,20,60,.9);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:.6rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;opacity:0;transition:opacity .2s}
+.sticker-del{position:absolute;top:-9px;right:-9px;width:20px;height:20px;border-radius:50%;background:rgba(200,20,60,.9);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:.65rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;opacity:0;transition:opacity .2s}
 .sticker-item:hover .sticker-del{opacity:1}
-
-/* IMAGE EDITOR BAR */
+body.editmode .sticker-del{opacity:.4!important}
+body.editmode .sticker-item:hover .sticker-del{opacity:1!important}
 #imgEditBar{position:fixed;bottom:60px;left:50%;transform:translateX(-50%) translateY(140px);z-index:50;background:rgba(3,0,10,.96);border:1px solid rgba(0,200,200,.4);border-radius:18px;padding:14px 18px;min-width:300px;max-width:92vw;backdrop-filter:blur(20px);box-shadow:0 0 40px rgba(0,200,200,.2),0 0 80px rgba(124,106,154,.15);transition:transform .4s cubic-bezier(.16,1,.3,1);pointer-events:none;opacity:0}
 #imgEditBar.show{transform:translateX(-50%) translateY(0);pointer-events:all;opacity:1}
 .ib-title{font-size:.58rem;letter-spacing:.2em;color:rgba(0,200,200,.9);text-transform:uppercase;text-align:center;margin-bottom:12px;font-weight:500}
@@ -127,31 +124,31 @@ body.editmode .sticker-item{pointer-events:all}
 .ib-range{flex:1;-webkit-appearance:none;appearance:none;height:3px;background:rgba(255,255,255,.12);border-radius:99px;outline:none;cursor:pointer}
 .ib-range::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--pink);box-shadow:0 0 6px var(--gp);cursor:pointer}
 .ib-val{font-size:.5rem;color:var(--muted);width:28px;text-align:right}
-.ib-actions{display:flex;gap:8px;justify-content:center;margin-top:10px}
-.ib-save{background:linear-gradient(135deg,rgba(0,200,200,.3),rgba(124,106,154,.3));border:1px solid rgba(0,200,200,.5);color:#80ffff;font-family:'Poppins',sans-serif;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;padding:7px 18px;border-radius:99px;cursor:pointer;transition:all .3s}
+.ib-actions{display:flex;gap:6px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+.ib-save{background:linear-gradient(135deg,rgba(0,200,200,.3),rgba(124,106,154,.3));border:1px solid rgba(0,200,200,.5);color:#80ffff;font-family:'Poppins',sans-serif;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;padding:7px 15px;border-radius:99px;cursor:pointer;transition:all .3s}
 .ib-save:hover{background:rgba(0,200,200,.4)}
+.ib-save.danger{background:rgba(200,20,60,.2)!important;border-color:rgba(200,20,60,.55)!important;color:#ff9090!important}
+.ib-save.danger:hover{background:rgba(200,20,60,.38)!important}
 .ib-cancel{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--muted2);font-family:'Poppins',sans-serif;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;padding:7px 14px;border-radius:99px;cursor:pointer}
 .ib-sep{height:1px;background:rgba(255,255,255,.07);margin:8px 0}
 .ib-cover-only{display:none}.ib-cover-only.visible{display:flex}
-
-/* STICKER EDIT BAR */
-#stickerEditBar{position:fixed;bottom:60px;right:14px;z-index:50;background:rgba(3,0,10,.96);border:1px solid rgba(255,45,120,.4);border-radius:18px;padding:14px 18px;width:265px;max-width:88vw;backdrop-filter:blur(20px);box-shadow:0 0 35px rgba(255,45,120,.18),0 0 70px rgba(124,106,154,.12);transform:translateY(140px);transition:transform .4s cubic-bezier(.16,1,.3,1),opacity .4s ease;pointer-events:none;opacity:0}
+#stickerEditBar{position:fixed;bottom:60px;right:14px;z-index:50;background:rgba(3,0,10,.96);border:1px solid rgba(255,45,120,.4);border-radius:18px;padding:14px 18px;width:280px;max-width:88vw;backdrop-filter:blur(20px);box-shadow:0 0 35px rgba(255,45,120,.18),0 0 70px rgba(124,106,154,.12);transform:translateY(140px);transition:transform .4s cubic-bezier(.16,1,.3,1),opacity .4s ease;pointer-events:none;opacity:0}
 #stickerEditBar.show{transform:translateY(0);pointer-events:all;opacity:1}
-
-#controls{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:96vw;opacity:0;transition:opacity .8s ease 2.2s}
+#controls{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:4px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:96vw;opacity:0;transition:opacity .8s ease 2.2s}
 #controls.show{opacity:1}
-.cb{background:rgba(255,45,120,.11);border:1px solid rgba(255,45,120,.36);color:var(--text);font-family:'Poppins',sans-serif;font-size:.51rem;letter-spacing:.1em;text-transform:uppercase;padding:6px 11px;border-radius:99px;cursor:pointer;backdrop-filter:blur(12px);transition:all .3s ease;white-space:nowrap;display:flex;align-items:center;gap:4px}
+.cb{background:rgba(255,45,120,.11);border:1px solid rgba(255,45,120,.36);color:var(--text);font-family:'Poppins',sans-serif;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;padding:6px 9px;border-radius:99px;cursor:pointer;backdrop-filter:blur(12px);transition:all .3s ease;white-space:nowrap;display:flex;align-items:center;gap:4px}
 .cb:hover{background:rgba(255,45,120,.25);box-shadow:0 0 16px var(--gp);transform:translateY(-2px)}.cb.on{background:rgba(255,45,120,.30);box-shadow:0 0 16px var(--gp)}
 .cb.green{background:rgba(80,220,120,.08);border-color:rgba(80,220,120,.3);color:#90ffb0}.cb.green:hover{background:rgba(80,220,120,.2)}
 .cb.pur{background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.32);color:var(--pu3)}.cb.pur:hover{background:rgba(168,85,247,.22)}
 .cb.amber{background:rgba(255,200,0,.08);border-color:rgba(255,200,0,.28);color:#ffd966}.cb.amber:hover{background:rgba(255,200,0,.2)}.cb.amber.active{background:rgba(255,200,0,.22);box-shadow:0 0 16px rgba(255,200,0,.4)}
 .cb.teal{background:rgba(0,200,200,.08);border-color:rgba(0,200,200,.28);color:#80ffff}.cb.teal:hover{background:rgba(0,200,200,.2)}
+.cb.dim{opacity:.3;pointer-events:none}
 #viz{display:flex;gap:2px;align-items:flex-end;height:16px}
 .vb{width:3px;border-radius:2px;background:linear-gradient(to top,var(--pink),var(--pu3));height:4px;opacity:.3}
 .vb.on{opacity:1;animation:vbA .5s ease-in-out infinite alternate}
 .vb:nth-child(1){animation-delay:0s}.vb:nth-child(2){animation-delay:.1s}.vb:nth-child(3){animation-delay:.2s}.vb:nth-child(4){animation-delay:.3s}.vb:nth-child(5){animation-delay:.15s}.vb:nth-child(6){animation-delay:.08s}
 @keyframes vbA{0%{height:4px}100%{height:16px}}
-#musicInfo{font-size:.47rem;letter-spacing:.08em;color:var(--muted2);max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#musicInfo{font-size:.47rem;letter-spacing:.08em;color:var(--muted2);max-width:75px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .navbtn{position:fixed;top:50%;transform:translateY(-50%);z-index:20;background:rgba(255,45,120,.1);border:1px solid rgba(255,45,120,.28);color:var(--pink);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1.15rem;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);transition:all .3s ease;opacity:0}
 .navbtn.show{opacity:1}.navbtn:hover{background:rgba(255,45,120,.28);box-shadow:0 0 18px var(--gp)}
 #navL{left:12px}#navR{right:12px}
@@ -170,7 +167,7 @@ body.editmode .sticker-item{pointer-events:all}
 .modal-overlay.open{opacity:1;visibility:visible}
 .modal-box{max-width:460px;width:92%;padding:38px 28px;border-radius:22px;box-shadow:0 0 65px var(--gp),0 0 130px var(--gpu)}
 #pwModal .modal-box{border:1px solid rgba(255,200,0,.28);background:rgba(255,200,0,.04);text-align:center}
-.pw-title{font-family:'Dancing Script',cursive;font-size:1.7rem;background:linear-gradient(135deg,var(--gold),var(--ps));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.pw-title{font-family:var(--font-script);font-size:1.7rem;background:linear-gradient(135deg,var(--gold),var(--ps));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
 .pw-sub{font-size:.6rem;letter-spacing:.14em;color:var(--muted2);margin-bottom:22px;text-transform:uppercase}
 .pw-inp{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,200,0,.3);color:var(--text);font-family:'Poppins',sans-serif;font-size:1.4rem;letter-spacing:.35em;text-align:center;padding:12px;border-radius:12px;outline:none;margin-bottom:16px}
 .pw-inp:focus{border-color:var(--gold);box-shadow:0 0 12px rgba(255,200,0,.2)}
@@ -179,7 +176,7 @@ body.editmode .sticker-item{pointer-events:all}
 .pw-ok{background:linear-gradient(135deg,var(--gold),#e09000);border:none;color:#000;font-family:'Poppins',sans-serif;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;padding:10px 24px;border-radius:99px;cursor:pointer}
 .pw-cancel{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:var(--muted);font-family:'Poppins',sans-serif;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;padding:10px 18px;border-radius:99px;cursor:pointer}
 #gotoModal .modal-box{border:1px solid rgba(168,85,247,.28);background:rgba(168,85,247,.05);text-align:center}
-.goto-title{font-family:'Dancing Script',cursive;font-size:1.6rem;background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.goto-title{font-family:var(--font-script);font-size:1.6rem;background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
 .goto-sub{font-size:.58rem;color:var(--muted2);margin-bottom:20px;letter-spacing:.12em;text-transform:uppercase}
 .goto-input{width:110px;background:rgba(255,255,255,.07);border:1px solid rgba(168,85,247,.35);color:var(--text);font-family:'Poppins',sans-serif;font-size:1.5rem;font-weight:300;text-align:center;padding:12px;border-radius:12px;outline:none;margin-bottom:16px}
 .goto-range{font-size:.56rem;color:var(--muted2);margin-bottom:16px}
@@ -187,12 +184,12 @@ body.editmode .sticker-item{pointer-events:all}
 .goto-go{background:linear-gradient(135deg,var(--pink),var(--pu2));border:none;color:#fff;font-family:'Poppins',sans-serif;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;padding:10px 24px;border-radius:99px;cursor:pointer;box-shadow:0 0 14px var(--gp)}
 .goto-cancel,.add-cancel,.mp-cancel,.sk-cancel{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:var(--muted);font-family:'Poppins',sans-serif;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;padding:10px 18px;border-radius:99px;cursor:pointer}
 #secret .modal-box{border:1px solid rgba(255,45,120,.28);background:rgba(255,45,120,.04);text-align:center}
-.sc-ico{font-size:3rem;margin-bottom:12px}.sc-title{font-family:'Dancing Script',cursive;font-size:1.9rem;background:linear-gradient(135deg,var(--pink),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:14px}
+.sc-ico{font-size:3rem;margin-bottom:12px}.sc-title{font-family:var(--font-script);font-size:1.9rem;background:linear-gradient(135deg,var(--pink),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:14px}
 .sc-body{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.98rem;line-height:1.9;color:var(--muted);margin-bottom:22px}
 .sc-body strong{background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-style:normal;font-weight:400}
 .sc-close{background:linear-gradient(135deg,var(--pink),var(--pu2));border:none;color:#fff;font-family:'Poppins',sans-serif;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;padding:10px 24px;border-radius:99px;cursor:pointer}
 #musicPanel .modal-box{border:1px solid rgba(168,85,247,.3);background:rgba(168,85,247,.05);text-align:center}
-.mp-title{font-family:'Dancing Script',cursive;font-size:1.6rem;background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px}
+.mp-title{font-family:var(--font-script);font-size:1.6rem;background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px}
 .mp-sub{font-size:.56rem;letter-spacing:.13em;color:var(--muted2);margin-bottom:20px;text-transform:uppercase}
 .mp-upload-area{border:2px dashed rgba(168,85,247,.35);border-radius:14px;padding:24px 14px;cursor:pointer;transition:all .3s;background:rgba(168,85,247,.04);position:relative;margin-bottom:14px}
 .mp-upload-area:hover{border-color:var(--pink)}.mp-upload-area input{position:absolute;inset:0;opacity:0;cursor:pointer}
@@ -204,7 +201,7 @@ body.editmode .sticker-item{pointer-events:all}
 .mp-save,.add-save{background:linear-gradient(135deg,var(--pink),var(--pu2));border:none;color:#fff;font-family:'Poppins',sans-serif;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;padding:10px 22px;border-radius:99px;cursor:pointer;box-shadow:0 0 18px var(--gp)}
 #addPanel .modal-box{border:1px solid rgba(168,85,247,.28);background:linear-gradient(155deg,#150024,#090013);max-height:90vh;overflow-y:auto;padding:28px 22px}
 #addPanel .modal-box::-webkit-scrollbar{width:3px}#addPanel .modal-box::-webkit-scrollbar-thumb{background:var(--pu);border-radius:2px}
-.add-title{font-family:'Dancing Script',cursive;font-size:1.6rem;background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:4px}
+.add-title{font-family:var(--font-script);font-size:1.6rem;background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:4px}
 .add-sub{font-size:.56rem;letter-spacing:.12em;color:var(--muted2);text-align:center;margin-bottom:18px;text-transform:uppercase}
 .add-tabs{display:flex;gap:6px;margin-bottom:16px;justify-content:center;flex-wrap:wrap}
 .add-tab{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--muted);font-family:'Poppins',sans-serif;font-size:.5rem;letter-spacing:.11em;text-transform:uppercase;padding:5px 12px;border-radius:99px;cursor:pointer;transition:all .3s ease}
@@ -222,29 +219,28 @@ body.editmode .sticker-item{pointer-events:all}
 .add-actions{margin-top:16px}
 .page-list{margin-top:4px}
 .page-item{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid rgba(168,85,247,.11);margin-bottom:6px;cursor:grab;user-select:none;transition:all .2s;position:relative}
-.page-item:active{cursor:grabbing}.page-item.dragging{opacity:.4;border-color:var(--pink);transform:scale(.97)}.page-item.drag-over{border-color:var(--pink);background:rgba(255,45,120,.1);transform:translateY(-2px);box-shadow:0 4px 18px var(--gp)}.page-item.fixed-page{cursor:default;opacity:.65}
-.pi-drag{font-size:.8rem;color:var(--muted2);flex-shrink:0;cursor:grab}.fixed-page .pi-drag{cursor:default;opacity:.3}
+.page-item:active{cursor:grabbing}.page-item.dragging{opacity:.4;border-color:var(--pink)}.page-item.drag-over{border-color:var(--pink);background:rgba(255,45,120,.1)}.page-item.fixed-page{cursor:default;opacity:.65}
+.pi-drag{font-size:.8rem;color:var(--muted2);flex-shrink:0}.fixed-page .pi-drag{cursor:default;opacity:.3}
 .pi-num{font-size:.5rem;color:var(--pu3);min-width:20px}.pi-title{flex:1;font-size:.64rem;color:var(--text)}.pi-type{font-size:.45rem;color:var(--muted2);text-transform:uppercase}
 .pi-del{background:rgba(255,45,120,.12);border:1px solid rgba(255,45,120,.2);color:var(--pink);width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:.6rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}.pi-del:hover{background:rgba(255,45,120,.3)}
 .pi-dup{background:rgba(124,106,154,.12);border:1px solid rgba(124,106,154,.2);color:var(--pu3);width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:.6rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:2px}.pi-dup:hover{background:rgba(124,106,154,.3)}
 .reorder-hint{font-size:.51rem;color:var(--muted2);text-align:center;padding:6px;border:1px dashed rgba(168,85,247,.2);border-radius:8px;margin-bottom:10px}
 #stickerPanel .modal-box{border:1px solid rgba(0,200,200,.28);background:rgba(0,200,200,.04);text-align:center}
-.sk-title{font-family:'Dancing Script',cursive;font-size:1.5rem;background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px}
+.sk-title{font-family:var(--font-script);font-size:1.5rem;background:linear-gradient(135deg,var(--ps),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px}
 .sk-sub{font-size:.56rem;letter-spacing:.13em;color:var(--muted2);margin-bottom:18px;text-transform:uppercase}
 .sk-grid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:18px}
 .sk-btn{width:44px;height:44px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);font-size:1.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .sk-btn:hover{border-color:var(--pink);transform:scale(1.2);background:rgba(255,45,120,.1)}
 .sk-upload{border:2px dashed rgba(168,85,247,.3);border-radius:10px;padding:12px;margin-bottom:14px;position:relative;cursor:pointer;transition:border-color .3s}.sk-upload:hover{border-color:var(--pink)}.sk-upload input{position:absolute;inset:0;opacity:0;cursor:pointer}.sk-upload-label{font-size:.58rem;color:var(--muted2)}
-@media(max-width:720px){:root{--pw:min(44vw,200px);--ph:min(70vw,350px)}.cb{font-size:.46rem;padding:5px 8px}#navL{left:4px}#navR{right:4px}#imgEditBar{min-width:88vw}}
-@media(max-width:480px){:root{--pw:min(86vw,320px);--ph:470px}#book{width:var(--pw)}#rPanel{display:none}#lPanel{border-radius:10px}#book::after{display:none}#controls{bottom:10px;gap:4px}#addPanel .modal-box{padding:18px 14px}}
+@media(max-width:720px){:root{--pw:min(44vw,200px);--ph:min(70vw,350px)}.cb{font-size:.44rem;padding:5px 7px}#navL{left:4px}#navR{right:4px}#imgEditBar{min-width:88vw}}
+@media(max-width:480px){:root{--pw:min(86vw,320px);--ph:470px}#book{width:var(--pw)}#rPanel{display:none}#lPanel{border-radius:10px}#book::after{display:none}#controls{bottom:10px;gap:3px}#addPanel .modal-box{padding:18px 14px}}
 </style>
 </head>
 <body>
 <canvas id="bgCanvas"></canvas>
 <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
-<div id="editBanner">✏️ &nbsp;Edit Mode — click any text to edit · click stickers to resize &nbsp;|&nbsp; <strong>"Edit 🔒" to lock</strong></div>
+<div id="editBanner">✏️ &nbsp;Edit Mode — click any text to edit · tap sticker to resize/delete &nbsp;|&nbsp; <strong>"Edit 🔒" to lock</strong></div>
 <div id="syncDot"></div>
-
 <div id="loader">
   <div class="ld-heart">💖</div>
   <div class="ld-title">Radwa &amp; Nour ❤️</div>
@@ -252,61 +248,29 @@ body.editmode .sticker-item{pointer-events:all}
   <div class="ld-track"><div class="ld-fill" id="ldFill"></div></div>
   <div class="ld-hint" id="ldHint">Connecting ☁️</div>
 </div>
-
-<!-- IMAGE EDITOR BAR -->
 <div id="imgEditBar">
-  <div class="ib-title">📷 Image Editor — drag sliders to adjust</div>
-  <div class="ib-row">
-    <span class="ib-lbl">Zoom</span>
-    <input type="range" class="ib-range" id="ibZoom" min="0.6" max="3" step="0.05" value="1" oninput="imgEditApply()">
-    <span class="ib-val" id="ibZoomVal">1×</span>
-  </div>
-  <div class="ib-row">
-    <span class="ib-lbl">Move X</span>
-    <input type="range" class="ib-range" id="ibPosX" min="0" max="100" step="1" value="50" oninput="imgEditApply()">
-    <span class="ib-val" id="ibPosXVal">50%</span>
-  </div>
-  <div class="ib-row">
-    <span class="ib-lbl">Move Y</span>
-    <input type="range" class="ib-range" id="ibPosY" min="0" max="100" step="1" value="50" oninput="imgEditApply()">
-    <span class="ib-val" id="ibPosYVal">50%</span>
-  </div>
+  <div class="ib-title">📷 Image Editor</div>
+  <div class="ib-row"><span class="ib-lbl">Zoom</span><input type="range" class="ib-range" id="ibZoom" min="0.6" max="3" step="0.05" value="1" oninput="imgEditApply()"><span class="ib-val" id="ibZoomVal">1×</span></div>
+  <div class="ib-row"><span class="ib-lbl">Move X</span><input type="range" class="ib-range" id="ibPosX" min="0" max="100" step="1" value="50" oninput="imgEditApply()"><span class="ib-val" id="ibPosXVal">50%</span></div>
+  <div class="ib-row"><span class="ib-lbl">Move Y</span><input type="range" class="ib-range" id="ibPosY" min="0" max="100" step="1" value="50" oninput="imgEditApply()"><span class="ib-val" id="ibPosYVal">50%</span></div>
   <div class="ib-sep"></div>
-  <div class="ib-row ib-cover-only" id="ibCoverRow">
-    <span class="ib-lbl">Size</span>
-    <input type="range" class="ib-range" id="ibCoverSize" min="60" max="200" step="4" value="116" oninput="imgEditCoverSize()">
-    <span class="ib-val" id="ibSizeVal">116</span>
-  </div>
-  <div class="ib-actions">
-    <button class="ib-save" onclick="imgEditSave()">☁️ Save Changes</button>
-    <button class="ib-cancel" onclick="imgEditCancel()">✕ Cancel</button>
-  </div>
+  <div class="ib-row ib-cover-only" id="ibCoverRow"><span class="ib-lbl">Size</span><input type="range" class="ib-range" id="ibCoverSize" min="60" max="200" step="4" value="116" oninput="imgEditCoverSize()"><span class="ib-val" id="ibSizeVal">116</span></div>
+  <div class="ib-actions"><button class="ib-save" onclick="imgEditSave()">☁️ Save</button><button class="ib-cancel" onclick="imgEditCancel()">✕ Cancel</button></div>
 </div>
-
-<!-- STICKER EDIT BAR -->
 <div id="stickerEditBar">
   <div class="ib-title">🌸 Sticker — Size &amp; Rotation</div>
-  <div class="ib-row">
-    <span class="ib-lbl">Size</span>
-    <input type="range" class="ib-range" id="stickerScale" min="0.2" max="5" step="0.1" value="1" oninput="stickerEditApply()">
-    <span class="ib-val" id="stickerScaleVal">1×</span>
-  </div>
-  <div class="ib-row">
-    <span class="ib-lbl">Rotate</span>
-    <input type="range" class="ib-range" id="stickerRot" min="-180" max="180" step="5" value="0" oninput="stickerEditApply()">
-    <span class="ib-val" id="stickerRotVal">0°</span>
-  </div>
+  <div class="ib-row"><span class="ib-lbl">Size</span><input type="range" class="ib-range" id="stickerScale" min="0.2" max="5" step="0.1" value="1" oninput="stickerEditApply()"><span class="ib-val" id="stickerScaleVal">1×</span></div>
+  <div class="ib-row"><span class="ib-lbl">Rotate</span><input type="range" class="ib-range" id="stickerRot" min="-180" max="180" step="5" value="0" oninput="stickerEditApply()"><span class="ib-val" id="stickerRotVal">0°</span></div>
   <div class="ib-actions">
     <button class="ib-save" onclick="stickerEditSave()">☁️ Save</button>
+    <button class="ib-save danger" onclick="deleteStickerFromBar()">🗑️ Delete</button>
     <button class="ib-cancel" onclick="stickerEditCancel()">✕ Cancel</button>
   </div>
 </div>
-
 <div id="toast"><span id="toastIco">♪</span><span id="toastMsg">–</span></div>
 <div id="pgCtr" title="Click to jump to page">Page <span id="pgNum">1</span> / <span id="pgTotal">–</span></div>
 <button class="navbtn" id="navL">‹</button>
 <button class="navbtn" id="navR">›</button>
-
 <div id="scene">
   <div id="bookOuter">
     <div id="book">
@@ -315,7 +279,6 @@ body.editmode .sticker-item{pointer-events:all}
     </div>
   </div>
 </div>
-
 <div id="controls">
   <div id="viz"><div class="vb"></div><div class="vb"></div><div class="vb"></div><div class="vb"></div><div class="vb"></div><div class="vb"></div></div>
   <div id="musicInfo">No music</div>
@@ -326,109 +289,27 @@ body.editmode .sticker-item{pointer-events:all}
   <button class="cb" id="btnSecret">🔐 Secret</button>
   <button class="cb green" id="btnAddPage">✚ Add Page</button>
   <button class="cb teal" id="btnSticker">🌸 Stickers</button>
+  <button class="cb" id="btnZoomOut" title="Shrink book">📖−</button>
+  <button class="cb" id="btnZoomIn" title="Enlarge book">📖+</button>
+  <button class="cb dim" id="btnUndo" title="Nothing to undo">↩ Undo</button>
+  <button class="cb teal" id="btnTheme">🎨 Theme</button>
   <button class="cb amber" id="btnEdit">✏️ Edit 🔒</button>
 </div>
-
-<!-- MODALS -->
-<div class="modal-overlay" id="pwModal">
-  <div class="modal-box">
-    <div class="pw-title">🔐 Edit Mode</div>
-    <div class="pw-sub">Enter password to unlock editing</div>
-    <input class="pw-inp" id="pwInput" type="password" placeholder="••••" maxlength="10" onkeydown="if(event.key==='Enter')checkPw()">
-    <div class="pw-err" id="pwErr"></div>
-    <div class="pw-actions">
-      <button class="pw-ok" onclick="checkPw()">Unlock ✦</button>
-      <button class="pw-cancel" onclick="closeModal('pwModal')">Cancel</button>
-    </div>
-  </div>
-</div>
-<div class="modal-overlay" id="gotoModal">
-  <div class="modal-box">
-    <div class="goto-title">Go to Page ✦</div>
-    <div class="goto-sub">اذهبي لأي صفحة مباشرة</div>
-    <input class="goto-input" id="gotoInput" type="number" min="1" placeholder="–" onkeydown="if(event.key==='Enter')doGoto()">
-    <div class="goto-range" id="gotoRange">Pages 1 – ?</div>
-    <div class="goto-actions">
-      <button class="goto-go" onclick="doGoto()">Go ›</button>
-      <button class="goto-cancel" onclick="closeModal('gotoModal')">Cancel</button>
-    </div>
-  </div>
-</div>
-<div class="modal-overlay" id="secret">
-  <div class="modal-box">
-    <div class="sc-ico">💌</div>
-    <div class="sc-title" id="scTitle" contenteditable="false">Only For You, Radwa</div>
-    <div class="sc-body" id="scBody" contenteditable="false">In every universe that has ever existed —<br>in every lifetime that could ever be lived —<br><br>I would search through all of it just to find you again.<br><br>You are not just my best friend.<br>You are the reason I believe that<br><strong>some bonds are written before birth.</strong><br><br>Happy Birthday, Radwa. I love you endlessly. 🌸</div>
-    <div id="scEditHint" style="display:none;font-size:.5rem;color:var(--gold);letter-spacing:.12em;margin-bottom:12px;text-align:center">✏️ Click text above to edit it</div>
-    <button class="sc-close" onclick="closeModal('secret')">Close with love ✕</button>
-  </div>
-</div>
-<div class="modal-overlay" id="musicPanel">
-  <div class="modal-box">
-    <div class="mp-title">🎵 Upload Your Song</div>
-    <div class="mp-sub">بتتحفظ على السحابة</div>
-    <div id="currentSongDisplay">🎵 No song saved yet</div>
-    <div class="mp-cloud-badge" id="cloudBadge">☁️ Song saved — plays on all devices</div>
-    <div class="mp-upload-area"><span class="mp-icon">🎶</span><div class="mp-txt">Click to upload (MP3, M4A…)<span>الملف لازم أقل من 5 MB</span></div><input type="file" accept="audio/*" id="songFileInput"></div>
-    <div class="mp-note">💡 <a href="https://ytmp3.cc" target="_blank">ytmp3.cc</a> لتحويل اليوتيوب</div>
-    <div class="mp-actions"><button class="mp-save" onclick="saveSong()">☁️ Save to Cloud</button><button class="mp-cancel" onclick="closeModal('musicPanel')">Cancel</button></div>
-  </div>
-</div>
-<div class="modal-overlay" id="addPanel">
-  <div class="modal-box">
-    <div class="add-title">✦ Add a New Page</div>
-    <div class="add-sub">Saved to cloud — visible on all devices forever</div>
-    <div class="add-tabs">
-      <button class="add-tab active" onclick="switchTab('memory',this)">📸 Memory</button>
-      <button class="add-tab" onclick="switchTab('poetry',this)">🌸 Poetry</button>
-      <button class="add-tab" onclick="switchTab('custom',this)">✨ Custom</button>
-      <button class="add-tab" onclick="switchTab('manage',this)">📋 Manage</button>
-    </div>
-    <div id="tab-memory">
-      <div class="fg"><label>Title</label><input id="inp-title" type="text" maxlength="55" placeholder="e.g. That Night We Danced"></div>
-      <div class="fg"><label>Date / Caption</label><input id="inp-date" type="text" maxlength="65" placeholder="e.g. Summer 2024"></div>
-      <div class="fg"><label>Memory Text</label><textarea id="inp-text" placeholder="Write your memory… ❤️"></textarea></div>
-      <div class="fg"><label>Emoji</label><div class="emoji-row" id="emojiRow"></div><input id="inp-emoji-custom" type="text" placeholder="Or type emoji…" maxlength="8" style="margin-top:6px"></div>
-      <div class="fg"><label>Photo or Video (max 20MB)</label><div class="media-upload" id="mediaUploadBox"><div class="ico">📷/🎬</div><span>Click to upload</span><input type="file" accept="image/*,video/*" id="mediaInput"></div></div>
-      <div class="add-actions"><button class="add-save" onclick="saveMemory()">☁️ Save Page</button><button class="add-cancel" onclick="closeModal('addPanel')">Cancel</button></div>
-    </div>
-    <div id="tab-poetry" style="display:none">
-      <div class="fg"><label>Label</label><input id="po-label" type="text" maxlength="30" placeholder="V. Stars"></div>
-      <div class="fg"><label>Poem — [word]=pink · *word*=gold</label><textarea id="po-text" style="min-height:100px" placeholder="Write your poem…"></textarea></div>
-      <div class="fg"><label>Ornament</label><select id="po-orn"><option value="❧">❧</option><option value="✦">✦</option><option value="🌸">🌸</option><option value="♡">♡</option></select></div>
-      <div class="add-actions"><button class="add-save" onclick="savePoetry()">☁️ Save Poem</button><button class="add-cancel" onclick="closeModal('addPanel')">Cancel</button></div>
-    </div>
-    <div id="tab-custom" style="display:none">
-      <div class="fg"><label>Page Title</label><input id="cu-title" type="text" maxlength="55" placeholder="My special page…"></div>
-      <div class="fg"><label>Content / Message</label><textarea id="cu-body" style="min-height:90px" placeholder="Write anything…"></textarea></div>
-      <div class="fg"><label>Image (optional)</label><div class="media-upload" id="cuMediaBox"><div class="ico">📷</div><span>Click to add image</span><input type="file" accept="image/*" id="cuMediaInput"></div></div>
-      <div class="fg"><label>Background</label><select id="cu-bg"><option value="dark">Dark Purple</option><option value="rose">Deep Rose</option><option value="night">Midnight</option></select></div>
-      <div class="add-actions"><button class="add-save" onclick="saveCustom()">☁️ Save Page</button><button class="add-cancel" onclick="closeModal('addPanel')">Cancel</button></div>
-    </div>
-    <div id="tab-manage" style="display:none">
-      <div class="reorder-hint">⠿ اسحبي الصفحات لترتيبها — Drag to reorder</div>
-      <div class="page-list" id="pageListWrap"></div>
-      <div style="text-align:center;margin-top:12px"><button class="add-cancel" onclick="closeModal('addPanel')">Done ✓</button></div>
-    </div>
-  </div>
-</div>
-<div class="modal-overlay" id="stickerPanel">
-  <div class="modal-box">
-    <div class="sk-title">🌸 Add Sticker</div>
-    <div class="sk-sub">Pick one — goes on the current page · tap sticker to resize</div>
-    <div class="sk-grid" id="stickerGrid"></div>
-    <div class="sk-upload"><div class="sk-upload-label">📷 Upload custom sticker image</div><input type="file" accept="image/*" id="stickerUploadInput"></div>
-    <button class="sk-cancel" onclick="closeModal('stickerPanel')">Cancel</button>
-  </div>
-</div>
-
+<div class="modal-overlay" id="pwModal"><div class="modal-box"><div class="pw-title">🔐 Edit Mode</div><div class="pw-sub">Enter password to unlock editing</div><input class="pw-inp" id="pwInput" type="password" placeholder="••••" maxlength="10" onkeydown="if(event.key==='Enter')checkPw()"><div class="pw-err" id="pwErr"></div><div class="pw-actions"><button class="pw-ok" onclick="checkPw()">Unlock ✦</button><button class="pw-cancel" onclick="closeModal('pwModal')">Cancel</button></div></div></div>
+<div class="modal-overlay" id="themePwModal"><div class="modal-box" style="border:1px solid rgba(0,200,200,.28);background:rgba(0,200,200,.04);text-align:center"><div style="font-family:var(--font-script);font-size:1.7rem;background:linear-gradient(135deg,#00c8c8,var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px">🎨 Theme Studio</div><div class="pw-sub">Enter password to customize</div><input class="pw-inp" id="themePwInput" type="password" placeholder="••••" maxlength="10" style="border-color:rgba(0,200,200,.35)" onkeydown="if(event.key==='Enter')checkThemePw()"><div class="pw-err" id="themePwErr"></div><div class="pw-actions"><button class="pw-ok" style="background:linear-gradient(135deg,#00aaa0,#5a4d7a);color:#fff" onclick="checkThemePw()">Unlock ✦</button><button class="pw-cancel" onclick="closeModal('themePwModal')">Cancel</button></div></div></div>
+<div class="modal-overlay" id="themePanel"><div class="modal-box" style="border:1px solid rgba(0,200,200,.28);background:rgba(3,0,15,.98);max-height:88vh;overflow-y:auto;max-width:500px;width:94%;padding:24px 18px"><div style="font-family:var(--font-script);font-size:1.7rem;background:linear-gradient(135deg,#00c8c8,var(--ps));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:4px">🎨 Theme Studio</div><div style="font-size:.52rem;letter-spacing:.16em;color:var(--muted2);text-align:center;margin-bottom:16px;text-transform:uppercase">Colors &amp; Fonts · لوحة التخصيص</div><div style="font-size:.5rem;letter-spacing:.14em;color:#80ffff;text-transform:uppercase;margin-bottom:10px">🎨 Color Presets</div><div id="colorPresets" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px;justify-content:center"></div><div style="font-size:.5rem;letter-spacing:.14em;color:#80ffff;text-transform:uppercase;margin-bottom:8px">✏️ Custom Colors</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px"><div class="fg"><label>Main Color</label><input type="color" id="tc-pink" value="#c8788a" style="width:100%;height:34px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:8px;cursor:pointer;padding:3px" oninput="previewCustomTheme()"></div><div class="fg"><label>Accent Color</label><input type="color" id="tc-purple" value="#7c6a9a" style="width:100%;height:34px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:8px;cursor:pointer;padding:3px" oninput="previewCustomTheme()"></div><div class="fg"><label>Gold/Highlight</label><input type="color" id="tc-gold" value="#c8a96e" style="width:100%;height:34px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:8px;cursor:pointer;padding:3px" oninput="previewCustomTheme()"></div><div class="fg"><label>Background</label><input type="color" id="tc-bg" value="#05040a" style="width:100%;height:34px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:8px;cursor:pointer;padding:3px" oninput="previewCustomTheme()"></div></div><div style="font-size:.5rem;letter-spacing:.14em;color:#80ffff;text-transform:uppercase;margin-bottom:10px">✦ Heading Font</div><div id="fontOptions" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;justify-content:center"></div><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button onclick="saveTheme()" style="background:linear-gradient(135deg,rgba(0,200,200,.3),rgba(124,106,154,.3));border:1px solid rgba(0,200,200,.5);color:#80ffff;font-family:'Poppins',sans-serif;font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 18px;border-radius:99px;cursor:pointer">☁️ Apply &amp; Save</button><button onclick="resetTheme()" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:var(--muted2);font-family:'Poppins',sans-serif;font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 14px;border-radius:99px;cursor:pointer">↩ Reset</button><button onclick="closeModal('themePanel')" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:var(--muted2);font-family:'Poppins',sans-serif;font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 14px;border-radius:99px;cursor:pointer">✕ Close</button></div></div></div>
+<div class="modal-overlay" id="gotoModal"><div class="modal-box"><div class="goto-title">Go to Page ✦</div><div class="goto-sub">اذهبي لأي صفحة مباشرة</div><input class="goto-input" id="gotoInput" type="number" min="1" placeholder="–" onkeydown="if(event.key==='Enter')doGoto()"><div class="goto-range" id="gotoRange">Pages 1 – ?</div><div class="goto-actions"><button class="goto-go" onclick="doGoto()">Go ›</button><button class="goto-cancel" onclick="closeModal('gotoModal')">Cancel</button></div></div></div>
+<div class="modal-overlay" id="secret"><div class="modal-box"><div class="sc-ico">💌</div><div class="sc-title" id="scTitle" contenteditable="false">Only For You, Radwa</div><div class="sc-body" id="scBody" contenteditable="false">In every universe that has ever existed —<br>in every lifetime that could ever be lived —<br><br>I would search through all of it just to find you again.<br><br>You are not just my best friend.<br>You are the reason I believe that<br><strong>some bonds are written before birth.</strong><br><br>Happy Birthday, Radwa. I love you endlessly. 🌸</div><div id="scEditHint" style="display:none;font-size:.5rem;color:var(--gold);letter-spacing:.12em;margin-bottom:12px;text-align:center">✏️ Click text above to edit it</div><button class="sc-close" onclick="closeModal('secret')">Close with love ✕</button></div></div>
+<div class="modal-overlay" id="musicPanel"><div class="modal-box"><div class="mp-title">🎵 Upload Your Song</div><div class="mp-sub">بتتحفظ على السحابة</div><div id="currentSongDisplay">🎵 No song saved yet</div><div class="mp-cloud-badge" id="cloudBadge">☁️ Song saved — plays on all devices</div><div class="mp-upload-area"><span class="mp-icon">🎶</span><div class="mp-txt">Click to upload (MP3, M4A…)<span>الملف لازم أقل من 5 MB</span></div><input type="file" accept="audio/*" id="songFileInput"></div><div class="mp-note">💡 <a href="https://ytmp3.cc" target="_blank">ytmp3.cc</a> لتحويل اليوتيوب</div><div class="mp-actions"><button class="mp-save" onclick="saveSong()">☁️ Save to Cloud</button><button class="mp-cancel" onclick="closeModal('musicPanel')">Cancel</button></div></div></div>
+<div class="modal-overlay" id="addPanel"><div class="modal-box"><div class="add-title">✦ Add a New Page</div><div class="add-sub">Saved to cloud — visible on all devices forever</div><div class="add-tabs"><button class="add-tab active" onclick="switchTab('memory',this)">📸 Memory</button><button class="add-tab" onclick="switchTab('poetry',this)">🌸 Poetry</button><button class="add-tab" onclick="switchTab('custom',this)">✨ Custom</button><button class="add-tab" onclick="switchTab('manage',this)">📋 Manage</button></div><div id="tab-memory"><div class="fg"><label>Title</label><input id="inp-title" type="text" maxlength="55" placeholder="e.g. That Night We Danced"></div><div class="fg"><label>Date / Caption</label><input id="inp-date" type="text" maxlength="65" placeholder="e.g. Summer 2024"></div><div class="fg"><label>Memory Text</label><textarea id="inp-text" placeholder="Write your memory… ❤️"></textarea></div><div class="fg"><label>Emoji</label><div class="emoji-row" id="emojiRow"></div><input id="inp-emoji-custom" type="text" placeholder="Or type emoji…" maxlength="8" style="margin-top:6px"></div><div class="fg"><label>Photo or Video (max 20MB)</label><div class="media-upload" id="mediaUploadBox"><div class="ico">📷/🎬</div><span>Click to upload</span><input type="file" accept="image/*,video/*" id="mediaInput"></div></div><div class="add-actions"><button class="add-save" onclick="saveMemory()">☁️ Save Page</button><button class="add-cancel" onclick="closeModal('addPanel')">Cancel</button></div></div><div id="tab-poetry" style="display:none"><div class="fg"><label>Label</label><input id="po-label" type="text" maxlength="30" placeholder="V. Stars"></div><div class="fg"><label>Poem — [word]=pink · *word*=gold</label><textarea id="po-text" style="min-height:100px" placeholder="Write your poem…"></textarea></div><div class="fg"><label>Ornament</label><select id="po-orn"><option value="❧">❧</option><option value="✦">✦</option><option value="🌸">🌸</option><option value="♡">♡</option></select></div><div class="add-actions"><button class="add-save" onclick="savePoetry()">☁️ Save Poem</button><button class="add-cancel" onclick="closeModal('addPanel')">Cancel</button></div></div><div id="tab-custom" style="display:none"><div class="fg"><label>Page Title</label><input id="cu-title" type="text" maxlength="55" placeholder="My special page…"></div><div class="fg"><label>Content / Message</label><textarea id="cu-body" style="min-height:90px" placeholder="Write anything…"></textarea></div><div class="fg"><label>Image (optional)</label><div class="media-upload" id="cuMediaBox"><div class="ico">📷</div><span>Click to add image</span><input type="file" accept="image/*" id="cuMediaInput"></div></div><div class="fg"><label>Background</label><select id="cu-bg"><option value="dark">Dark Purple</option><option value="rose">Deep Rose</option><option value="night">Midnight</option></select></div><div class="add-actions"><button class="add-save" onclick="saveCustom()">☁️ Save Page</button><button class="add-cancel" onclick="closeModal('addPanel')">Cancel</button></div></div><div id="tab-manage" style="display:none"><div class="reorder-hint">⠿ اسحبي الصفحات لترتيبها — Drag to reorder</div><div class="page-list" id="pageListWrap"></div><div style="text-align:center;margin-top:12px"><button class="add-cancel" onclick="closeModal('addPanel')">Done ✓</button></div></div></div></div>
+<div class="modal-overlay" id="stickerPanel"><div class="modal-box"><div class="sk-title">🌸 Add Sticker</div><div class="sk-sub">Pick one — tap sticker to resize or delete</div><div class="sk-grid" id="stickerGrid"></div><div class="sk-upload"><div class="sk-upload-label">📷 Upload custom sticker image</div><input type="file" accept="image/*" id="stickerUploadInput"></div><button class="sk-cancel" onclick="closeModal('stickerPanel')">Cancel</button></div></div>
 <audio id="bgAudio" loop></audio>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script>
 const FB={apiKey:"AIzaSyDqrbZCuaVDZFhYbV-6pfne2wQyJkTRx58",authDomain:"radwa-nour-book.firebaseapp.com",databaseURL:"https://radwa-nour-book-default-rtdb.firebaseio.com",projectId:"radwa-nour-book",storageBucket:"radwa-nour-book.appspot.com",messagingSenderId:"215096507762",appId:"1:215096507762:web:0dc012f9274e91137731eb"};
-const OWNER_EMAIL="nourmessi629@gmail.com",OWNER_PASS="Nour@2767",EDIT_PASSWORD="2767";
+const OWNER_EMAIL="nourmessi629@gmail.com",OWNER_PASS="Nour@2767",EDIT_PASSWORD="2767",THEME_PW="1209";
 firebase.initializeApp(FB);const auth=firebase.auth(),db=firebase.database();
 const REF=p=>db.ref('rnb/'+p);
 async function dbSet(path,val){syncStart();try{await REF(path).set(val);syncDone();}catch(e){if(e.code==='PERMISSION_DENIED'){await signInOwner();await REF(path).set(val);syncDone();}else{showToast('⚠️',e.message);syncDone();}}}
@@ -436,8 +317,6 @@ async function dbRemove(path){syncStart();try{await REF(path).remove();syncDone(
 function syncStart(){document.getElementById('syncDot').className='show syncing';}
 function syncDone(){const d=document.getElementById('syncDot');d.className='show';setTimeout(()=>d.className='',1500);}
 async function signInOwner(){try{await auth.signInWithEmailAndPassword(OWNER_EMAIL,OWNER_PASS);}catch(e){}}
-
-/* ══ DEFAULT CONTENT ══ */
 const MEM_EN=[
   {title:"The First Hello",date:"A day that changed everything",text:"The moment our worlds collided, time decided to slow down — as if the universe itself wanted us to notice each other.",emoji:"👋✨"},
   {title:"Our Favourite Spot",date:"Where hours felt like minutes",text:"That little corner of the world only we knew. We turned the most ordinary places into our own private universe.",emoji:"🌆🌸"},
@@ -465,254 +344,138 @@ const POE_EN=[
   {label:"III. Saved",orn:"🌸",text:"If I could save one fragment\nfrom this entire existence —\none thing to carry into whatever comes next —\n\nit would be the memory of you laughing,\ncompletely free,\n[completely mine to witness.]"},
   {label:"IV. Constant",orn:"♡",text:"They say love is a feeling.\nBut with you, it is a [place] —\na soft, lit room I return to\nno matter how far I wander.\n\nYou are my *constant.*\nYou are my [home.]\nYou are my *everything.*"},
 ];
-
+/* ══ THEME CONSTANTS ══ */
+const THEME_PRESETS=[
+  {id:'default',name:'🌸 Rose Purple',pink:'#c8788a',ps:'#d4909f',pu:'#7c6a9a',pu2:'#5a4d7a',pu3:'#9e8fc0',gold:'#c8a96e',bg:'#05040a'},
+  {id:'ocean',name:'🌊 Ocean Blue',pink:'#4a9eca',ps:'#60b4de',pu:'#2e5c9e',pu2:'#1e3c7e',pu3:'#6ea4d8',gold:'#88c8e8',bg:'#010810'},
+  {id:'forest',name:'🌿 Forest',pink:'#5a9e6a',ps:'#70b880',pu:'#3a7a50',pu2:'#245a38',pu3:'#70b870',gold:'#a8d898',bg:'#020a04'},
+  {id:'golden',name:'✨ Golden',pink:'#d4956a',ps:'#e0b080',pu:'#9e6a4a',pu2:'#7a4a30',pu3:'#c8986a',gold:'#e8d090',bg:'#0a0601'},
+  {id:'lavender',name:'💜 Lavender',pink:'#b888c8',ps:'#c8a0d8',pu:'#8a5aaa',pu2:'#6a3a8a',pu3:'#b0a0cc',gold:'#d8c8e8',bg:'#05030a'},
+  {id:'ruby',name:'❤️ Ruby',pink:'#e05868',ps:'#e87888',pu:'#9e3050',pu2:'#7a2040',pu3:'#c87080',gold:'#e8b090',bg:'#0a0205'},
+];
+const FONT_PRESETS=[
+  {id:'dancing',name:'Dancing Script',family:'Dancing Script'},
+  {id:'great-vibes',name:'Great Vibes',family:'Great Vibes'},
+  {id:'pacifico',name:'Pacifico',family:'Pacifico'},
+  {id:'satisfy',name:'Satisfy',family:'Satisfy'},
+];
+let activeTheme={...THEME_PRESETS[0]},activeFontId='dancing',themeUnlocked=false;
 /* ══ STATE ══ */
-let cloudData={coverPhoto:null,coverSettings:{scale:1,posX:50,posY:50,size:116},songName:'',songData:null,userPages:[],pageOrder:[],memoryMedia:{},editTexts:{},stickers:{}};
+let cloudData={coverPhoto:null,coverSettings:{scale:1,posX:50,posY:50,size:116},songName:'',songData:null,userPages:[],pageOrder:[],memoryMedia:{},editTexts:{},stickers:{},theme:null};
 let BOOK_PAGES=[],spread=0,flipping=false,cdTimer=null,editMode=false,musicOn=false,pendingSongFile=null,addMediaSrc=null,addMediaType='image',cuMediaSrc=null;
-
-/* ══ FIREBASE LOAD ══ */
-async function loadCloudData(){
-  try{
-    const snap=await db.ref('rnb').once('value');mergeSnapshot(snap.val());
-    db.ref('rnb').on('value',s=>{mergeSnapshot(s.val());BOOK_PAGES=buildPages();renderSpread(spread);});
-  }catch(e){showToast('⚠️','Failed to load');}
+/* ══ BOOK SCALE ══ */
+let bookScale=parseFloat(localStorage.getItem('rnb_bookScale')||'1');
+(function(){document.documentElement.style.setProperty('--book-scale',bookScale);})();
+function setBookScale(s){bookScale=Math.max(.4,Math.min(1.8,parseFloat(s.toFixed(2))));document.documentElement.style.setProperty('--book-scale',bookScale);localStorage.setItem('rnb_bookScale',bookScale);showToast('📖','Size: '+Math.round(bookScale*100)+'%');}
+document.getElementById('btnZoomIn').addEventListener('click',()=>setBookScale(bookScale+.1));
+document.getElementById('btnZoomOut').addEventListener('click',()=>setBookScale(bookScale-.1));
+/* ══ UNDO SYSTEM ══ */
+const undoStack=[];
+function pushUndo(type,data){undoStack.push({type,data});if(undoStack.length>25)undoStack.shift();const b=document.getElementById('btnUndo');b.classList.remove('dim');b.title='Undo: '+type.replace(/_/g,' ');}
+function updateUndoBtn(){const b=document.getElementById('btnUndo');if(!undoStack.length){b.classList.add('dim');b.title='Nothing to undo';}else{b.classList.remove('dim');b.title='Undo: '+undoStack[undoStack.length-1].type.replace(/_/g,' ');}}
+async function performUndo(){
+  if(!undoStack.length){showToast('↩','Nothing to undo');return;}
+  const action=undoStack.pop();updateUndoBtn();
+  switch(action.type){
+    case 'sticker_add':{const{sid,stId}=action.data;if(cloudData.stickers[sid])delete cloudData.stickers[sid][stId];await dbRemove('stickers/'+sid+'/'+stId);renderSpread(spread);showToast('↩','Sticker removed');break;}
+    case 'sticker_delete':{const{sid,stId,sticker}=action.data;cloudData.stickers[sid]=cloudData.stickers[sid]||{};cloudData.stickers[sid][stId]=sticker;await dbSet('stickers/'+sid+'/'+stId,sticker);renderSpread(spread);showToast('↩','Sticker restored');break;}
+    case 'sticker_move':{const{sid,stId,oldX,oldY}=action.data;if(cloudData.stickers[sid]&&cloudData.stickers[sid][stId]){cloudData.stickers[sid][stId].x=oldX;cloudData.stickers[sid][stId].y=oldY;await dbSet('stickers/'+sid+'/'+stId,cloudData.stickers[sid][stId]);renderSpread(spread);showToast('↩','Position restored');}break;}
+    case 'sticker_edit':{const{sid,stId,oldScale,oldRotation}=action.data;if(cloudData.stickers[sid]&&cloudData.stickers[sid][stId]){cloudData.stickers[sid][stId].scale=oldScale;cloudData.stickers[sid][stId].rotation=oldRotation;await dbSet('stickers/'+sid+'/'+stId,cloudData.stickers[sid][stId]);renderSpread(spread);showToast('↩','Sticker size restored');}break;}
+    case 'text_edit':{const{key,oldHtml}=action.data;cloudData.editTexts[key]=oldHtml;await dbSet('editTexts/'+key.replace(/\//g,'_'),oldHtml);renderSpread(spread);showToast('↩','Text restored');break;}
+    case 'page_add':{const{pageId}=action.data;const ui=cloudData.userPages.findIndex(x=>x._id===pageId);if(ui>=0){cloudData.userPages.splice(ui,1);await dbRemove('userPages/'+pageId);BOOK_PAGES=buildPages();if(spread>maxSpread())spread=maxSpread();renderSpread(spread);document.getElementById('pgTotal').textContent=TOTAL();showToast('↩','Page removed');}break;}
+    case 'media_upload':{const{mediaKey,oldMedia}=action.data;if(oldMedia){cloudData.memoryMedia[mediaKey]=oldMedia;await dbSet('memoryMedia/'+mediaKey,oldMedia);}else{delete cloudData.memoryMedia[mediaKey];await dbRemove('memoryMedia/'+mediaKey);}renderSpread(spread);showToast('↩','Media reverted');break;}
+  }
 }
+document.getElementById('btnUndo').addEventListener('click',performUndo);
+/* ══ THEME SYSTEM ══ */
+function hexToRgba(hex,a){if(!hex||hex.length<7)return`rgba(200,120,138,${a})`;const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return`rgba(${r},${g},${b},${a})`;}
+function hexAdjust(hex,amt){if(!hex||hex.length<7)return hex;let r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);r=Math.max(0,Math.min(255,r+amt));g=Math.max(0,Math.min(255,g+amt));b=Math.max(0,Math.min(255,b+amt));return'#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('');}
+function applyThemeColors(t){const r=document.documentElement.style;r.setProperty('--pink',t.pink);r.setProperty('--ps',t.ps||hexAdjust(t.pink,18));r.setProperty('--pu',t.pu);r.setProperty('--pu2',t.pu2||hexAdjust(t.pu,-22));r.setProperty('--pu3',t.pu3||hexAdjust(t.pu,22));r.setProperty('--gold',t.gold);r.setProperty('--bg',t.bg);r.setProperty('--gp',hexToRgba(t.pink,.55));r.setProperty('--gpu',hexToRgba(t.pu,.45));document.body.style.background=t.bg;}
+function applyFont(fp){let s=document.getElementById('fontOverrideStyle');if(!s){s=document.createElement('style');s.id='fontOverrideStyle';document.head.appendChild(s);}s.textContent=`.ld-title,.cv-title,.mtitle,.bd-title,.custom-title,.goto-title,.mp-title,.add-title,.sk-title,.intro-title-el,.intro-sig,.sc-title,.po-lbl{font-family:'${fp.family}',cursive!important;}`;activeFontId=fp.id;}
+function loadSavedTheme(){try{const st=localStorage.getItem('rnb_theme');if(st){const t=JSON.parse(st);activeTheme=t;applyThemeColors(t);if(t.fontId){const fp=FONT_PRESETS.find(f=>f.id===t.fontId);if(fp){activeFontId=fp.id;applyFont(fp);}}}}catch(e){}}
+function initThemePanel(){
+  document.getElementById('tc-pink').value=activeTheme.pink||'#c8788a';document.getElementById('tc-purple').value=activeTheme.pu||'#7c6a9a';document.getElementById('tc-gold').value=activeTheme.gold||'#c8a96e';document.getElementById('tc-bg').value=activeTheme.bg||'#05040a';
+  const cp=document.getElementById('colorPresets');cp.innerHTML='';
+  THEME_PRESETS.forEach(t=>{const btn=document.createElement('button');const isA=activeTheme.id===t.id;btn.style.cssText=`width:36px;height:36px;border-radius:50%;background:${t.pink};border:3px solid ${isA?'#fff':'transparent'};cursor:pointer;transition:all .2s;box-shadow:0 0 14px ${t.pink}88;flex-shrink:0;outline:none`;btn.title=t.name;btn.onclick=()=>{activeTheme={...t};document.getElementById('tc-pink').value=t.pink;document.getElementById('tc-purple').value=t.pu;document.getElementById('tc-gold').value=t.gold;document.getElementById('tc-bg').value=t.bg;applyThemeColors(t);initThemePanel();};cp.appendChild(btn);});
+  const fp=document.getElementById('fontOptions');fp.innerHTML='';
+  FONT_PRESETS.forEach(f=>{const btn=document.createElement('button');const isA=activeFontId===f.id;btn.style.cssText=`font-family:'${f.family}',cursive;font-size:1rem;padding:7px 16px;border-radius:99px;border:1px solid ${isA?'rgba(255,45,120,.7)':'rgba(255,255,255,.12)'};background:${isA?'rgba(255,45,120,.18)':'rgba(255,255,255,.05)'};color:var(--text);cursor:pointer;transition:all .2s;outline:none`;btn.textContent=f.name;btn.onclick=()=>{activeFontId=f.id;applyFont(f);initThemePanel();};fp.appendChild(btn);});
+}
+function previewCustomTheme(){const pink=document.getElementById('tc-pink').value,pu=document.getElementById('tc-purple').value,gold=document.getElementById('tc-gold').value,bg=document.getElementById('tc-bg').value;applyThemeColors({pink,ps:hexAdjust(pink,18),pu,pu2:hexAdjust(pu,-22),pu3:hexAdjust(pu,22),gold,bg});activeTheme={id:'custom',pink,pu,gold,bg};document.querySelectorAll('#colorPresets button').forEach(b=>b.style.borderColor='transparent');}
+async function saveTheme(){const t={...activeTheme,fontId:activeFontId};cloudData.theme=t;await dbSet('theme',t);localStorage.setItem('rnb_theme',JSON.stringify(t));closeModal('themePanel');showToast('🎨','Theme saved! ☁️');spawnBurst(8,['✨','🎨','💗']);}
+async function resetTheme(){const def=THEME_PRESETS[0];activeTheme={...def};applyThemeColors(def);const defF=FONT_PRESETS[0];activeFontId=defF.id;applyFont(defF);cloudData.theme=null;await dbRemove('theme');localStorage.removeItem('rnb_theme');initThemePanel();showToast('↩','Theme reset!');}
+function checkThemePw(){const v=document.getElementById('themePwInput').value;if(v===THEME_PW){closeModal('themePwModal');themeUnlocked=true;initThemePanel();openModal('themePanel');}else{document.getElementById('themePwErr').textContent='Wrong password ✕';document.getElementById('themePwInput').value='';setTimeout(()=>document.getElementById('themePwErr').textContent='',2000);}}
+document.getElementById('btnTheme').addEventListener('click',()=>{if(themeUnlocked){initThemePanel();openModal('themePanel');}else{document.getElementById('themePwInput').value='';document.getElementById('themePwErr').textContent='';openModal('themePwModal');setTimeout(()=>document.getElementById('themePwInput').focus(),200);}});
+/* ══ FIREBASE LOAD ══ */
+async function loadCloudData(){try{const snap=await db.ref('rnb').once('value');mergeSnapshot(snap.val());db.ref('rnb').on('value',s=>{mergeSnapshot(s.val());BOOK_PAGES=buildPages();renderSpread(spread);});}catch(e){showToast('⚠️','Failed to load');}}
 function mergeSnapshot(v){
   if(!v)return;
-  cloudData.coverPhoto=v.coverPhoto||null;
-  cloudData.coverSettings=v.coverSettings||{scale:1,posX:50,posY:50,size:116};
+  cloudData.coverPhoto=v.coverPhoto||null;cloudData.coverSettings=v.coverSettings||{scale:1,posX:50,posY:50,size:116};
   cloudData.songName=v.songName||'';cloudData.songData=v.songData||null;
-  cloudData.userPages=v.userPages?Object.values(v.userPages):[];
-  cloudData.pageOrder=v.pageOrder||[];cloudData.memoryMedia=v.memoryMedia||{};
-  cloudData.editTexts=v.editTexts||{};cloudData.stickers=v.stickers||{};
+  cloudData.userPages=v.userPages?Object.values(v.userPages):[];cloudData.pageOrder=v.pageOrder||[];cloudData.memoryMedia=v.memoryMedia||{};cloudData.editTexts=v.editTexts||{};cloudData.stickers=v.stickers||{};
+  cloudData.theme=v.theme||null;
+  if(cloudData.theme){const t=cloudData.theme;const match=THEME_PRESETS.find(p=>p.id===t.id);activeTheme=match?{...match,...t}:{...THEME_PRESETS[0],...t};applyThemeColors(activeTheme);if(t.fontId){const fp=FONT_PRESETS.find(f=>f.id===t.fontId);if(fp){activeFontId=fp.id;applyFont(fp);}}}
   if(cloudData.songData){const a=document.getElementById('bgAudio');if(a.src!==cloudData.songData)a.src=cloudData.songData;document.getElementById('currentSongDisplay').innerHTML=`🎵 <strong>${cloudData.songName}</strong>`;document.getElementById('cloudBadge').classList.add('show');}
 }
-
 /* ══ STABLE IDs ══ */
-function getSID(p){
-  if(!p)return'unknown';if(p._id)return p._id;
-  if(p.type==='cover')return'page_cover';if(p.type==='intro')return'page_intro';if(p.type==='birthday')return'page_birthday';
-  if(p.memKey)return p.memKey;if(p.type==='poetry'&&p.label)return'poetry_'+p.label.replace(/[^a-zA-Z0-9]/g,'_');
-  return'page_'+p.type;
-}
+function getSID(p){if(!p)return'unknown';if(p._id)return p._id;if(p.type==='cover')return'page_cover';if(p.type==='intro')return'page_intro';if(p.type==='birthday')return'page_birthday';if(p.memKey)return p.memKey;if(p.type==='poetry'&&p.label)return'poetry_'+p.label.replace(/[^a-zA-Z0-9]/g,'_');return'page_'+p.type;}
 function getET(sid,field,def){const k=sid+'__'+field;return Object.prototype.hasOwnProperty.call(cloudData.editTexts,k)?cloudData.editTexts[k]:def;}
 async function saveET(sid,field,html){const k=sid+'__'+field;cloudData.editTexts[k]=html;await dbSet('editTexts/'+k.replace(/\//g,'_'),html);}
-
 /* ══ BUILD PAGES ══ */
 function buildPages(){
-  const core=[];
-  core.push({type:'cover',_id:'page_cover',_fixedStart:true});
-  core.push({type:'intro',_id:'page_intro',_fixedStart:true});
+  const core=[];core.push({type:'cover',_id:'page_cover',_fixedStart:true});core.push({type:'intro',_id:'page_intro',_fixedStart:true});
   MEM_EN.forEach((m,i)=>core.push({type:'memory',...m,_id:'orig-'+i,memKey:'orig-'+i,_fixedStart:true}));
   POE_EN.forEach((p,i)=>core.push({type:'poetry',...p,_id:'orig-poem-'+i,_fixedStart:true}));
-  cloudData.userPages.forEach(p=>core.push(p));
-  core.push({type:'birthday',_id:'page_birthday',_fixedEnd:true});
-  if(cloudData.pageOrder&&cloudData.pageOrder.length){
-    const fS=core.filter(p=>p._fixedStart),fE=core.filter(p=>p._fixedEnd),mv=core.filter(p=>!p._fixedStart&&!p._fixedEnd);
-    const re=[];cloudData.pageOrder.forEach(k=>{const f=mv.find(p=>getSID(p)===k);if(f)re.push(f);});mv.forEach(p=>{if(!re.includes(p))re.push(p);});
-    return[...fS,...re,...fE];
-  }
+  cloudData.userPages.forEach(p=>core.push(p));core.push({type:'birthday',_id:'page_birthday',_fixedEnd:true});
+  if(cloudData.pageOrder&&cloudData.pageOrder.length){const fS=core.filter(p=>p._fixedStart),fE=core.filter(p=>p._fixedEnd),mv=core.filter(p=>!p._fixedStart&&!p._fixedEnd);const re=[];cloudData.pageOrder.forEach(k=>{const f=mv.find(p=>getSID(p)===k);if(f)re.push(f);});mv.forEach(p=>{if(!re.includes(p))re.push(p);});return[...fS,...re,...fE];}
   return core;
 }
-
 /* ══ IMAGE EDITING ══ */
 let imgEditState={active:false,key:null,isCover:false,el:null};
-function imgEditOpen(key,isCover,el){
-  imgEditState={active:true,key,isCover,el};
-  const med=isCover?cloudData.coverSettings:(cloudData.memoryMedia[key]||{});
-  const Z=document.getElementById('ibZoom'),PX=document.getElementById('ibPosX'),PY=document.getElementById('ibPosY');
-  Z.value=med.scale||1;PX.value=med.posX!==undefined?med.posX:50;PY.value=med.posY!==undefined?med.posY:50;
-  document.getElementById('ibZoomVal').textContent=(med.scale||1).toFixed(2)+'×';
-  document.getElementById('ibPosXVal').textContent=Math.round(PX.value)+'%';
-  document.getElementById('ibPosYVal').textContent=Math.round(PY.value)+'%';
-  const cvRow=document.getElementById('ibCoverRow');
-  if(isCover){cvRow.classList.add('visible');document.getElementById('ibCoverSize').value=med.size||116;document.getElementById('ibSizeVal').textContent=med.size||116;}
-  else{cvRow.classList.remove('visible');}
-  document.getElementById('imgEditBar').classList.add('show');
-}
-function imgEditApply(){
-  if(!imgEditState.active)return;
-  const scale=parseFloat(document.getElementById('ibZoom').value);
-  const posX=parseFloat(document.getElementById('ibPosX').value);
-  const posY=parseFloat(document.getElementById('ibPosY').value);
-  document.getElementById('ibZoomVal').textContent=scale.toFixed(2)+'×';
-  document.getElementById('ibPosXVal').textContent=Math.round(posX)+'%';
-  document.getElementById('ibPosYVal').textContent=Math.round(posY)+'%';
-  const med=imgEditState.isCover?cloudData.coverSettings:(cloudData.memoryMedia[imgEditState.key]||{});
-  med.scale=scale;med.posX=posX;med.posY=posY;
-  if(imgEditState.isCover)cloudData.coverSettings=med;else cloudData.memoryMedia[imgEditState.key]=med;
-  applyImgTransform(imgEditState.el,med);
-}
-function imgEditCoverSize(){
-  const sz=parseInt(document.getElementById('ibCoverSize').value);
-  document.getElementById('ibSizeVal').textContent=sz;
-  cloudData.coverSettings.size=sz;
-  const wrap=document.querySelector('.cv-img');
-  if(wrap){wrap.style.width=wrap.style.height=sz+'px';}
-  const wrapEl=document.querySelector('.cv-img-wrap');
-  if(wrapEl){wrapEl.style.width=wrapEl.style.height=sz+'px';}
-}
-function applyImgTransform(el,med){
-  if(!el||!med)return;
-  const scale=med.scale||1,posX=med.posX!==undefined?med.posX:50,posY=med.posY!==undefined?med.posY:50;
-  if(el.tagName==='IMG'||el.tagName==='VIDEO'){
-    el.style.objectPosition=posX+'% '+posY+'%';
-    el.style.transform='scale('+scale+')';
-    el.style.transformOrigin=posX+'% '+posY+'%';
-  }
-}
-async function imgEditSave(){
-  if(!imgEditState.active)return;
-  if(imgEditState.isCover){await dbSet('coverSettings',cloudData.coverSettings);}
-  else{await dbSet('memoryMedia/'+imgEditState.key,cloudData.memoryMedia[imgEditState.key]);}
-  document.getElementById('imgEditBar').classList.remove('show');
-  imgEditState.active=false;showToast('☁️','Image saved!');renderSpread(spread);
-}
+function imgEditOpen(key,isCover,el){imgEditState={active:true,key,isCover,el};const med=isCover?cloudData.coverSettings:(cloudData.memoryMedia[key]||{});const Z=document.getElementById('ibZoom'),PX=document.getElementById('ibPosX'),PY=document.getElementById('ibPosY');Z.value=med.scale||1;PX.value=med.posX!==undefined?med.posX:50;PY.value=med.posY!==undefined?med.posY:50;document.getElementById('ibZoomVal').textContent=(med.scale||1).toFixed(2)+'×';document.getElementById('ibPosXVal').textContent=Math.round(PX.value)+'%';document.getElementById('ibPosYVal').textContent=Math.round(PY.value)+'%';const cvRow=document.getElementById('ibCoverRow');if(isCover){cvRow.classList.add('visible');document.getElementById('ibCoverSize').value=med.size||116;document.getElementById('ibSizeVal').textContent=med.size||116;}else{cvRow.classList.remove('visible');}document.getElementById('imgEditBar').classList.add('show');}
+function imgEditApply(){if(!imgEditState.active)return;const scale=parseFloat(document.getElementById('ibZoom').value),posX=parseFloat(document.getElementById('ibPosX').value),posY=parseFloat(document.getElementById('ibPosY').value);document.getElementById('ibZoomVal').textContent=scale.toFixed(2)+'×';document.getElementById('ibPosXVal').textContent=Math.round(posX)+'%';document.getElementById('ibPosYVal').textContent=Math.round(posY)+'%';const med=imgEditState.isCover?cloudData.coverSettings:(cloudData.memoryMedia[imgEditState.key]||{});med.scale=scale;med.posX=posX;med.posY=posY;if(imgEditState.isCover)cloudData.coverSettings=med;else cloudData.memoryMedia[imgEditState.key]=med;applyImgTransform(imgEditState.el,med);}
+function imgEditCoverSize(){const sz=parseInt(document.getElementById('ibCoverSize').value);document.getElementById('ibSizeVal').textContent=sz;cloudData.coverSettings.size=sz;const wrap=document.querySelector('.cv-img');if(wrap){wrap.style.width=wrap.style.height=sz+'px';}const wrapEl=document.querySelector('.cv-img-wrap');if(wrapEl){wrapEl.style.width=wrapEl.style.height=sz+'px';}}
+function applyImgTransform(el,med){if(!el||!med)return;const scale=med.scale||1,posX=med.posX!==undefined?med.posX:50,posY=med.posY!==undefined?med.posY:50;if(el.tagName==='IMG'||el.tagName==='VIDEO'){el.style.objectPosition=posX+'% '+posY+'%';el.style.transform='scale('+scale+')';el.style.transformOrigin=posX+'% '+posY+'%';}}
+async function imgEditSave(){if(!imgEditState.active)return;if(imgEditState.isCover){await dbSet('coverSettings',cloudData.coverSettings);}else{await dbSet('memoryMedia/'+imgEditState.key,cloudData.memoryMedia[imgEditState.key]);}document.getElementById('imgEditBar').classList.remove('show');imgEditState.active=false;showToast('☁️','Image saved!');renderSpread(spread);}
 function imgEditCancel(){document.getElementById('imgEditBar').classList.remove('show');imgEditState.active=false;renderSpread(spread);}
-
-/* ══ STICKER EDIT — size & rotation control ══ */
-let stickerEditSt={active:false,sid:null,stId:null,s:null,el:null};
-function stickerEditOpen(sid,stId,s,el){
-  stickerEditSt={active:true,sid,stId,s:{...s},el};
-  document.getElementById('stickerScale').value=s.scale||1;
-  document.getElementById('stickerRot').value=s.rotation||0;
-  document.getElementById('stickerScaleVal').textContent=parseFloat(s.scale||1).toFixed(1)+'×';
-  document.getElementById('stickerRotVal').textContent=(s.rotation||0)+'°';
-  document.getElementById('stickerEditBar').classList.add('show');
-}
-function stickerEditApply(){
-  if(!stickerEditSt.active)return;
-  const sc=parseFloat(document.getElementById('stickerScale').value);
-  const rt=parseFloat(document.getElementById('stickerRot').value);
-  document.getElementById('stickerScaleVal').textContent=sc.toFixed(1)+'×';
-  document.getElementById('stickerRotVal').textContent=rt+'°';
-  stickerEditSt.s.scale=sc;stickerEditSt.s.rotation=rt;
-  if(stickerEditSt.el)stickerEditSt.el.style.transform=`translate(-50%,-50%) scale(${sc}) rotate(${rt}deg)`;
-}
-async function stickerEditSave(){
-  if(!stickerEditSt.active)return;
-  const{sid,stId,s}=stickerEditSt;
-  if(!cloudData.stickers[sid])cloudData.stickers[sid]={};
-  const upd={...(cloudData.stickers[sid][stId]||{}),...s};
-  cloudData.stickers[sid][stId]=upd;
-  await dbSet('stickers/'+sid+'/'+stId,upd);
-  document.getElementById('stickerEditBar').classList.remove('show');
-  stickerEditSt.active=false;renderSpread(spread);showToast('☁️','Sticker saved!');
-}
-function stickerEditCancel(){
-  document.getElementById('stickerEditBar').classList.remove('show');
-  stickerEditSt.active=false;renderSpread(spread);
-}
-
+/* ══ STICKER EDIT ══ */
+let stickerEditSt={active:false,sid:null,stId:null,s:null,el:null,origScale:1,origRotation:0};
+function stickerEditOpen(sid,stId,s,el){stickerEditSt={active:true,sid,stId,s:{...s},el,origScale:s.scale||1,origRotation:s.rotation||0};document.getElementById('stickerScale').value=s.scale||1;document.getElementById('stickerRot').value=s.rotation||0;document.getElementById('stickerScaleVal').textContent=parseFloat(s.scale||1).toFixed(1)+'×';document.getElementById('stickerRotVal').textContent=(s.rotation||0)+'°';document.getElementById('stickerEditBar').classList.add('show');}
+function stickerEditApply(){if(!stickerEditSt.active)return;const sc=parseFloat(document.getElementById('stickerScale').value),rt=parseFloat(document.getElementById('stickerRot').value);document.getElementById('stickerScaleVal').textContent=sc.toFixed(1)+'×';document.getElementById('stickerRotVal').textContent=rt+'°';stickerEditSt.s.scale=sc;stickerEditSt.s.rotation=rt;if(stickerEditSt.el)stickerEditSt.el.style.transform=`translate(-50%,-50%) scale(${sc}) rotate(${rt}deg)`;}
+async function stickerEditSave(){if(!stickerEditSt.active)return;const{sid,stId,s,origScale,origRotation}=stickerEditSt;pushUndo('sticker_edit',{sid,stId,oldScale:origScale,oldRotation:origRotation});if(!cloudData.stickers[sid])cloudData.stickers[sid]={};const upd={...(cloudData.stickers[sid][stId]||{}),...s};cloudData.stickers[sid][stId]=upd;await dbSet('stickers/'+sid+'/'+stId,upd);document.getElementById('stickerEditBar').classList.remove('show');stickerEditSt.active=false;renderSpread(spread);showToast('☁️','Sticker saved!');}
+async function deleteStickerFromBar(){if(!stickerEditSt.active)return;const{sid,stId}=stickerEditSt;pushUndo('sticker_delete',{sid,stId,sticker:{...(cloudData.stickers[sid]&&cloudData.stickers[sid][stId])||{}}});if(cloudData.stickers[sid])delete cloudData.stickers[sid][stId];await dbRemove('stickers/'+sid+'/'+stId);document.getElementById('stickerEditBar').classList.remove('show');stickerEditSt.active=false;renderSpread(spread);showToast('🗑️','Sticker deleted');}
+function stickerEditCancel(){document.getElementById('stickerEditBar').classList.remove('show');stickerEditSt.active=false;renderSpread(spread);}
 /* ══ RENDERERS ══ */
 function makeCover(p){
-  const sid='page_cover';const cs=cloudData.coverSettings||{};
-  const sz=cs.size||116;const sc=cs.scale||1;const px=cs.posX!==undefined?cs.posX:50;const py=cs.posY!==undefined?cs.posY:50;
+  const sid='page_cover';const cs=cloudData.coverSettings||{};const sz=cs.size||116;const sc=cs.scale||1;const px=cs.posX!==undefined?cs.posX:50;const py=cs.posY!==undefined?cs.posY:50;
   const photo=cloudData.coverPhoto?`<img src="${cloudData.coverPhoto}" alt="us" style="object-position:${px}% ${py}%;transform:scale(${sc});transform-origin:${px}% ${py}%" ${editMode?'onclick="imgEditOpen(\'cover\',true,this)"':''}>`:'💑';
-  return`<div class="pg pg-cover">
-    <div class="cv-roses" data-sid="${sid}" data-field="cvroses" contenteditable="false">${getET(sid,'cvroses','🌹 🌸 🌹')}</div>
-    <div class="cv-img-wrap" style="width:${sz}px;height:${sz}px">
-      <div class="cv-img" style="width:${sz}px;height:${sz}px">${photo}</div>
-      <label class="eu-btn" title="Change photo">📷<input type="file" accept="image/*" onchange="uploadCoverPhoto(event)"></label>
-      <button class="eu-img-edit" onclick="var img=this.closest('.cv-img-wrap').querySelector('img');imgEditOpen('cover',true,img)">🔍 Edit</button>
-    </div>
-    <div class="cv-title" data-sid="${sid}" data-field="cvtitle" contenteditable="false">${getET(sid,'cvtitle','Radwa &amp; Nour ❤️')}</div>
-    <div class="cv-line"></div>
-    <div class="cv-sub" data-sid="${sid}" data-field="cvsub" contenteditable="false">${getET(sid,'cvsub','A Book Full of Us')}</div>
-    <div class="deco decoP" style="margin:5px auto"></div>
-    <div class="cv-hint" data-sid="${sid}" data-field="cvhint" contenteditable="false" onclick="if(!editMode)flipNext()">${getET(sid,'cvhint','✦ touch to open ✦')}</div>
-    <div class="pgn r">1</div>
-  </div>`;
+  return`<div class="pg pg-cover"><div class="cv-roses" data-sid="${sid}" data-field="cvroses" contenteditable="false">${getET(sid,'cvroses','🌹 🌸 🌹')}</div><div class="cv-img-wrap" style="width:${sz}px;height:${sz}px"><div class="cv-img" style="width:${sz}px;height:${sz}px">${photo}</div><label class="eu-btn" title="Change photo">📷<input type="file" accept="image/*" onchange="uploadCoverPhoto(event)"></label><button class="eu-img-edit" onclick="var img=this.closest('.cv-img-wrap').querySelector('img');imgEditOpen('cover',true,img)">🔍 Edit</button></div><div class="cv-title" data-sid="${sid}" data-field="cvtitle" contenteditable="false">${getET(sid,'cvtitle','Radwa &amp; Nour ❤️')}</div><div class="cv-line"></div><div class="cv-sub" data-sid="${sid}" data-field="cvsub" contenteditable="false">${getET(sid,'cvsub','A Book Full of Us')}</div><div class="deco decoP" style="margin:5px auto"></div><div class="cv-hint" data-sid="${sid}" data-field="cvhint" contenteditable="false" onclick="if(!editMode)flipNext()">${getET(sid,'cvhint','✦ touch to open ✦')}</div><div class="pgn r">1</div></div>`;
 }
 function makeIntro(p){
   const sid='page_intro';
-  return`<div class="pg pg-intro">
-    <div class="intro-orn" data-sid="${sid}" data-field="orn" contenteditable="false">${getET(sid,'orn','🌸 ✦ 🌸')}</div>
-    <div class="intro-title-el" data-sid="${sid}" data-field="title" contenteditable="false">${getET(sid,'title','كتابُ حُبِّنا')}</div>
-    <div class="intro-divider"></div>
-    <div class="intro-body">
-      <p data-sid="${sid}" data-field="p1" contenteditable="false">${getET(sid,'p1','من الممكن أن أُطلق عليه <span class="hi">«كتابُ حُبِّنا»</span>، لأنني لم أجد أجمل من الكلمات — لتُعبّر عن مدى <span class="hi">حُبّي لكِ</span>.')}</p>
-      <p data-sid="${sid}" data-field="p2" contenteditable="false">${getET(sid,'p2','حتى أنّني أعجز عن تخيّل انتهاء حقبةٍ من حياتي أراكِ فيها يوميًا. وأكاد أجزم أنّ ذلك سيكون من <span class="hi">أسوأ المشاعر</span>.')}</p>
-      <p data-sid="${sid}" data-field="p3" contenteditable="false">${getET(sid,'p3','سيبقى هذا الكتاب، ويبقى حُبّي دائمًا… حتى نصل — بإذن الله — إلى <span class="hi">«الألفيّة في حُبِّ رضوى»</span>.')}</p>
-      <div class="intro-list" data-sid="${sid}" data-field="list" contenteditable="false">${getET(sid,'list','<span class="hi">يتكوّن الكتاب من:</span><br>• بعض <span class="hi">ذكرياتنا</span>،<br>• بعض <span class="hi">الكلمات</span>،<br>• بعض <span class="hi">الصور</span> التي تجمعنا،<br>• و<span class="hi">Countdown</span> ليوم ميلادك القادم.')}</div>
-    </div>
-    <div class="intro-sig"><span data-sid="${sid}" data-field="sig" contenteditable="false">${getET(sid,'sig','مع خالص حُبّي، نور شهاب')}</span><small data-sid="${sid}" data-field="sigsm" contenteditable="false">${getET(sid,'sigsm','( خوختك 🍑 )')}</small></div>
-    <div class="pgn r" style="direction:ltr">2</div>
-  </div>`;
+  return`<div class="pg pg-intro"><div class="intro-orn" data-sid="${sid}" data-field="orn" contenteditable="false">${getET(sid,'orn','🌸 ✦ 🌸')}</div><div class="intro-title-el" data-sid="${sid}" data-field="title" contenteditable="false">${getET(sid,'title','كتابُ حُبِّنا')}</div><div class="intro-divider"></div><div class="intro-body"><p data-sid="${sid}" data-field="p1" contenteditable="false">${getET(sid,'p1','من الممكن أن أُطلق عليه <span class="hi">«كتابُ حُبِّنا»</span>، لأنني لم أجد أجمل من الكلمات — لتُعبّر عن مدى <span class="hi">حُبّي لكِ</span>.')}</p><p data-sid="${sid}" data-field="p2" contenteditable="false">${getET(sid,'p2','حتى أنّني أعجز عن تخيّل انتهاء حقبةٍ من حياتي أراكِ فيها يوميًا. وأكاد أجزم أنّ ذلك سيكون من <span class="hi">أسوأ المشاعر</span>.')}</p><p data-sid="${sid}" data-field="p3" contenteditable="false">${getET(sid,'p3','سيبقى هذا الكتاب، ويبقى حُبّي دائمًا… حتى نصل — بإذن الله — إلى <span class="hi">«الألفيّة في حُبِّ رضوى»</span>.')}</p><div class="intro-list" data-sid="${sid}" data-field="list" contenteditable="false">${getET(sid,'list','<span class="hi">يتكوّن الكتاب من:</span><br>• بعض <span class="hi">ذكرياتنا</span>،<br>• بعض <span class="hi">الكلمات</span>،<br>• بعض <span class="hi">الصور</span> التي تجمعنا،<br>• و<span class="hi">Countdown</span> ليوم ميلادك القادم.')}</div></div><div class="intro-sig"><span data-sid="${sid}" data-field="sig" contenteditable="false">${getET(sid,'sig','مع خالص حُبّي، نور شهاب')}</span><small data-sid="${sid}" data-field="sigsm" contenteditable="false">${getET(sid,'sigsm','( خوختك 🍑 )')}</small></div><div class="pgn r" style="direction:ltr">2</div></div>`;
 }
 function makeMemory(m,gi){
-  const sid=getSID(m);const cnt=BOOK_PAGES.slice(0,gi+1).filter(p=>p.type==='memory').length;const side=gi%2===0?'r':'l';
-  const mk=m.memKey||m._id;const med=cloudData.memoryMedia[mk];
-  const sc=med?.scale||1;const px=med?.posX!==undefined?med.posX:50;const py=med?.posY!==undefined?med.posY:50;
-  let mh='';
-  if(med&&med.type==='video'){mh=`<video src="${med.src}" autoplay muted loop playsinline style="object-position:${px}% ${py}%;transform:scale(${sc});transform-origin:${px}% ${py}%"></video><div class="vid-badge">▶ VIDEO</div>`;}
-  else if(med){mh=`<img src="${med.src}" alt="memory" style="object-position:${px}% ${py}%;transform:scale(${sc});transform-origin:${px}% ${py}%" ${editMode?`onclick="imgEditOpen('${mk}',false,this)"`:''}>
-    <button class="eu-img-edit" onclick="imgEditOpen('${mk}',false,this.closest('.mthumb').querySelector('img'))">🔍 Edit</button>`;}
-  else{mh=`<div class="big">${m.emoji||'💗'}</div><div class="lbl">✦ add your media ✦</div>`;}
-  return`<div class="pg">
-    <div class="mtag" data-sid="${sid}" data-field="mtag" contenteditable="false">${getET(sid,'mtag','Memory '+String(cnt).padStart(2,'0'))}</div>
-    <div class="mtitle" data-sid="${sid}" data-field="title" contenteditable="false">${getET(sid,'title',m.title)}</div>
-    <div class="deco"></div>
-    <div class="mthumb">${mh}<label class="eu-mem">📷 ${med?'Change':'Add'}<input type="file" accept="image/*,video/*" onchange="uploadMemMedia(event,'${mk}')"></label></div>
-    <div class="deco"></div>
-    <div class="mbody" data-sid="${sid}" data-field="body" contenteditable="false">${getET(sid,'body',m.text)}</div>
-    <div class="mdate" data-sid="${sid}" data-field="date" contenteditable="false">${getET(sid,'date','✦ '+m.date+' ✦')}</div>
-    <div class="pgn ${side}">${gi+1}</div>
-  </div>`;
+  const sid=getSID(m);const cnt=BOOK_PAGES.slice(0,gi+1).filter(p=>p.type==='memory').length;const side=gi%2===0?'r':'l';const mk=m.memKey||m._id;const med=cloudData.memoryMedia[mk];const sc=med?.scale||1;const px=med?.posX!==undefined?med.posX:50;const py=med?.posY!==undefined?med.posY:50;
+  let mh='';if(med&&med.type==='video'){mh=`<video src="${med.src}" autoplay muted loop playsinline style="object-position:${px}% ${py}%;transform:scale(${sc});transform-origin:${px}% ${py}%"></video><div class="vid-badge">▶ VIDEO</div>`;}else if(med){mh=`<img src="${med.src}" alt="memory" style="object-position:${px}% ${py}%;transform:scale(${sc});transform-origin:${px}% ${py}%" ${editMode?`onclick="imgEditOpen('${mk}',false,this)"`:''}>
+    <button class="eu-img-edit" onclick="imgEditOpen('${mk}',false,this.closest('.mthumb').querySelector('img'))">🔍 Edit</button>`;}else{mh=`<div class="big">${m.emoji||'💗'}</div><div class="lbl">✦ add your media ✦</div>`;}
+  return`<div class="pg"><div class="mtag" data-sid="${sid}" data-field="mtag" contenteditable="false">${getET(sid,'mtag','Memory '+String(cnt).padStart(2,'0'))}</div><div class="mtitle" data-sid="${sid}" data-field="title" contenteditable="false">${getET(sid,'title',m.title)}</div><div class="deco"></div><div class="mthumb">${mh}<label class="eu-mem">📷 ${med?'Change':'Add'}<input type="file" accept="image/*,video/*" onchange="uploadMemMedia(event,'${mk}')"></label></div><div class="deco"></div><div class="mbody" data-sid="${sid}" data-field="body" contenteditable="false">${getET(sid,'body',m.text)}</div><div class="mdate" data-sid="${sid}" data-field="date" contenteditable="false">${getET(sid,'date','✦ '+m.date+' ✦')}</div><div class="pgn ${side}">${gi+1}</div></div>`;
 }
 function makePoetry(p,gi){
   const sid=getSID(p);const side=gi%2===0?'r':'l';
   const body=p.text.replace(/\[([^\]]+)\]/g,'<em>$1</em>').replace(/\*([^*]+)\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
-  return`<div class="pg pg-po">
-    <div class="po-orn" data-sid="${sid}" data-field="orn1" contenteditable="false">${getET(sid,'orn1',p.orn||'❧')}</div>
-    <div class="po-body" data-sid="${sid}" data-field="body" contenteditable="false">${getET(sid,'body',body)}</div>
-    <div class="po-orn" data-sid="${sid}" data-field="orn2" contenteditable="false">${getET(sid,'orn2',p.orn||'❧')}</div>
-    <div class="po-lbl" data-sid="${sid}" data-field="lbl" contenteditable="false">${getET(sid,'lbl',p.label)}</div>
-    <div class="pgn ${side}">${gi+1}</div>
-  </div>`;
+  return`<div class="pg pg-po"><div class="po-orn" data-sid="${sid}" data-field="orn1" contenteditable="false">${getET(sid,'orn1',p.orn||'❧')}</div><div class="po-body" data-sid="${sid}" data-field="body" contenteditable="false">${getET(sid,'body',body)}</div><div class="po-orn" data-sid="${sid}" data-field="orn2" contenteditable="false">${getET(sid,'orn2',p.orn||'❧')}</div><div class="po-lbl" data-sid="${sid}" data-field="lbl" contenteditable="false">${getET(sid,'lbl',p.label)}</div><div class="pgn ${side}">${gi+1}</div></div>`;
 }
 function makeBirthday(p,gi){
   const sid='page_birthday';
-  return`<div class="pg pg-bd">
-    <div class="bd-ico" data-sid="${sid}" data-field="bdico" contenteditable="false">${getET(sid,'bdico','🎂')}</div>
-    <div class="bd-title" data-sid="${sid}" data-field="bdtitle" contenteditable="false">${getET(sid,'bdtitle','Happy Birthday, Radwa 🎉')}</div>
-    <div class="bd-sub" data-sid="${sid}" data-field="bdsub" contenteditable="false">${getET(sid,'bdsub','Your special day is approaching…')}</div>
-    <div class="cd-row">
-      <div class="cdb"><span class="cdn" id="cdD">--</span><span class="cdl">Days</span></div>
-      <div class="cdb"><span class="cdn" id="cdH">--</span><span class="cdl">Hrs</span></div>
-      <div class="cdb"><span class="cdn" id="cdM">--</span><span class="cdl">Mins</span></div>
-      <div class="cdb"><span class="cdn" id="cdS">--</span><span class="cdl">Secs</span></div>
-    </div>
-    <div class="bd-msg" data-sid="${sid}" data-field="bdmsg" contenteditable="false">${getET(sid,'bdmsg','Every single year I get to celebrate you<br>feels like the universe giving me its greatest gift.<br>You are <span>irreplaceable, infinite,</span><br>and <span>so very, deeply loved.</span>')}</div>
-    <div class="pgn r">${gi+1}</div>
-  </div>`;
+  return`<div class="pg pg-bd"><div class="bd-ico" data-sid="${sid}" data-field="bdico" contenteditable="false">${getET(sid,'bdico','🎂')}</div><div class="bd-title" data-sid="${sid}" data-field="bdtitle" contenteditable="false">${getET(sid,'bdtitle','Happy Birthday, Radwa 🎉')}</div><div class="bd-sub" data-sid="${sid}" data-field="bdsub" contenteditable="false">${getET(sid,'bdsub','Your special day is approaching…')}</div><div class="cd-row"><div class="cdb"><span class="cdn" id="cdD">--</span><span class="cdl">Days</span></div><div class="cdb"><span class="cdn" id="cdH">--</span><span class="cdl">Hrs</span></div><div class="cdb"><span class="cdn" id="cdM">--</span><span class="cdl">Mins</span></div><div class="cdb"><span class="cdn" id="cdS">--</span><span class="cdl">Secs</span></div></div><div class="bd-msg" data-sid="${sid}" data-field="bdmsg" contenteditable="false">${getET(sid,'bdmsg','Every single year I get to celebrate you<br>feels like the universe giving me its greatest gift.<br>You are <span>irreplaceable, infinite,</span><br>and <span>so very, deeply loved.</span>')}</div><div class="pgn r">${gi+1}</div></div>`;
 }
 function makeCustom(p,gi){
-  const sid=getSID(p);const side=gi%2===0?'r':'l';
-  const bgMap={dark:'linear-gradient(155deg,#150024,#090013)',rose:'linear-gradient(155deg,#250015,#0e0008)',night:'linear-gradient(155deg,#050520,#020210)'};
-  const bg=bgMap[p.background||'dark']||bgMap.dark;
-  const med=cloudData.memoryMedia[sid];
-  const sc=med?.scale||1;const px=med?.posX!==undefined?med.posX:50;const py=med?.posY!==undefined?med.posY:50;
+  const sid=getSID(p);const side=gi%2===0?'r':'l';const bgMap={dark:'linear-gradient(155deg,#150024,#090013)',rose:'linear-gradient(155deg,#250015,#0e0008)',night:'linear-gradient(155deg,#050520,#020210)'};const bg=bgMap[p.background||'dark']||bgMap.dark;const med=cloudData.memoryMedia[sid];const sc=med?.scale||1;const px=med?.posX!==undefined?med.posX:50;const py=med?.posY!==undefined?med.posY:50;
   let imgHtml='';if(med)imgHtml=`<img class="custom-img" src="${med.src}" style="object-position:${px}% ${py}%;transform:scale(${sc});transform-origin:${px}% ${py}%" ${editMode?`onclick="imgEditOpen('${sid}',false,this)"`:''} alt="custom">`;
-  return`<div class="pg pg-custom" style="background:${bg}">
-    <div class="custom-title" data-sid="${sid}" data-field="title" contenteditable="false">${getET(sid,'title',p.title||'My Page')}</div>
-    <div class="deco decoP"></div>${imgHtml}
-    <div class="custom-body" data-sid="${sid}" data-field="body" contenteditable="false">${getET(sid,'body',p.body||'')}</div>
-    ${med?`<button class="eu-img-edit" onclick="imgEditOpen('${sid}',false,this.closest('.pg').querySelector('img'))">🔍 Edit Image</button>`:''}
-    <label class="eu-mem">📷 ${med?'Change':'Add'} Image<input type="file" accept="image/*" onchange="uploadMemMedia(event,'${sid}')"></label>
-    <div class="pgn ${side}">${gi+1}</div>
-  </div>`;
+  return`<div class="pg pg-custom" style="background:${bg}"><div class="custom-title" data-sid="${sid}" data-field="title" contenteditable="false">${getET(sid,'title',p.title||'My Page')}</div><div class="deco decoP"></div>${imgHtml}<div class="custom-body" data-sid="${sid}" data-field="body" contenteditable="false">${getET(sid,'body',p.body||'')}</div>${med?`<button class="eu-img-edit" onclick="imgEditOpen('${sid}',false,this.closest('.pg').querySelector('img'))">🔍 Edit Image</button>`:''}<label class="eu-mem">📷 ${med?'Change':'Add'} Image<input type="file" accept="image/*" onchange="uploadMemMedia(event,'${sid}')"></label><div class="pgn ${side}">${gi+1}</div></div>`;
 }
-function renderPage(gi){
-  if(gi<0||gi>=TOTAL())return'<div class="pg" style="background:#090013"></div>';
-  const p=BOOK_PAGES[gi];
-  if(p.type==='cover')return makeCover(p);if(p.type==='intro')return makeIntro(p);
-  if(p.type==='memory')return makeMemory(p,gi);if(p.type==='poetry')return makePoetry(p,gi);
-  if(p.type==='birthday')return makeBirthday(p,gi);if(p.type==='custom')return makeCustom(p,gi);
-  return'<div class="pg"></div>';
-}
+function renderPage(gi){if(gi<0||gi>=TOTAL())return'<div class="pg" style="background:#090013"></div>';const p=BOOK_PAGES[gi];if(p.type==='cover')return makeCover(p);if(p.type==='intro')return makeIntro(p);if(p.type==='memory')return makeMemory(p,gi);if(p.type==='poetry')return makePoetry(p,gi);if(p.type==='birthday')return makeBirthday(p,gi);if(p.type==='custom')return makeCustom(p,gi);return'<div class="pg"></div>';}
 const TOTAL=()=>BOOK_PAGES.length,maxSpread=()=>Math.ceil((TOTAL()-1)/2);
-
 /* ══ RENDER FACE ══ */
 function renderFace(el,idx){
   if(idx<0||idx>=TOTAL()){el.innerHTML='<div class="pg" style="background:#090013"></div>';return;}
