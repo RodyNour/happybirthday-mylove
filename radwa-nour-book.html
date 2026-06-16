@@ -262,6 +262,32 @@ body.editmode .sticker-item:hover .sticker-del{opacity:1!important}
 .sk-btn{width:44px;height:44px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);font-size:1.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .sk-btn:hover{border-color:var(--pink);transform:scale(1.2);background:rgba(255,45,120,.1)}
 .sk-upload{border:2px dashed rgba(168,85,247,.3);border-radius:10px;padding:12px;margin-bottom:14px;position:relative;cursor:pointer;transition:border-color .3s}.sk-upload:hover{border-color:var(--pink)}.sk-upload input{position:absolute;inset:0;opacity:0;cursor:pointer}.sk-upload-label{font-size:.58rem;color:var(--muted2)}
+/* ── QUIZ PAGE ── */
+.pg-quiz{background:linear-gradient(155deg,#150024,#090013);text-align:center}
+.quiz-emoji{font-size:2.2rem;margin-bottom:4px;animation:fY 3s ease-in-out infinite;flex-shrink:0}
+.quiz-title-el{font-family:var(--font-script);font-size:clamp(1rem,2.4vw,1.42rem);background:linear-gradient(135deg,var(--ps),var(--gold),var(--pu3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:3px;flex-shrink:0}
+.quiz-q{font-family:var(--font-prose);font-style:italic;font-size:clamp(.7rem,1.6vw,.86rem);line-height:1.75;color:var(--text);text-align:center;margin:4px 0 10px;flex-shrink:0;width:100%;padding:0 4px}
+.quiz-opts{display:flex;flex-direction:column;gap:5px;width:100%;flex-shrink:0}
+.quiz-opt{background:rgba(255,45,120,.08);border:1px solid rgba(255,45,120,.28);border-radius:10px;color:var(--text);font-family:var(--font-caption);font-size:.6rem;letter-spacing:.04em;padding:7px 10px;cursor:pointer;transition:all .25s ease;text-align:left;line-height:1.5;width:100%}
+.quiz-opt:hover:not(:disabled){background:rgba(255,45,120,.2);border-color:var(--pink);transform:translateX(4px);box-shadow:0 0 12px var(--gp)}
+.quiz-opt.correct{background:rgba(80,220,120,.18)!important;border-color:#50dc78!important;color:#90ffb0!important;box-shadow:0 0 18px rgba(80,220,120,.4)!important;transform:none!important}
+.quiz-opt.wrong{background:rgba(220,60,80,.18)!important;border-color:#e04060!important;color:#ff9090!important;transform:none!important}
+.quiz-opt.dimmed{opacity:.28}
+.quiz-opt:disabled{cursor:default}
+.quiz-result{display:none;margin-top:9px;padding:10px;border-radius:12px;animation:qrFade .45s ease;flex-shrink:0;width:100%;text-align:center}
+@keyframes qrFade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.quiz-result.correct{background:rgba(80,220,120,.1);border:1px solid rgba(80,220,120,.3)}
+.quiz-result.wrong{background:rgba(220,60,80,.1);border:1px solid rgba(220,60,80,.3)}
+.quiz-result-ico{font-size:1.9rem;margin-bottom:3px}
+.quiz-result-msg{font-family:var(--font-prose);font-style:italic;font-size:.7rem;color:var(--muted);line-height:1.6;margin-bottom:8px}
+.quiz-retry{background:rgba(255,45,120,.12);border:1px solid rgba(255,45,120,.3);color:var(--ps);font-family:var(--font-caption);font-size:.52rem;letter-spacing:.1em;padding:5px 14px;border-radius:99px;cursor:pointer;transition:all .25s}
+.quiz-retry:hover{background:rgba(255,45,120,.25);box-shadow:0 0 10px var(--gp)}
+.quiz-opt-row{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.quiz-opt-row input[type=radio]{width:15px;height:15px;flex-shrink:0;accent-color:var(--pink);cursor:pointer}
+.quiz-opt-row input[type=text]{flex:1;min-width:0}
+.quiz-correct-hint{font-size:.46rem;color:var(--gold);letter-spacing:.08em;flex-shrink:0;opacity:.7}
+.quiz-score-bar{width:100%;height:4px;background:rgba(255,255,255,.08);border-radius:99px;margin:6px 0;flex-shrink:0;overflow:hidden}
+.quiz-score-fill{height:100%;background:linear-gradient(90deg,var(--pink),var(--pu3));border-radius:99px;transition:width .6s ease;box-shadow:0 0 8px var(--gp)}
 @media(max-width:720px){:root{--pw:min(44vw,200px);--ph:min(70vw,350px)}.cb{font-size:.44rem;padding:5px 7px}#navL{left:4px}#navR{right:4px}#imgEditBar{min-width:88vw}}
 @media(max-width:480px){:root{--pw:min(86vw,320px);--ph:470px}#book{width:var(--pw)}#rPanel{display:none}#lPanel{border-radius:10px}#book::after{display:none}#controls{bottom:10px;gap:3px}#addPanel .modal-box{padding:18px 14px}}
 </style>
@@ -408,7 +434,21 @@ body.editmode .sticker-item:hover .sticker-del{opacity:1!important}
 <div class="modal-overlay" id="gotoModal"><div class="modal-box"><div class="goto-title">Go to Page ✦</div><div class="goto-sub">اذهبي لأي صفحة مباشرة</div><input class="goto-input" id="gotoInput" type="number" min="1" placeholder="–" onkeydown="if(event.key==='Enter')doGoto()"><div class="goto-range" id="gotoRange">Pages 1 – ?</div><div class="goto-actions"><button class="goto-go" onclick="doGoto()">Go ›</button><button class="goto-cancel" onclick="closeModal('gotoModal')">Cancel</button></div></div></div>
 <div class="modal-overlay" id="secret"><div class="modal-box"><div class="sc-ico">💌</div><div class="sc-title" id="scTitle" contenteditable="false">Only For You, Radwa</div><div class="sc-body" id="scBody" contenteditable="false">In every universe that has ever existed —<br>in every lifetime that could ever be lived —<br><br>I would search through all of it just to find you again.<br><br>You are not just my best friend.<br>You are the reason I believe that<br><strong>some bonds are written before birth.</strong><br><br>Happy Birthday, Radwa. I love you endlessly. 🌸</div><div id="scEditHint" style="display:none;font-size:.5rem;color:var(--gold);letter-spacing:.12em;margin-bottom:12px;text-align:center">✏️ Click text above to edit it</div><button class="sc-close" onclick="closeModal('secret')">Close with love ✕</button></div></div>
 <div class="modal-overlay" id="musicPanel"><div class="modal-box"><div class="mp-title">🎵 Upload Your Song</div><div class="mp-sub">بتتحفظ على السحابة</div><div id="currentSongDisplay">🎵 No song saved yet</div><div class="mp-cloud-badge" id="cloudBadge">☁️ Song saved — plays on all devices</div><div class="mp-upload-area"><span class="mp-icon">🎶</span><div class="mp-txt">Click to upload (MP3, M4A…)<span>الملف لازم أقل من 5 MB</span></div><input type="file" accept="audio/*" id="songFileInput"></div><div class="mp-note">💡 <a href="https://ytmp3.cc" target="_blank">ytmp3.cc</a> لتحويل اليوتيوب</div><div class="mp-actions"><button class="mp-save" onclick="saveSong()">☁️ Save to Cloud</button><button class="mp-cancel" onclick="closeModal('musicPanel')">Cancel</button></div></div></div>
-<div class="modal-overlay" id="addPanel"><div class="modal-box"><div class="add-title">✦ Add a New Page</div><div class="add-sub">Saved to cloud — visible on all devices forever</div><div class="add-tabs"><button class="add-tab active" onclick="switchTab('memory',this)">📸 Memory</button><button class="add-tab" onclick="switchTab('poetry',this)">🌸 Poetry</button><button class="add-tab" onclick="switchTab('custom',this)">✨ Custom</button><button class="add-tab" onclick="switchTab('manage',this)">📋 Manage</button></div><div id="tab-memory"><div class="fg"><label>Title</label><input id="inp-title" type="text" maxlength="55" placeholder="e.g. That Night We Danced"></div><div class="fg"><label>Date / Caption</label><input id="inp-date" type="text" maxlength="65" placeholder="e.g. Summer 2024"></div><div class="fg"><label>Memory Text</label><textarea id="inp-text" placeholder="Write your memory… ❤️"></textarea></div><div class="fg"><label>Emoji</label><div class="emoji-row" id="emojiRow"></div><input id="inp-emoji-custom" type="text" placeholder="Or type emoji…" maxlength="8" style="margin-top:6px"></div><div class="fg"><label>Photo or Video (max 20MB)</label><div class="media-upload" id="mediaUploadBox"><div class="ico">📷/🎬</div><span>Click to upload</span><input type="file" accept="image/*,video/*" id="mediaInput"></div></div><div class="add-actions"><button class="add-save" onclick="saveMemory()">☁️ Save Page</button><button class="add-cancel" onclick="closeModal('addPanel')">Cancel</button></div></div><div id="tab-poetry" style="display:none"><div class="fg"><label>Label</label><input id="po-label" type="text" maxlength="30" placeholder="V. Stars"></div><div class="fg"><label>Poem — [word]=pink · *word*=gold</label><textarea id="po-text" style="min-height:100px" placeholder="Write your poem…"></textarea></div><div class="fg"><label>Ornament</label><select id="po-orn"><option value="❧">❧</option><option value="✦">✦</option><option value="🌸">🌸</option><option value="♡">♡</option></select></div><div class="add-actions"><button class="add-save" onclick="savePoetry()">☁️ Save Poem</button><button class="add-cancel" onclick="closeModal('addPanel')">Cancel</button></div></div><div id="tab-custom" style="display:none"><div class="fg"><label>Page Title</label><input id="cu-title" type="text" maxlength="55" placeholder="My special page…"></div><div class="fg"><label>Content / Message</label><textarea id="cu-body" style="min-height:90px" placeholder="Write anything…"></textarea></div><div class="fg"><label>Image (optional)</label><div class="media-upload" id="cuMediaBox"><div class="ico">📷</div><span>Click to add image</span><input type="file" accept="image/*" id="cuMediaInput"></div></div><div class="fg"><label>Background</label><select id="cu-bg"><option value="dark">Dark Purple</option><option value="rose">Deep Rose</option><option value="night">Midnight</option></select></div><div class="add-actions"><button class="add-save" onclick="saveCustom()">☁️ Save Page</button><button class="add-cancel" onclick="closeModal('addPanel')">Cancel</button></div></div><div id="tab-manage" style="display:none"><div class="reorder-hint">⠿ اسحبي الصفحات لترتيبها — Drag to reorder</div><div class="page-list" id="pageListWrap"></div><div style="text-align:center;margin-top:12px"><button class="add-cancel" onclick="closeModal('addPanel')">Done ✓</button></div></div></div></div>
+<div class="modal-overlay" id="addPanel"><div class="modal-box"><div class="add-title">✦ Add a New Page</div><div class="add-sub">Saved to cloud — visible on all devices forever</div><div class="add-tabs"><button class="add-tab active" onclick="switchTab('memory',this)">📸 Memory</button><button class="add-tab" onclick="switchTab('poetry',this)">🌸 Poetry</button><button class="add-tab" onclick="switchTab('custom',this)">✨ Custom</button><button class="add-tab" onclick="switchTab('manage',this)">📋 Manage</button><button class="add-tab" onclick="switchTab('quiz',this)">🧠 Quiz</button></div><div id="tab-memory"><div class="fg"><label>Title</label><input id="inp-title" type="text" maxlength="55" placeholder="e.g. That Night We Danced"></div><div class="fg"><label>Date / Caption</label><input id="inp-date" type="text" maxlength="65" placeholder="e.g. Summer 2024"></div><div class="fg"><label>Memory Text</label><textarea id="inp-text" placeholder="Write your memory… ❤️"></textarea></div><div class="fg"><label>Emoji</label><div class="emoji-row" id="emojiRow"></div><input id="inp-emoji-custom" type="text" placeholder="Or type emoji…" maxlength="8" style="margin-top:6px"></div><div class="fg"><label>Photo or Video (max 20MB)</label><div class="media-upload" id="mediaUploadBox"><div class="ico">📷/🎬</div><span>Click to upload</span><input type="file" accept="image/*,video/*" id="mediaInput"></div></div><div class="add-actions"><button class="add-save" onclick="saveMemory()">☁️ Save Page</button><button class="add-cancel" onclick="closeModal('addPanel')">Cancel</button></div></div><div id="tab-poetry" style="display:none"><div class="fg"><label>Label</label><input id="po-label" type="text" maxlength="30" placeholder="V. Stars"></div><div class="fg"><label>Poem — [word]=pink · *word*=gold</label><textarea id="po-text" style="min-height:100px" placeholder="Write your poem…"></textarea></div><div class="fg"><label>Ornament</label><select id="po-orn"><option value="❧">❧</option><option value="✦">✦</option><option value="🌸">🌸</option><option value="♡">♡</option></select></div><div class="add-actions"><button class="add-save" onclick="savePoetry()">☁️ Save Poem</button><button class="add-cancel" onclick="closeModal('addPanel')">Cancel</button></div></div><div id="tab-custom" style="display:none"><div class="fg"><label>Page Title</label><input id="cu-title" type="text" maxlength="55" placeholder="My special page…"></div><div class="fg"><label>Content / Message</label><textarea id="cu-body" style="min-height:90px" placeholder="Write anything…"></textarea></div><div class="fg"><label>Image (optional)</label><div class="media-upload" id="cuMediaBox"><div class="ico">📷</div><span>Click to add image</span><input type="file" accept="image/*" id="cuMediaInput"></div></div><div class="fg"><label>Background</label><select id="cu-bg"><option value="dark">Dark Purple</option><option value="rose">Deep Rose</option><option value="night">Midnight</option></select></div><div class="add-actions"><button class="add-save" onclick="saveCustom()">☁️ Save Page</button><button class="add-cancel" onclick="closeModal('addPanel')">Cancel</button></div></div><div id="tab-manage" style="display:none"><div class="reorder-hint">⠿ اسحبي الصفحات لترتيبها — Drag to reorder</div><div class="page-list" id="pageListWrap"></div><div style="text-align:center;margin-top:12px"><button class="add-cancel" onclick="closeModal('addPanel')">Done ✓</button></div><div id="tab-quiz" style="display:none">
+<div class="fg"><label>Quiz Title</label><input id="qz-title" type="text" maxlength="55" placeholder="e.g. How well do you know me? 🧠"></div>
+<div class="fg"><label>Question</label><textarea id="qz-question" style="min-height:65px" placeholder="Write your question here…"></textarea></div>
+<div class="fg"><label>Emoji</label><input id="qz-emoji" type="text" maxlength="4" placeholder="🧠" value="🧠"></div>
+<div class="fg"><label>Answer Options — الإجابة الصح (دوسي على الـ radio جنبها)</label>
+<div class="quiz-opt-row"><input type="radio" name="qz-correct" value="0" checked><input id="qz-opt0" type="text" placeholder="الإجابة الأولى…" maxlength="100"><span class="quiz-correct-hint">← صح؟</span></div>
+<div class="quiz-opt-row"><input type="radio" name="qz-correct" value="1"><input id="qz-opt1" type="text" placeholder="الإجابة التانية…" maxlength="100"><span class="quiz-correct-hint">← صح؟</span></div>
+<div class="quiz-opt-row"><input type="radio" name="qz-correct" value="2"><input id="qz-opt2" type="text" placeholder="الإجابة التالتة (اختياري)…" maxlength="100"><span class="quiz-correct-hint">← صح؟</span></div>
+<div class="quiz-opt-row"><input type="radio" name="qz-correct" value="3"><input id="qz-opt3" type="text" placeholder="الإجابة الرابعة (اختياري)…" maxlength="100"><span class="quiz-correct-hint">← صح؟</span></div>
+</div>
+<div class="fg"><label>✅ رسالة لما تجاوبي صح</label><input id="qz-msg-correct" type="text" maxlength="100" placeholder="e.g. أيوه! تعرفيني كويس جداً! 🎉"></div>
+<div class="fg"><label>❌ رسالة لما تجاوبي غلط</label><input id="qz-msg-wrong" type="text" maxlength="100" placeholder="e.g. هممم، مش كدا! 😅 جربي تاني!"></div>
+<div class="fg"><label>Background</label><select id="qz-bg"><option value="dark">Dark Purple</option><option value="rose">Deep Rose</option><option value="night">Midnight</option><option value="quiz">Quiz Blue</option></select></div>
+<div class="add-actions"><button class="add-save" onclick="saveQuiz()">☁️ Save Quiz</button><button class="add-cancel" onclick="closeModal('addPanel')">Cancel</button></div>
+</div></div></div></div>
 <div class="modal-overlay" id="stickerPanel"><div class="modal-box"><div class="sk-title">🌸 Add Sticker</div><div class="sk-sub">Pick one — tap sticker to resize or delete</div><div class="sk-grid" id="stickerGrid"></div><div class="sk-upload"><div class="sk-upload-label">📷 Upload custom sticker image</div><input type="file" accept="image/*" id="stickerUploadInput"></div><button class="sk-cancel" onclick="closeModal('stickerPanel')">Cancel</button></div></div>
 
 <audio id="bgAudio" loop></audio>
@@ -761,6 +801,23 @@ function makeMemory(m,gi){
   return`<div class="pg"><div class="mtag" data-sid="${sid}" data-field="mtag" contenteditable="false">${getET(sid,'mtag','Memory '+String(cnt).padStart(2,'0'))}</div><div class="mtitle" data-sid="${sid}" data-field="title" contenteditable="false">${getET(sid,'title',m.title)}</div><div class="deco"></div><div class="mthumb" style="${outerStyle}"><div class="mthumb-clip" style="${clipStyle}">${mhMedia}</div>${badges}${editBtns}</div><div class="deco"></div><div class="mbody" data-sid="${sid}" data-field="body" contenteditable="false">${getET(sid,'body',m.text)}</div><div class="mdate" data-sid="${sid}" data-field="date" contenteditable="false">${getET(sid,'date','✦ '+m.date+' ✦')}</div><div class="pgn ${side}">${gi+1}</div></div>`;
 }
 
+
+/* ══ QUIZ RENDERER ══ */
+function makeQuiz(p,gi){
+  const sid=getSID(p);const side=gi%2===0?'r':'l';
+  const bgMap={dark:'linear-gradient(155deg,#150024,#090013)',rose:'linear-gradient(155deg,#250015,#0e0008)',night:'linear-gradient(155deg,#050520,#020210)',quiz:'linear-gradient(155deg,#001530,#00090e)'};
+  const bg=bgMap[p.background||'dark']||bgMap.dark;
+  const opts=p.options||[];const correctIdx=p.correctIndex??0;
+  const optsHtml=opts.map((opt,i)=>opt?`<button class="quiz-opt" data-idx="${i}" onclick="quizAnswer(this,${i===correctIdx},'${sid}')">${opt}</button>`:'').join('');
+  return`<div class="pg pg-quiz" style="background:${bg}">
+<div class="quiz-emoji" data-sid="${sid}" data-field="qzEmoji" contenteditable="false">${getET(sid,'qzEmoji',p.emoji||'🧠')}</div>
+<div class="quiz-title-el" data-sid="${sid}" data-field="qzTitle" contenteditable="false">${getET(sid,'qzTitle',p.title||'Quiz Time!')}</div>
+<div class="deco decoP"></div>
+<div class="quiz-q" data-sid="${sid}" data-field="qzQ" contenteditable="false">${getET(sid,'qzQ',p.question||'')}</div>
+<div class="quiz-opts" id="qopts-${sid}" data-correct="${correctIdx}">${optsHtml}</div>
+<div class="quiz-result" id="qr-${sid}"><div class="quiz-result-ico" id="qri-${sid}"></div><div class="quiz-result-msg" id="qrm-${sid}"></div><button class="quiz-retry" onclick="resetQuiz('${sid}')">↩ Try Again</button></div>
+<div class="pgn ${side}">${gi+1}</div></div>`;
+}
 function makePoetry(p,gi){
   const sid=getSID(p);const side=gi%2===0?'r':'l';
   const body=p.text.replace(/\[([^\]]+)\]/g,'<em>$1</em>').replace(/\*([^*]+)\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
@@ -782,7 +839,7 @@ function makeCustom(p,gi){
   return`<div class="pg pg-custom" style="background:${bg}"><div class="custom-title" data-sid="${sid}" data-field="title" contenteditable="false">${getET(sid,'title',p.title||'My Page')}</div><div class="deco decoP"></div>${imgHtml}<div class="custom-body" data-sid="${sid}" data-field="body" contenteditable="false">${getET(sid,'body',p.body||'')}</div>${med?`<button class="eu-img-edit" onclick="imgEditOpen('${sid}',false,this.closest('.pg').querySelector('img'))">🔍 Edit Image</button>`:''}<label class="eu-mem">📷 ${med?'Change':'Add'} Image<input type="file" accept="image/*" onchange="uploadMemMedia(event,'${sid}')"></label><div class="pgn ${side}">${gi+1}</div></div>`;
 }
 
-function renderPage(gi){if(gi<0||gi>=TOTAL())return'<div class="pg" style="background:#090013"></div>';const p=BOOK_PAGES[gi];if(p.type==='cover')return makeCover(p);if(p.type==='intro')return makeIntro(p);if(p.type==='memory')return makeMemory(p,gi);if(p.type==='poetry')return makePoetry(p,gi);if(p.type==='birthday')return makeBirthday(p,gi);if(p.type==='custom')return makeCustom(p,gi);return'<div class="pg"></div>';}
+function renderPage(gi){if(gi<0||gi>=TOTAL())return'<div class="pg" style="background:#090013"></div>';const p=BOOK_PAGES[gi];if(p.type==='cover')return makeCover(p);if(p.type==='intro')return makeIntro(p);if(p.type==='memory')return makeMemory(p,gi);if(p.type==='poetry')return makePoetry(p,gi);if(p.type==='birthday')return makeBirthday(p,gi);if(p.type==='custom')return makeCustom(p,gi);if(p.type==='quiz')return makeQuiz(p,gi);return'<div class="pg"></div>';}
 const TOTAL=()=>BOOK_PAGES.length,maxSpread=()=>Math.ceil((TOTAL()-1)/2);
 
 function renderFace(el,idx){
@@ -870,15 +927,77 @@ const EMOJIS=['💗','❤️','🌸','✨','🌙','⭐','🎂','🎉','💫','�
 function initEmojiPicker(){const row=document.getElementById('emojiRow');row.innerHTML='';EMOJIS.forEach(e=>{const btn=document.createElement('button');btn.className='em-pick';btn.textContent=e;if(e==='💗')btn.classList.add('picked');btn.onclick=()=>{document.querySelectorAll('.em-pick').forEach(b=>b.classList.remove('picked'));btn.classList.add('picked');document.getElementById('inp-emoji-custom').value=e;};row.appendChild(btn);});}
 function setupMediaUpload(){addMediaSrc=null;addMediaType='image';const box=document.getElementById('mediaUploadBox');box.innerHTML=`<div class="ico">📷/🎬</div><span>Click to upload (max ${MAX_MB}MB)</span><input type="file" accept="image/*,video/*" id="mediaInput">`;document.getElementById('mediaInput').addEventListener('change',function(){const file=this.files[0];if(!file)return;if(file.size>MAX_MB*1024*1024){showToast('⚠️','Max '+MAX_MB+'MB');return;}addMediaType=file.type.startsWith('video/')?'video':'image';const r=new FileReader();r.onload=async ev=>{let src=ev.target.result;if(addMediaType!=='video')src=await compressIfNeeded(src);addMediaSrc=src;box.innerHTML=(addMediaType==='video'?`<video class="media-prev-vid" src="${src}" autoplay muted loop playsinline></video>`:`<img class="media-prev-img" src="${src}">`)+`<input type="file" accept="image/*,video/*" id="mediaInput">`;document.getElementById('mediaInput').addEventListener('change',arguments.callee);showToast(addMediaType==='video'?'🎬':'📷','Ready!');};r.readAsDataURL(file);});}
 function setupCuMedia(){cuMediaSrc=null;const box=document.getElementById('cuMediaBox');box.innerHTML=`<div class="ico">📷</div><span>Click to add image</span><input type="file" accept="image/*" id="cuMediaInput">`;document.getElementById('cuMediaInput').addEventListener('change',function(){const file=this.files[0];if(!file)return;const r=new FileReader();r.onload=async ev=>{let src=ev.target.result;src=await compressIfNeeded(src);cuMediaSrc=src;box.innerHTML=`<img class="media-prev-img" src="${src}"><input type="file" accept="image/*" id="cuMediaInput">`;document.getElementById('cuMediaInput').addEventListener('change',arguments.callee);showToast('📷','Ready!');};r.readAsDataURL(file);});}
-document.getElementById('btnAddPage').addEventListener('click',()=>{initEmojiPicker();setupMediaUpload();setupCuMedia();['inp-title','inp-date','inp-text','inp-emoji-custom','po-label','po-text','cu-title','cu-body'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.getElementById('inp-emoji-custom').value='💗';switchTab('memory',document.querySelector('.add-tab'));openModal('addPanel');});
-function switchTab(name,btn){document.querySelectorAll('.add-tab').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');['memory','poetry','custom','manage'].forEach(t=>{document.getElementById('tab-'+t).style.display=(t===name)?'block':'none';});if(name==='manage')buildPageList();}
+document.getElementById('btnAddPage').addEventListener('click',()=>{initEmojiPicker();setupMediaUpload();setupCuMedia();['inp-title','inp-date','inp-text','inp-emoji-custom','po-label','po-text','cu-title','cu-body','qz-title','qz-question','qz-emoji','qz-opt0','qz-opt1','qz-opt2','qz-opt3','qz-msg-correct','qz-msg-wrong'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.getElementById('inp-emoji-custom').value='💗';switchTab('memory',document.querySelector('.add-tab'));openModal('addPanel');});
+function switchTab(name,btn){document.querySelectorAll('.add-tab').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');['memory','poetry','custom','manage','quiz'].forEach(t=>{document.getElementById('tab-'+t).style.display=(t===name)?'block':'none';});if(name==='manage')buildPageList();}
 async function saveMemory(){const title=document.getElementById('inp-title').value.trim(),date=document.getElementById('inp-date').value.trim(),text=document.getElementById('inp-text').value.trim(),emoji=document.getElementById('inp-emoji-custom').value.trim()||'💗';if(!title||!text){showToast('⚠️','Fill title and text!');return;}const key='user-'+Date.now();const page={type:'memory',title,date:date||'a moment in time',text,emoji:emoji+' '+emoji,_id:key,memKey:key};if(addMediaSrc){const md={type:addMediaType,src:addMediaSrc};cloudData.memoryMedia[key]=md;await dbSet('memoryMedia/'+key,md);}cloudData.userPages.push(page);await dbSet('userPages/'+key,page);BOOK_PAGES=buildPages();closeModal('addPanel');renderSpread(spread);document.getElementById('pgTotal').textContent=TOTAL();showToast('☁️','Page saved!');spawnBurst(12,['💗','✨','🌸']);}
 async function savePoetry(){const label=document.getElementById('po-label').value.trim(),text=document.getElementById('po-text').value.trim(),orn=document.getElementById('po-orn').value;if(!label||!text){showToast('⚠️','Fill all fields!');return;}const key='poem-'+Date.now();const page={type:'poetry',label,text,orn,_id:key};cloudData.userPages.push(page);await dbSet('userPages/'+key,page);BOOK_PAGES=buildPages();closeModal('addPanel');renderSpread(spread);document.getElementById('pgTotal').textContent=TOTAL();showToast('☁️','Poem saved!');spawnBurst(12,['🌸','✨','💫']);}
 async function saveCustom(){const title=document.getElementById('cu-title').value.trim()||'My Page',body=document.getElementById('cu-body').value.trim(),bg=document.getElementById('cu-bg').value;const key='custom-'+Date.now();const page={type:'custom',title,body,background:bg,_id:key};if(cuMediaSrc){const md={type:'image',src:cuMediaSrc};cloudData.memoryMedia[key]=md;await dbSet('memoryMedia/'+key,md);}cloudData.userPages.push(page);await dbSet('userPages/'+key,page);BOOK_PAGES=buildPages();closeModal('addPanel');renderSpread(spread);document.getElementById('pgTotal').textContent=TOTAL();showToast('☁️','Custom page saved!');spawnBurst(10,['✨','🌸']);}
 
+
+/* ══ QUIZ SAVE & INTERACTION ══ */
+async function saveQuiz(){
+  const title=document.getElementById('qz-title').value.trim()||'Quiz Time!';
+  const question=document.getElementById('qz-question').value.trim();
+  const emoji=document.getElementById('qz-emoji').value.trim()||'🧠';
+  const msgCorrect=document.getElementById('qz-msg-correct').value.trim()||'🎉 أيوه! تعرفيني كويس جداً!';
+  const msgWrong=document.getElementById('qz-msg-wrong').value.trim()||'😅 مش كدا! جربي تاني!';
+  const bg=document.getElementById('qz-bg').value;
+  if(!question){showToast('⚠️','اكتبي السؤال الأول!');return;}
+  const opts=[
+    document.getElementById('qz-opt0').value.trim(),
+    document.getElementById('qz-opt1').value.trim(),
+    document.getElementById('qz-opt2').value.trim(),
+    document.getElementById('qz-opt3').value.trim(),
+  ];
+  if(opts.filter(o=>o).length<2){showToast('⚠️','حطي إجابتين على الأقل!');return;}
+  const correctEl=document.querySelector('input[name="qz-correct"]:checked');
+  const correctIndex=correctEl?parseInt(correctEl.value):0;
+  if(!opts[correctIndex]){showToast('⚠️','الإجابة الصح فاضية! اختاري غيرها أو اكتبيها.');return;}
+  const key='quiz-'+Date.now();
+  const page={type:'quiz',title,question,emoji,options:opts,correctIndex,msgCorrect,msgWrong,background:bg,_id:key};
+  cloudData.userPages.push(page);
+  await dbSet('userPages/'+key,page);
+  BOOK_PAGES=buildPages();closeModal('addPanel');renderSpread(spread);
+  document.getElementById('pgTotal').textContent=TOTAL();
+  showToast('🧠','Quiz saved! ☁️');spawnBurst(14,['🎉','✨','💗','🧠','⭐']);
+}
+
+function quizAnswer(btn,isCorrect,sid){
+  const optsDiv=document.getElementById('qopts-'+sid);if(!optsDiv)return;
+  const btns=optsDiv.querySelectorAll('.quiz-opt');
+  const correctIdx=parseInt(optsDiv.dataset.correct);
+  btns.forEach(b=>{
+    b.disabled=true;
+    if(b===btn){b.classList.add(isCorrect?'correct':'wrong');}
+    else if(!isCorrect&&parseInt(b.dataset.idx)===correctIdx){b.classList.add('correct');}
+    else{b.classList.add('dimmed');}
+  });
+  const page=BOOK_PAGES.find(p=>getSID(p)===sid);
+  const msgC=(page&&page.msgCorrect)||'🎉 أيوه! تعرفيني كويس جداً!';
+  const msgW=(page&&page.msgWrong)||'😅 مش كدا! جربي تاني!';
+  const resultDiv=document.getElementById('qr-'+sid);
+  const icoDiv=document.getElementById('qri-'+sid);
+  const msgDiv=document.getElementById('qrm-'+sid);
+  if(resultDiv){
+    resultDiv.style.display='block';
+    resultDiv.classList.add(isCorrect?'correct':'wrong');
+    icoDiv.textContent=isCorrect?'🎉':'💔';
+    msgDiv.textContent=isCorrect?msgC:msgW;
+  }
+  if(isCorrect)spawnBurst(16,['🎉','✨','💗','⭐','💫','🌸']);
+  else spawnBurst(6,['💔','😅']);
+}
+
+function resetQuiz(sid){
+  const optsDiv=document.getElementById('qopts-'+sid);
+  if(optsDiv)optsDiv.querySelectorAll('.quiz-opt').forEach(b=>{b.disabled=false;b.classList.remove('correct','wrong','dimmed');});
+  const resultDiv=document.getElementById('qr-'+sid);
+  if(resultDiv){resultDiv.style.display='none';resultDiv.classList.remove('correct','wrong');}
+}
+
 /* ══ PAGE MANAGEMENT ══ */
 let dragSrcIdx=null;
-function buildPageList(){const wrap=document.getElementById('pageListWrap');wrap.innerHTML='';const icons={cover:'📖',intro:'💌',memory:'📸',poetry:'🌸',birthday:'🎂',custom:'✨'};const types={cover:'Cover',intro:'Intro',memory:'Memory',poetry:'Poetry',birthday:'Birthday',custom:'Custom'};BOOK_PAGES.forEach((p,i)=>{const isFixed=p._fixedStart||p._fixedEnd;const div=document.createElement('div');div.className='page-item'+(isFixed?' fixed-page':'');div.dataset.idx=i;div.innerHTML=`<span class="pi-drag">${isFixed?'🔒':'⠿'}</span><span class="pi-num">${i+1}</span><span class="pi-title">${icons[p.type]||'📄'} ${p.title||p.label||p.type}</span><span class="pi-type">${types[p.type]||p.type}</span>${!isFixed?`<button class="pi-dup" title="Duplicate" onclick="duplicatePage(${i})">⎘</button><button class="pi-del" onclick="deletePage(${i})">✕</button>`:''}`;if(!isFixed){div.draggable=true;div.addEventListener('dragstart',e=>{dragSrcIdx=i;div.classList.add('dragging');e.dataTransfer.effectAllowed='move';});div.addEventListener('dragend',()=>{div.classList.remove('dragging');wrap.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));});div.addEventListener('dragover',e=>{e.preventDefault();wrap.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));div.classList.add('drag-over');});div.addEventListener('drop',e=>{e.preventDefault();if(dragSrcIdx===null||dragSrcIdx===i)return;const target=BOOK_PAGES[i];if(target._fixedStart||target._fixedEnd){showToast('⚠️','Cannot move here');return;}const moved=BOOK_PAGES.splice(dragSrcIdx,1)[0];BOOK_PAGES.splice(i,0,moved);savePageOrder();buildPageList();renderSpread(spread);showToast('✦','Order saved!');dragSrcIdx=null;});}wrap.appendChild(div);});}
+function buildPageList(){const wrap=document.getElementById('pageListWrap');wrap.innerHTML='';const icons={cover:'📖',intro:'💌',memory:'📸',poetry:'🌸',birthday:'🎂',custom:'✨',quiz:'🧠'};const types={cover:'Cover',intro:'Intro',memory:'Memory',poetry:'Poetry',birthday:'Birthday',custom:'Custom',quiz:'Quiz'};BOOK_PAGES.forEach((p,i)=>{const isFixed=p._fixedStart||p._fixedEnd;const div=document.createElement('div');div.className='page-item'+(isFixed?' fixed-page':'');div.dataset.idx=i;div.innerHTML=`<span class="pi-drag">${isFixed?'🔒':'⠿'}</span><span class="pi-num">${i+1}</span><span class="pi-title">${icons[p.type]||'📄'} ${p.title||p.label||p.type}</span><span class="pi-type">${types[p.type]||p.type}</span>${!isFixed?`<button class="pi-dup" title="Duplicate" onclick="duplicatePage(${i})">⎘</button><button class="pi-del" onclick="deletePage(${i})">✕</button>`:''}`;if(!isFixed){div.draggable=true;div.addEventListener('dragstart',e=>{dragSrcIdx=i;div.classList.add('dragging');e.dataTransfer.effectAllowed='move';});div.addEventListener('dragend',()=>{div.classList.remove('dragging');wrap.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));});div.addEventListener('dragover',e=>{e.preventDefault();wrap.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));div.classList.add('drag-over');});div.addEventListener('drop',e=>{e.preventDefault();if(dragSrcIdx===null||dragSrcIdx===i)return;const target=BOOK_PAGES[i];if(target._fixedStart||target._fixedEnd){showToast('⚠️','Cannot move here');return;}const moved=BOOK_PAGES.splice(dragSrcIdx,1)[0];BOOK_PAGES.splice(i,0,moved);savePageOrder();buildPageList();renderSpread(spread);showToast('✦','Order saved!');dragSrcIdx=null;});}wrap.appendChild(div);});}
 async function savePageOrder(){const order=BOOK_PAGES.filter(p=>!p._fixedStart&&!p._fixedEnd).map(getSID);cloudData.pageOrder=order;await dbSet('pageOrder',order);}
 async function deletePage(idx){const p=BOOK_PAGES[idx];if(p._fixedStart||p._fixedEnd)return;if(!confirm('Delete this page?'))return;const id=p._id;const ui=cloudData.userPages.findIndex(x=>x._id===id);if(ui>=0){cloudData.userPages.splice(ui,1);await dbRemove('userPages/'+id);}BOOK_PAGES=buildPages();if(spread>maxSpread())spread=maxSpread();buildPageList();renderSpread(spread);document.getElementById('pgTotal').textContent=TOTAL();showToast('🗑️','Page deleted');}
 async function duplicatePage(idx){const p=BOOK_PAGES[idx];if(p._fixedStart||p._fixedEnd)return;const key=(p.type||'page')+'-dup-'+Date.now();const dup={...p,_id:key,memKey:p.type==='memory'?key:undefined,title:(p.title||'Page')+' (copy)'};delete dup._fixedStart;delete dup._fixedEnd;cloudData.userPages.push(dup);await dbSet('userPages/'+key,dup);BOOK_PAGES=buildPages();buildPageList();renderSpread(spread);document.getElementById('pgTotal').textContent=TOTAL();showToast('⎘','Page duplicated!');}
