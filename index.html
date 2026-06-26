@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -169,7 +168,6 @@ body{background:var(--ink);color:var(--white);height:100vh;overflow:hidden;curso
   width:90vw;
   max-width:620px;
 }
-/* FIX: gradient applied per-char so inline spans inherit it correctly */
 #cinMessage{
   font-family:'Cairo',sans-serif;
   font-size:clamp(1.8rem,5vw,3rem);
@@ -181,7 +179,6 @@ body{background:var(--ink);color:var(--white);height:100vh;overflow:hidden;curso
   unicode-bidi:plaintext;
   filter:drop-shadow(0 0 18px rgba(200,120,138,.5));
 }
-/* FIX: gradient on .cin-char directly — background-clip:text doesn't inherit to child spans */
 .cin-char{
   display:inline-block;
   opacity:0;
@@ -244,6 +241,18 @@ body{background:var(--ink);color:var(--white);height:100vh;overflow:hidden;curso
 }
 #cinGlow.show{opacity:1}
 
+/* SKIP HINT */
+#skipHint{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  z-index:9999;
+  font-family:var(--sans);font-size:.5rem;letter-spacing:.35em;
+  color:var(--silver-dim);text-transform:uppercase;
+  opacity:0;transition:opacity 1s ease;
+  pointer-events:none;
+  white-space:nowrap;
+}
+#skipHint.show{opacity:.45}
+
 @media(max-width:600px){
   #act3{text-align:center;align-items:center}
   .act3-rule{margin-left:auto;margin-right:auto}
@@ -261,6 +270,7 @@ body{background:var(--ink);color:var(--white);height:100vh;overflow:hidden;curso
 <div id="noise"></div>
 <canvas id="veil"></canvas>
 <div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
+<div id="skipHint">double-click anywhere to skip</div>
 
 <!-- PASSWORD -->
 <div class="act" id="actPassword">
@@ -671,7 +681,6 @@ function triggerNourCinematic(){
     },1600);
   },2500);
   setTimeout(()=>{['cinBfly1','cinBfly2','cinBfly3'].forEach((id,i)=>{setTimeout(()=>document.getElementById(id).classList.add('show'),i*400);});},1800);
-  /* FIX: message reveal now visible — .cin-char has gradient applied directly */
   setTimeout(()=>{revealCinMessage();},2500);
   setTimeout(()=>{
     const btn=document.getElementById('cinContinue');btn.style.display='flex';
@@ -681,13 +690,8 @@ function triggerNourCinematic(){
 
 function revealCinMessage(){
   const msgEl=document.getElementById('cinMessage');
-
   msgEl.innerHTML = `
-    <span style="
-      direction:rtl;
-      unicode-bidi:plaintext;
-      display:inline-block;
-    ">
+    <span style="direction:rtl;unicode-bidi:plaintext;display:inline-block;">
       وانا كمان بحبك يا قلبي 😊❤️
     </span>
   `;
@@ -698,6 +702,69 @@ document.getElementById('cinContinue').addEventListener('click',()=>{
   setTimeout(()=>{overlay.style.display='none';overlay.style.opacity='';overlay.style.transition='';CIN.stop();openBook();},820);
 });
 
+/* ═══ DOUBLE-CLICK SKIP TO QUIZ ═══ */
+(function(){
+  /* Briefly show the hint after the user passes the password gate */
+  let hintShown=false;
+  function flashHint(){
+    if(hintShown)return;hintShown=true;
+    const h=document.getElementById('skipHint');
+    h.classList.add('show');
+    setTimeout(()=>h.classList.remove('show'),3500);
+  }
+  /* Hook into act1 becoming visible */
+  new MutationObserver(()=>{
+    if(document.getElementById('act1').classList.contains('visible'))
+      setTimeout(flashHint,2400);
+  }).observe(document.getElementById('act1'),{attributeFilter:['class']});
+
+  function jumpToQuiz(){
+    /* Kill any running animations */
+    if(act2AnimFrame){cancelAnimationFrame(act2AnimFrame);act2AnimFrame=null;}
+    if(CIN.running)CIN.stop();
+
+    /* Hide every overlay */
+    document.getElementById('wrongOverlay').classList.remove('show');
+    const cinOv=document.getElementById('cinematicOverlay');
+    cinOv.style.display='none';cinOv.style.opacity='';cinOv.style.transition='';
+    document.getElementById('bookShell').classList.remove('active');
+    const rev=document.getElementById('revealOverlay');
+    rev.classList.remove('entering','leaving');
+
+    /* Reset cinematic so it can replay properly next time */
+    ['cinCrownWrap','cinRay1','cinRay2','cinRay3','cinRay4','cinRay5',
+     'cinGlow','cinBfly1','cinBfly2','cinBfly3'].forEach(id=>{
+       const el=document.getElementById(id);if(el)el.classList.remove('show');
+    });
+    const btn=document.getElementById('cinContinue');
+    btn.classList.remove('show');btn.style.display='none';
+    document.getElementById('cinBg').style.background='';
+
+    /* Reset quiz animations so they play fresh */
+    ['quizEyebrow','quizQuestion','quizRule','quizChoices'].forEach(id=>{
+      document.getElementById(id).classList.remove('in');
+    });
+
+    showAct('actQuiz');
+    setTimeout(()=>document.getElementById('quizEyebrow').classList.add('in'),200);
+    setTimeout(()=>document.getElementById('quizQuestion').classList.add('in'),450);
+    setTimeout(()=>document.getElementById('quizRule').classList.add('in'),700);
+    setTimeout(()=>document.getElementById('quizChoices').classList.add('in'),1100);
+  }
+
+  document.addEventListener('dblclick',function(e){
+    /* Ignore clicks on interactive elements */
+    if(e.target.closest('button,input,.cta-btn,.quiz-choice,.wrong-retry,.pw-btn,.back-pill'))return;
+    /* Don't fire on the password screen */
+    if(document.getElementById('actPassword').classList.contains('visible'))return;
+    /* Don't fire if already on the quiz */
+    if(document.getElementById('actQuiz').classList.contains('visible'))return;
+    /* Don't fire if inside the book */
+    if(document.getElementById('bookShell').classList.contains('active'))return;
+    jumpToQuiz();
+  });
+})();
+
 /* ═══ MUSIC ═══ */
 const music=document.getElementById('bgMusic'),musicBtn=document.getElementById('musicBtn');
 music.volume=.35;
@@ -707,5 +774,3 @@ musicBtn.addEventListener('click',async()=>{
 </script>
 </body>
 </html>
-
-
